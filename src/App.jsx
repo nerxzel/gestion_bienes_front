@@ -6,7 +6,9 @@ function App({children}) {
   
   return (
     <>
-      {children}
+      <main>
+        {children}
+      </main>
     </>
   )
 }

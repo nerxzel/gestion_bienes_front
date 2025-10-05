@@ -1,13 +1,16 @@
-import React from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
-import loginImage from '../assets/loginIMG.png';
+import LoginForm from '../components/LoginForm';
+
 
 function Login() {
     return (
-        <Container className='vh-100 d-flex align-items-center justify-conten-center'>
-            <Row>
-                <Col md={7} lg={8} className='d-none d-md-block p-0'>
-                    <img src={loginImage} alt='Login' className='login-image' />
+        <Container fluid>
+            <Row className='vh-100 align-items-center justify-content-center'>
+  
+                <Col md={5} lg={4}>
+                    <div>
+                        <LoginForm />
+                    </div>
                 </Col>
             </Row>
     
