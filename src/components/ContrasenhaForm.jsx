@@ -1,7 +1,22 @@
 import { Form, Button, Card, FloatingLabel } from 'react-bootstrap';
 import { Link } from 'react-router-dom'; 
+import { useState } from 'react';
 
 function ContrasenhaForm() {
+    const [email, setEmail] = useState("")
+    const [error, setError] = useState(false)
+
+    const manejarEnvio = (e) => {
+    e.preventDefault()
+
+    if(email === "") {
+      setError(true)
+      return
+    }
+
+    setError(false)
+  }
+
   return (
     <Card className="p-4 shadow-sm border-2">
       <Card.Body>
@@ -10,9 +25,12 @@ function ContrasenhaForm() {
           Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.
         </p>
         
-        <Form>
+        <Form onSubmit={manejarEnvio}>
           <FloatingLabel controlId="floatingEmail" label="Correo Electrónico" className="mb-3">
-            <Form.Control type="email" placeholder=" " />
+            <Form.Control type="email" 
+                          value={email}
+                          placeholder=" " 
+                          onChange={e => setEmail(e.target.value)}/>
           </FloatingLabel>
 
           <div className="d-grid mt-4">
@@ -21,6 +39,7 @@ function ContrasenhaForm() {
             </Button>
           </div>
         </Form>
+        <p>{error && <p>Todos los campos son obligatorios</p>}</p>
         <div className="text-center mt-3">
             <Link to="/">Volver a Iniciar Sesión</Link>
         </div>

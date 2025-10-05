@@ -8,9 +8,7 @@ function Login() {
             <Row className='vh-100 align-items-center justify-content-center'>
   
                 <Col md={5} lg={4}>
-                    <div>
                         <LoginForm />
-                    </div>
                 </Col>
             </Row>
     
