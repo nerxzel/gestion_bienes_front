@@ -3,14 +3,14 @@ import { Form, Button, Card, FloatingLabel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function LoginForm() {
-  const [usuario, setUsuario] = useState("")
-  const [contrasenha, setContrasenha] = useState("")
+  const [user, setUser] = useState("")
+  const [password, setPassword] = useState("")
   const [error, setError] = useState(false)
 
-  const manejarEnvio = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
 
-    if(usuario === "" || contrasenha === "") {
+    if(user === "" || password === "") {
       setError(true)
       return
     }
@@ -23,23 +23,23 @@ function LoginForm() {
       <Card.Body>
         <h2 className="fw-bold text-center mb-4">Inicie sesión</h2>
         
-        <Form onSubmit={manejarEnvio}>
+        <Form onSubmit={handleSubmit}>
           <FloatingLabel controlId="floatingEmail" label="Ingresa tu correo o usuario" className="mb-3">
             <Form.Control type="text" 
-                          value={usuario}
+                          value={user}
                           placeholder=" " 
-                          onChange={e => setUsuario(e.target.value)} />
+                          onChange={e => setUser(e.target.value)} />
           </FloatingLabel>
 
           <FloatingLabel controlId="floatingPassword" label="Contraseña">
             <Form.Control type="password" 
-                          value={contrasenha}
+                          value={password}
                           placeholder=" "
-                          onChange={e => setContrasenha(e.target.value)}/>
+                          onChange={e => setPassword(e.target.value)}/>
           </FloatingLabel>
 
           <div className="text-end mt-2">
-            <Link to="/recuperar" className="small text-muted">¿Olvidaste tu contraseña?</Link>
+            <Link to="/forgot-password" className="small text-muted">¿Olvidaste tu contraseña?</Link>
           </div>
           
           <div className="d-grid mt-4">
