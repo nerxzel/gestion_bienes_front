@@ -1,20 +1,38 @@
 import { Form, Button, Card, FloatingLabel } from 'react-bootstrap';
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
 import { useState } from 'react';
 
 function ForgotForm() {
     const [email, setEmail] = useState("")
-    const [error, setError] = useState(false)
+    const [errors, setErrors] = useState({})
+    const navigate = useNavigate();
+
+    const validateForm = () => {
+      const newErrors = {};
+
+       const emailRegex = /\S+@\S+\.\S+/;
+
+      if(!email) {
+        newErrors.email = "Favor, el campo de correo no puede estar vacío"
+      } else if (!emailRegex.test(email)) {
+        newErrors.email = "Por favor, ingresa un formato de correo válido (ejemplo@ejemplo.com).";
+      }
+
+      return newErrors;
+    }
 
     const handleSubmit = (e) => {
     e.preventDefault()
 
-    if(email === "") {
-      setError(true)
+    const validateErrors = validateForm();
+
+    if(Object.keys(validateErrors).length > 0) {
+      setErrors(validateErrors)
       return
     }
 
-    setError(false)
+    setErrors({})
+    navigate('/enter-code');
   }
 
   return (
@@ -25,12 +43,16 @@ function ForgotForm() {
           Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.
         </p>
         
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} noValidate>
           <FloatingLabel controlId="floatingEmail" label="Correo Electrónico" className="mb-3">
             <Form.Control type="email" 
                           value={email}
                           placeholder=" " 
-                          onChange={e => setEmail(e.target.value)}/>
+                          onChange={e => setEmail(e.target.value)}
+                          isInvalid={!!errors.email}/>
+            <Form.Control.Feedback type='invalid'>
+              {errors.email}
+            </Form.Control.Feedback>
           </FloatingLabel>
 
           <div className="d-grid mt-4">
@@ -39,7 +61,6 @@ function ForgotForm() {
             </Button>
           </div>
         </Form>
-        <p>{error && <p>Todos los campos son obligatorios</p>}</p>
         <div className="text-center mt-3">
             <Link to="/">Volver a Iniciar Sesión</Link>
         </div>

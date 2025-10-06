@@ -5,17 +5,34 @@ import { Link } from 'react-router-dom';
 function LoginForm() {
   const [user, setUser] = useState("")
   const [password, setPassword] = useState("")
-  const [error, setError] = useState(false)
+  const [errors, setErrors] = useState({})
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!user) {
+      newErrors.user = "Este campo no puede quedar vacío"
+    }
+
+    if (!password) {
+      newErrors.password = "Este campo no puede quedar vacío"
+    }
+
+    return newErrors
+
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if(user === "" || password === "") {
-      setError(true)
-      return
+    const validateErrors = validateForm();
+
+    if (Object.keys(validateErrors).length > 0) {
+      setErrors(validateErrors)
+      return;
     }
 
-    setError(false)
+    setErrors({})
   }
   
   return (
@@ -28,14 +45,22 @@ function LoginForm() {
             <Form.Control type="text" 
                           value={user}
                           placeholder=" " 
-                          onChange={e => setUser(e.target.value)} />
+                          onChange={e => setUser(e.target.value)} 
+                          isInvalid={!!errors.user}/>
+            <Form.Control.Feedback type="invalid">
+              {errors.user}
+            </Form.Control.Feedback>
           </FloatingLabel>
 
           <FloatingLabel controlId="floatingPassword" label="Contraseña">
             <Form.Control type="password" 
                           value={password}
                           placeholder=" "
-                          onChange={e => setPassword(e.target.value)}/>
+                          onChange={e => setPassword(e.target.value)}
+                          isInvalid={!!errors.password}/>
+            <Form.Control.Feedback type='invalid'>
+              {errors.password}
+            </Form.Control.Feedback>
           </FloatingLabel>
 
           <div className="text-end mt-2">
@@ -48,7 +73,6 @@ function LoginForm() {
             </Button>
           </div>
         </Form>
-        {error && <p>Todos los campos son obligatorios</p>}
       </Card.Body>
     </Card>
   );
