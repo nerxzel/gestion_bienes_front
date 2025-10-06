@@ -1,15 +1,15 @@
 import { Form, Button, Card, FloatingLabel } from 'react-bootstrap';
 import { useState } from 'react';
 
-function RestablecerForm() {
-      const [nuevaContrasenha, setNuevaContrasenha] = useState("")
-      const [confirmarContrasenha, setConfirmarContrasenha] = useState("")
+function ResetForm() {
+      const [newPassword, setNewPassword] = useState("")
+      const [confirmPassword, setConfirmPassword] = useState("")
       const [error, setError] = useState(false)
 
-      const manejarEnvio = (e) => {
+      const handleSubmit = (e) => {
     e.preventDefault()
 
-    if(nuevaContrasenha === "" || confirmarContrasenha === "") {
+    if(newPassword === "" || confirmPassword === "") {
       setError(true)
       return
     }
@@ -21,13 +21,13 @@ function RestablecerForm() {
     <Card className="p-4 shadow-sm border-2">
       <Card.Body>
         <h2 className="fw-bold text-center mb-4">Crea una Nueva Contraseña</h2>
-        <Form onSubmit={manejarEnvio}>
+        <Form onSubmit={handleSubmit}>
           <FloatingLabel controlId="floatingPassword" label="Nueva Contraseña" className="mb-3">
             <Form.Control 
               type="password" 
               placeholder=" "
-              value={nuevaContrasenha}
-              onChange={e => setNuevaContrasenha(e.target.value)}
+              value={newPassword}
+              onChange={e => setNewPassword(e.target.value)}
             />
           </FloatingLabel>
 
@@ -35,8 +35,8 @@ function RestablecerForm() {
             <Form.Control 
               type="password" 
               placeholder=" "
-              value={confirmarContrasenha}
-              onChange={e => setConfirmarContrasenha(e.target.value)}
+              value={confirmPassword}
+              onChange={e => setConfirmPassword(e.target.value)}
             />
           </FloatingLabel>
 
@@ -52,4 +52,4 @@ function RestablecerForm() {
   );
 }
 
-export default RestablecerForm;
+export default ResetForm;

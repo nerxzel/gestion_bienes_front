@@ -2,11 +2,11 @@ import { Form, Button, Card, FloatingLabel } from 'react-bootstrap';
 import { Link } from 'react-router-dom'; 
 import { useState } from 'react';
 
-function ContrasenhaForm() {
+function ForgotForm() {
     const [email, setEmail] = useState("")
     const [error, setError] = useState(false)
 
-    const manejarEnvio = (e) => {
+    const handleSubmit = (e) => {
     e.preventDefault()
 
     if(email === "") {
@@ -25,7 +25,7 @@ function ContrasenhaForm() {
           Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.
         </p>
         
-        <Form onSubmit={manejarEnvio}>
+        <Form onSubmit={handleSubmit}>
           <FloatingLabel controlId="floatingEmail" label="Correo Electrónico" className="mb-3">
             <Form.Control type="email" 
                           value={email}
@@ -48,4 +48,4 @@ function ContrasenhaForm() {
   );
 }
 
-export default ContrasenhaForm;
+export default ForgotForm;
