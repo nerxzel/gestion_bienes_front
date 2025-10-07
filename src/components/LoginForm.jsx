@@ -1,12 +1,17 @@
 import { useState } from 'react';
-import { Form, Button, Card, FloatingLabel } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Form, Button, Card, FloatingLabel, Spinner  } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import api from '../api/axiosConfig'
 
 function LoginForm() {
   const [user, setUser] = useState("")
   const [password, setPassword] = useState("")
   const [errors, setErrors] = useState({})
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState('');
 
+  const navigate = useNavigate()
+  
   const validateForm = () => {
     const newErrors = {};
 
@@ -22,8 +27,9 @@ function LoginForm() {
 
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setServerError('')
 
     const validateErrors = validateForm();
 
@@ -33,8 +39,32 @@ function LoginForm() {
     }
 
     setErrors({})
+
+    setLoading(true)
+    try {
+      const response = await api.post('/*hay que poner un enlace que apunte al login en el backend*/', {
+        username: user,
+        password: password
+      });
+
+      const { token } = response.data;
+      if (token) {
+        localStorage.setItem('authToken', token)
+        navigate('/*acá debería ir un enlace al landingpage*/')
+      }
+    } catch (error) {
+    console.error("Error al iniciar sesión: ", error);
+    if (error.response && error.response.status === 401) {
+      setServerError("Usuario o contraseña incorrectos");
+    } else {
+      setServerError("No se pudo conectar con el servidor. Inténtalo más tarde.")
+    } 
+
+  } finally {
+    setLoading(false)
   }
-  
+}; 
+
   return (
     <Card className="p-3 shadow-sm border-2">
       <Card.Body>
@@ -46,7 +76,8 @@ function LoginForm() {
                           value={user}
                           placeholder=" " 
                           onChange={e => setUser(e.target.value)} 
-                          isInvalid={!!errors.user}/>
+                          isInvalid={!!errors.user}
+                          disabled={loading}/>
             <Form.Control.Feedback type="invalid">
               {errors.user}
             </Form.Control.Feedback>
@@ -57,25 +88,37 @@ function LoginForm() {
                           value={password}
                           placeholder=" "
                           onChange={e => setPassword(e.target.value)}
-                          isInvalid={!!errors.password}/>
+                          isInvalid={!!errors.password}
+                          disabled={loading}/>
             <Form.Control.Feedback type='invalid'>
               {errors.password}
             </Form.Control.Feedback>
           </FloatingLabel>
+
+          {serverError && <p className="text-danger small mt-3">{serverError}</p>}
 
           <div className="text-end mt-2">
             <Link to="/forgot-password" className="small text-muted">¿Olvidaste tu contraseña?</Link>
           </div>
           
           <div className="d-grid mt-4">
-            <Button variant="primary" type="submit" size="lg">
-              Iniciar Sesión
+            <Button variant="primary" type="submit" size="lg" disabled={loading}>
+              {loading ? (
+                <>
+                  <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                  <span className="ms-2">Ingresando...</span>
+                </>
+              ) : (
+                'Iniciar Sesión'
+              )}
             </Button>
           </div>
         </Form>
       </Card.Body>
     </Card>
-  );
+  
+  )
+
 }
 
 export default LoginForm;
