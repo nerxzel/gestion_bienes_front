@@ -3,6 +3,8 @@ import Login from '../pages/Login.jsx';
 import ForgotPassword from "../pages/ForgotPassword.jsx";
 import ResetPassword from "../pages/ResetPassword.jsx";
 import EnterCode from "../pages/EnterCode.jsx";
+import Dashboard from "../pages/Dashboard.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 
 function AppRouter() {
     return(
@@ -11,6 +13,10 @@ function AppRouter() {
             <Route path="/forgot-password" element={<ForgotPassword />}/>
             <Route path="/reset-password" element={<ResetPassword/>}/>
             <Route path="/enter-code" element={<EnterCode/>}/>
+
+            <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Dashboard/>}/>
+            </Route>
           
         </Routes>
 

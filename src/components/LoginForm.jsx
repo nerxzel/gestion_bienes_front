@@ -42,7 +42,7 @@ function LoginForm() {
 
     setLoading(true)
     try {
-      const response = await api.post('/*hay que poner un enlace que apunte al login en el backend*/', {
+      const response = await api.post('/auth/login', {
         username: user,
         password: password
       });
@@ -50,7 +50,7 @@ function LoginForm() {
       const { token } = response.data;
       if (token) {
         localStorage.setItem('authToken', token)
-        navigate('/*acá debería ir un enlace al landingpage*/')
+        navigate('/dashboard')
       }
     } catch (error) {
     console.error("Error al iniciar sesión: ", error);

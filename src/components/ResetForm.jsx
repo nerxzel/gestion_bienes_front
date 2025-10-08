@@ -1,6 +1,5 @@
 import { Form, Button, Card, FloatingLabel } from 'react-bootstrap';
-import { useState } from 'react';
-//import { useNavigate } from 'react-router-dom'; 
+import { useState } from 'react'; 
 
 function ResetForm() {
   const [newPassword, setNewPassword] = useState("");
