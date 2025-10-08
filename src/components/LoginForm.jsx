@@ -40,19 +40,18 @@ function LoginForm() {
 
     setErrors({})
 
-    setLoading(true)
+    setLoading(true);
     try {
-      const response = await api.post('/*hay que poner un enlace que apunte al login en el backend*/', {
-        username: user,
-        password: password
-      });
+      
+        await api.post('/login', {
+            user: user, 
+            password: password
+        });
+        
+     
+        navigate('/dashboard');
 
-      const { token } = response.data;
-      if (token) {
-        localStorage.setItem('authToken', token)
-        navigate('/*acá debería ir un enlace al landingpage*/')
-      }
-    } catch (error) {
+       } catch (error) {
     console.error("Error al iniciar sesión: ", error);
     if (error.response && error.response.status === 401) {
       setServerError("Usuario o contraseña incorrectos");
@@ -96,7 +95,7 @@ function LoginForm() {
           </FloatingLabel>
 
           {serverError && <p className="text-danger small mt-3">{serverError}</p>}
-
+          
           <div className="text-end mt-2">
             <Link to="/forgot-password" className="small text-muted">¿Olvidaste tu contraseña?</Link>
           </div>
@@ -111,7 +110,7 @@ function LoginForm() {
               ) : (
                 'Iniciar Sesión'
               )}
-            </Button>
+              </Button>
           </div>
         </Form>
       </Card.Body>
