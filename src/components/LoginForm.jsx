@@ -43,11 +43,10 @@ function LoginForm() {
     setLoading(true);
     try {
       
-        await api.post('/login', {
-            user: user, 
+        await api.post('/users/login', {
+            username: user, 
             password: password
         });
-        
      
         navigate('/dashboard');
 
