@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/axiosConfig';
 
 function Saludito() {
-  
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    axios.get('/users/show')
+    // Usa la instancia 'api'. Ya sabe la URL base, solo necesita el endpoint.
+    api.get('/users/show') 
       .then(response => {
         setUser(response.data);
       })
