@@ -6,7 +6,7 @@ function Saludito() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/users/show')
+    axios.get('/users/show')
       .then(response => {
         setUser(response.data);
       })
