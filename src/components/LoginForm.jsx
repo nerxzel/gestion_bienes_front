@@ -42,10 +42,9 @@ function LoginForm() {
 
     setLoading(true);
     try {
-      
-        await api.post('/users/login', {
-            username: user, 
-            password: password
+        const encodedCredentials = btoa(user + ':' + password);
+        await api.get('/users/all', {
+            headers: {'Authorization' : 'Basic ' + encodedCredentials}
         });
      
         navigate('/dashboard');
