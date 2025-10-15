@@ -50,7 +50,7 @@ function LoginForm() {
         navigate('/dashboard');
 
        } catch (error) {
-    console.error("Error al iniciar sesión: ", error);
+   
     if (error.response && error.response.status === 401) {
       setServerError("Usuario o contraseña incorrectos");
     } else {

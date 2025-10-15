@@ -1,11 +1,13 @@
+import NavBar from './components/NavBar'
+import { Outlet } from 'react-router-dom';
 import './styles/themes.css';
 
-function App({children}) {
-  
+function App() {
   return (
     <>
+    <NavBar />
       <main>
-        {children}
+        <Outlet> </Outlet>
       </main>
     </>
   )
