@@ -1,5 +1,5 @@
 .navbar .dropdown-menu .dropdown-toggle + .dropdown-menu {
   
-  left: 100%; 
-  top: -1px;   
+  left: 100% !important; 
+  top: -1px !important;   
 }

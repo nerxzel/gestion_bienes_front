@@ -1,8 +1,14 @@
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/themes.css';
 
 function NavBar() {
+  const navigate = useNavigate()
+  const handleLogout = () => {
+  localStorage.removeItem('userToken');
+  navigate('/'); 
+};
+
   return (
     <Navbar expand="lg" bg="light" data-bs-theme="light">
       <Container>
@@ -49,6 +55,10 @@ function NavBar() {
               <NavDropdown.Item as={Link} to='/maestro-funcionario'>Maestro de Funcionario</NavDropdown.Item>
               <NavDropdown.Item as={Link} to='/marca'>Marca</NavDropdown.Item>
             </NavDropdown>
+
+            <Nav.Link onClick={handleLogout} style={{ cursor: 'pointer' }}>
+              Cerrar Sesión
+            </Nav.Link>
 
           </Nav>
         </Navbar.Collapse>

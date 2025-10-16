@@ -1,7 +1,7 @@
 import { Form, Button, Card, FloatingLabel } from 'react-bootstrap';
 import { useState } from 'react';
 
-function ResetForm() {
+function RestablecerContrasenhaForm() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -83,4 +83,4 @@ function ResetForm() {
   );
 }
 
-export default ResetForm;
+export default RestablecerContrasenhaForm;

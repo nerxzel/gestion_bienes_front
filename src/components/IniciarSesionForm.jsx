@@ -3,7 +3,7 @@ import { Form, Button, Card, FloatingLabel, Spinner  } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../api/axiosConfig'
 
-function LoginForm() {
+function IniciarSesionForm() {
   const [user, setUser] = useState("")
   const [password, setPassword] = useState("")
   const [errors, setErrors] = useState({})
@@ -46,6 +46,8 @@ function LoginForm() {
         await api.get('/users/all', {
             headers: {'Authorization' : 'Basic ' + encodedCredentials}
         });
+
+        localStorage.setItem('userToken', encodedCredentials);
      
         navigate('/dashboard');
 
@@ -95,7 +97,7 @@ function LoginForm() {
           {serverError && <p className="text-danger small mt-3">{serverError}</p>}
           
           <div className="text-end mt-2">
-            <Link to="/forgot-password" className="small text-muted">¿Olvidaste tu contraseña?</Link>
+            <Link to="/olvide-contrasenha" className="small text-muted">¿Olvidaste tu contraseña?</Link>
           </div>
           
           <div className="d-grid mt-4">
@@ -118,4 +120,4 @@ function LoginForm() {
 
 }
 
-export default LoginForm;
+export default IniciarSesionForm;

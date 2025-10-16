@@ -2,20 +2,19 @@ import { Form, Button, Card, FloatingLabel } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom'; 
 import { useState } from 'react';
 
-function ForgotForm() {
+function OlvideContrasenhaForm() {
     const [email, setEmail] = useState("")
     const [errors, setErrors] = useState({})
     const navigate = useNavigate();
 
     const validateForm = () => {
       const newErrors = {};
-
-       const emailRegex = /\S+@\S+\.\S+/;
+      const emailRegex = /\S+@\S+\.\S+/;
 
       if(!email) {
         newErrors.email = "Favor, el campo de correo no puede estar vacío"
       } else if (!emailRegex.test(email)) {
-        newErrors.email = "Por favor, ingresa un formato de correo válido (ejemplo@ejemplo.com).";
+        newErrors.email = "Por favor, ingresa un formato de correo válido (correo@dominio.com).";
       }
 
       return newErrors;
@@ -32,7 +31,7 @@ function ForgotForm() {
     }
 
     setErrors({})
-    navigate('/enter-code');
+    navigate('/validar-codigo');
   }
 
   return (
@@ -69,4 +68,4 @@ function ForgotForm() {
   );
 }
 
-export default ForgotForm;
+export default OlvideContrasenhaForm;
