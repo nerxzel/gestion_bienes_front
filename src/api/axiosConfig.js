@@ -4,15 +4,13 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL
 });
 
-/*api.interceptors.request.use(config => {
-  const token = localStorage.getItem('authToken');
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('userToken');
   if (token) {
     
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Basic ${token}`;
   }
   return config;
-});*/ 
-
-/*Considerar implementación de este método si retomamos el uso de JWT*/
+});
 
 export default api;

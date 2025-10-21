@@ -16,11 +16,6 @@ function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav"  />
         <Navbar.Collapse id="basic-navbar-nav" className='justify-content-center'>
           <Nav >
-            
-            <NavDropdown title="Maestro de Bienes" id="bienes-dropdown">
-              <NavDropdown.Item as={Link} to='/agregar-bien'>Agregar Bien</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to='/modificar-bien'>Modificar Bien</NavDropdown.Item>
-            </NavDropdown>
 
             <NavDropdown title="Procesos" id="procesos-dropdown">
               <NavDropdown.Item as={Link} to='/dar-alta'>Dar de Alta</NavDropdown.Item>

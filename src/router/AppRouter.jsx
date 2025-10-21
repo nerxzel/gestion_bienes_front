@@ -5,8 +5,6 @@ import OlvideContrasenha from "../pages/AuthOlvideContrasenha.jsx";
 import RestablecerContrasenha from "../pages/AuthRestablecerContrasenha.jsx";
 import ValidarCodigo from "../pages/AuthValidarCodigo.jsx";
 import Dashboard from "../pages/Dashboard.jsx";
-import AgregarBien from "../pages/MaestroAgregarBien.jsx";
-import ModificarBien from "../pages/MaestroModificarBien.jsx";
 import CorrelativosPorGrupo from "../pages/ConfigCorrelativosPorGrupo.jsx";
 import GrupoClaseSubclase from "../pages/ConfigGrupoClaseSubclase.jsx"
 import MaestroFuncionario from "../pages/ConfigMaestroFuncionario.jsx";
@@ -39,8 +37,6 @@ function AppRouter() {
             <Route element={<RutaProtegida/>}>
                 <Route element={<App/>}>
                     <Route path="/dashboard" element={<Dashboard/>}/>
-                    <Route path="/agregar-bien" element={<AgregarBien/>}/>
-                    <Route path="/modificar-bien" element={<ModificarBien/>}/>
                     <Route path="/cambio-responsable" element={<CambioResponsable/>}/>
                     <Route path="/dar-alta" element={<DarAlta/>}/>
                     <Route path="/dar-baja" element={<DarBaja/>}/>
