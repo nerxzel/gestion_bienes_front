@@ -24,6 +24,8 @@ import EtiquetaIndividual from "../pages/ReportesEtiquetaIndividual.jsx";
 import EtiquetaPorResponsable from "../pages/ReportesEtiquetaPorResponsable.jsx";
 import EtiquetasPorUbicacion from "../pages/ReportesEtiquetaPorUbicacion.jsx";
 import HojaMural from "../pages/ReportesHojaMural.jsx";
+import AgregarBien from "../pages/MaestroBienes/AgregarBien.jsx";
+import ModificarBien from "../pages/MaestroBienes/ModificarBien.jsx";
 import App from "../App.jsx"
 
 function AppRouter() {
@@ -37,6 +39,8 @@ function AppRouter() {
             <Route element={<RutaProtegida/>}>
                 <Route element={<App/>}>
                     <Route path="/dashboard" element={<Dashboard/>}/>
+                    <Route path="/agregar-bien" element={<AgregarBien/>}/>
+                    <Route path="/modificar-bien/:id" element={<ModificarBien/>}/>
                     <Route path="/cambio-responsable" element={<CambioResponsable/>}/>
                     <Route path="/dar-alta" element={<DarAlta/>}/>
                     <Route path="/dar-baja" element={<DarBaja/>}/>
