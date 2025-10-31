@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Form, Button, Card, FloatingLabel, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-function EnterCodeForm() {
+function ValidarCodigoForm() {
   const [code, setCode] = useState('');
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ function EnterCodeForm() {
     setErrors({});
     console.log('Código enviado para verificación:', code);
     
-    navigate('/reset-password'); 
+    navigate('/restablecer-contrasenha'); 
   };
 
   return (
@@ -63,4 +63,4 @@ function EnterCodeForm() {
   );
 }
 
-export default EnterCodeForm;
+export default ValidarCodigoForm;

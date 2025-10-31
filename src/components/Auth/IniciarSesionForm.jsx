@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Form, Button, Card, FloatingLabel, Spinner  } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../api/axiosConfig'
+import api from '../../api/axiosConfig'
 
-function LoginForm() {
+function IniciarSesionForm() {
   const [user, setUser] = useState("")
   const [password, setPassword] = useState("")
   const [errors, setErrors] = useState({})
@@ -40,20 +40,19 @@ function LoginForm() {
 
     setErrors({})
 
-    setLoading(true)
+    setLoading(true);
     try {
-      const response = await api.post('/*hay que poner un enlace que apunte al login en el backend*/', {
-        username: user,
-        password: password
-      });
+        const encodedCredentials = btoa(user + ':' + password);
+        await api.get('/users/all', {
+            headers: {'Authorization' : 'Basic ' + encodedCredentials}
+        });
 
-      const { token } = response.data;
-      if (token) {
-        localStorage.setItem('authToken', token)
-        navigate('/*acá debería ir un enlace al landingpage*/')
-      }
-    } catch (error) {
-    console.error("Error al iniciar sesión: ", error);
+        localStorage.setItem('userToken', encodedCredentials);
+     
+        navigate('/dashboard');
+
+       } catch (error) {
+   
     if (error.response && error.response.status === 401) {
       setServerError("Usuario o contraseña incorrectos");
     } else {
@@ -96,9 +95,9 @@ function LoginForm() {
           </FloatingLabel>
 
           {serverError && <p className="text-danger small mt-3">{serverError}</p>}
-
+          
           <div className="text-end mt-2">
-            <Link to="/forgot-password" className="small text-muted">¿Olvidaste tu contraseña?</Link>
+            <Link to="/olvide-contrasenha" className="small text-muted">¿Olvidaste tu contraseña?</Link>
           </div>
           
           <div className="d-grid mt-4">
@@ -111,7 +110,7 @@ function LoginForm() {
               ) : (
                 'Iniciar Sesión'
               )}
-            </Button>
+              </Button>
           </div>
         </Form>
       </Card.Body>
@@ -121,4 +120,4 @@ function LoginForm() {
 
 }
 
-export default LoginForm;
+export default IniciarSesionForm;

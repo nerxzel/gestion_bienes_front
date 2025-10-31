@@ -1,16 +1,17 @@
-import { Container, Row, Col } from 'react-bootstrap';
-import ResetForm from '../components/ResetForm';
+import { Children } from 'react';
+import {Container, Row, Col} from 'react-bootstrap';
 
-function ResetPassword() {
+
+function AuthLayout({children}) {
     return (
         <Container>
             <Row className='vh-100 align-items-center justify-content-center'>
                 <Col sm={9} md={7} lg={6}>
-                    <ResetForm />
+                        {children}
                 </Col>
             </Row>
         </Container>
     )
 }
 
-export default ResetPassword;
+export default AuthLayout;

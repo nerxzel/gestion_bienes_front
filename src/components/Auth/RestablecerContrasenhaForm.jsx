@@ -1,8 +1,7 @@
 import { Form, Button, Card, FloatingLabel } from 'react-bootstrap';
 import { useState } from 'react';
-//import { useNavigate } from 'react-router-dom'; 
 
-function ResetForm() {
+function RestablecerContrasenhaForm() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -37,7 +36,6 @@ function ResetForm() {
     }
 
     setErrors({});
-    console.log("Formulario válido, enviando datos...");
    
   };
 
@@ -84,4 +82,4 @@ function ResetForm() {
   );
 }
 
-export default ResetForm;
+export default RestablecerContrasenhaForm;
