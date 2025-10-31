@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
+import { FaTrash } from 'react-icons/fa';
 import api from '../../api/axiosConfig'; 
 
-function BienForm({ initialData, onSubmit, isEditing, catalogos }) {
+function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
     const [formData, setFormData] = useState(initialData);
     const navigate = useNavigate();
 
@@ -59,9 +60,9 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos }) {
         if (isEditing && initialData) {
             cargarOpcionesIniciales();
         } else {
-             setOpcionesClase([]);
-             setOpcionesSubclase([]);
-             setOpcionesModelo([]);
+            setOpcionesClase([]);
+            setOpcionesSubclase([]);
+            setOpcionesModelo([]);
         }
 
     }, [initialData, isEditing]);
@@ -157,8 +158,17 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos }) {
         onSubmit(formData);
     };
 
+    const handleDeleteClick = () => {
+        const confirmar = window.confirm(
+            `¿Está seguro de que desea eliminar el bien "${formData?.nombre || 'este bien'}" (ID: ${formData?.id})? Esta acción eliminará el bien.`
+        );
+        if (confirmar && onDelete) { 
+            onDelete();
+        }
+    };
+
     const currentCatalogos = {
-         grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], ...catalogos
+        grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], ...catalogos
     };
 
     return (
@@ -193,8 +203,8 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos }) {
                     <Form.Label>Descripción Corta</Form.Label>
                     <Form.Control 
                         type="text"
-                        name="descripcionCorta" 
-                        value={formData.descripcionCorta || ''} 
+                        name="nombre" 
+                        value={formData.nombre || ''} 
                         onChange={handleInputChange} 
                         required />
                 </Form.Group>
@@ -239,9 +249,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos }) {
                 </Form.Group>
                 
             </Row>
-
             <Row className="mb-3">
-               
                 <Form.Group as={Col} md="4" controlId="formGridGrupo">
                     <Form.Label>Grupo</Form.Label>
                     <Form.Select 
@@ -297,18 +305,16 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos }) {
                 <Form.Group as={Col} md="6" controlId="formGridModelo">
                     <Form.Label>Modelo</Form.Label>
                     <Form.Select name="idModelo" 
-                                 value={formData.idModelo || ''} 
-                                 onChange={handleCatalogoChange} 
-                                 disabled={!formData.idMarca || cargandoModelos}
-                                 required>
+                                value={formData.idModelo || ''} 
+                                onChange={handleCatalogoChange} 
+                                disabled={!formData.idMarca || cargandoModelos}
+                                required>
                         <option value="">{cargandoModelos ? 'Cargando...' : (!formData.idMarca ? 'Seleccione Marca primero' : 'Seleccione Modelo')}</option>
                         {opcionesModelo.map(m => <option key={m.id} value={m.id}>{m.nombre}</option>)}
                     </Form.Select>
                 </Form.Group>
             </Row>
-
             <Row className="mb-3">
-             
                 <Form.Group as={Col} md="4" controlId="formGridNumSerie">
                     <Form.Label>Número de Serie</Form.Label>
                     <Form.Control type="text" name="numSerie" value={formData.numSerie || ''} onChange={handleInputChange} required/>
@@ -337,9 +343,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos }) {
                     <Form.Control type="number" step="0.1" name="ancho" value={formData.ancho || ''} onChange={handleInputChange} required/>
                 </Form.Group>
             </Row>
-
             <Row className="mb-3">
-          
                 <Form.Group as={Col} md="4" controlId="formGridUbicacion">
                     <Form.Label>Ubicación</Form.Label>
                     <Form.Select name="idUbicacion" value={formData.idUbicacion || ''} onChange={handleCatalogoChange} required>
@@ -362,24 +366,31 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos }) {
                     
                     </Form.Select>
                 </Form.Group>
-          
             </Row>
-
             <Row className="mb-3">
-          
                 <Form.Group as={Col} md="12" controlId="formGridFoto">
                     <Form.Label>URL Foto</Form.Label>
                     <Form.Control type="text" name="urlFoto" value={formData.urlFoto || ''} onChange={handleInputChange} />
                 </Form.Group>
             </Row>
-
             <div className="d-flex justify-content-end mt-4">
+                {isEditing && (
+                    <Button
+                        variant="danger"
+                        onClick={handleDeleteClick}
+                        className="me-auto" 
+                        type="button" 
+                    >
+                        <FaTrash /> Eliminar
+                    </Button>
+                )}
                 <Button variant="secondary" onClick={() => navigate('/dashboard')} className="me-2">
                     Cancelar
                 </Button>
                 <Button variant="primary" type="submit">
                     {isEditing ? 'Guardar Cambios' : 'Agregar Bien'}
                 </Button>
+
             </div>
         </Form>
     );

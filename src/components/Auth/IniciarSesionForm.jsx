@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form, Button, Card, FloatingLabel, Spinner  } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../api/axiosConfig'
+import api from '../../api/axiosConfig'
 
 function IniciarSesionForm() {
   const [user, setUser] = useState("")

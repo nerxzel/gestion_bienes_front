@@ -1,5 +1,5 @@
-import AuthLayout from '../components/AuthLayout';
-import IniciarSesionForm from '../components/IniciarSesionForm';
+import AuthLayout from '../../components/Auth/AuthLayout';
+import IniciarSesionForm from '../../components/Auth/IniciarSesionForm';
 
 function IniciarSesion() {
     return (

@@ -36,7 +36,6 @@ function RestablecerContrasenhaForm() {
     }
 
     setErrors({});
-    console.log("Formulario válido, enviando datos...");
    
   };
 

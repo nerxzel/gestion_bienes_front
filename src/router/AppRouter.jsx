@@ -1,17 +1,54 @@
 import { Routes, Route } from "react-router-dom";
+
+// Auth
 import RutaProtegida from "../components/RutaProtegida.jsx";
-import IniciarSesion from '../pages/AuthIniciarSesion.jsx';
-import OlvideContrasenha from "../pages/AuthOlvideContrasenha.jsx";
-import RestablecerContrasenha from "../pages/AuthRestablecerContrasenha.jsx";
-import ValidarCodigo from "../pages/AuthValidarCodigo.jsx";
+import IniciarSesion from '../pages/Auth/AuthIniciarSesion.jsx';
+import OlvideContrasenha from "../pages/Auth/AuthOlvideContrasenha.jsx";
+import RestablecerContrasenha from "../pages/Auth/AuthRestablecerContrasenha.jsx";
+import ValidarCodigo from "../pages/Auth/AuthValidarCodigo.jsx";
+
+// Bienes
 import Dashboard from "../pages/Dashboard.jsx";
-import CorrelativosPorGrupo from "../pages/ConfigCorrelativosPorGrupo.jsx";
-import GrupoClaseSubclase from "../pages/ConfigGrupoClaseSubclase.jsx"
+import AgregarBien from "../pages/MaestroBienes/AgregarBien.jsx";
+import ModificarBien from "../pages/MaestroBienes/ModificarBien.jsx";
+
+// Grupos
+import DashboardGrupo from "../pages/MaestroGrupos-Clases-Subclases/DashboardGrupo.jsx"
+import AgregarGrupo from "../pages/MaestroGrupos-Clases-Subclases/AgregarGrupo.jsx"
+import ModificarGrupo from "../pages/MaestroGrupos-Clases-Subclases/ModificarGrupo.jsx"
+
+// Clases
+import DashboardClase from "../pages/MaestroGrupos-Clases-Subclases/DashboardClase.jsx"
+import AgregarClase from "../pages/MaestroGrupos-Clases-Subclases/AgregarClase.jsx"
+import ModificarClase from "../pages/MaestroGrupos-Clases-Subclases/ModificarClase.jsx"
+
+// Subclases
+import DashboardSubclase from "../pages/MaestroGrupos-Clases-Subclases/DashboardSubclase.jsx"
+import AgregarSubclase from "../pages/MaestroGrupos-Clases-Subclases/AgregarSubclase.jsx"
+import ModificarSubclase from "../pages/MaestroGrupos-Clases-Subclases/ModificarSubclase.jsx"
+
+// Marcas
+import DashboardMarca from "../pages/MaestroMarcas-Modelos/DashboardMarca.jsx"
+import AgregarMarca from "../pages/MaestroMarcas-Modelos/AgregarMarca.jsx"
+import ModificarMarca from "../pages/MaestroMarcas-Modelos/ModificarMarca.jsx"
+
+// Modelos
+import DashboardModelo from "../pages/MaestroMarcas-Modelos/DashboardModelo.jsx"
+import AgregarModelo from "../pages/MaestroMarcas-Modelos/AgregarModelo.jsx"
+import ModificarModelo from "../pages/MaestroMarcas-Modelos/ModificarModelo.jsx"
+
+// Ubicaciones
+import DashboardUbicacion from "../pages/MaestroUbicaciones/DashboardUbicacion.jsx"
+import AgregaUbicacion from "../pages/MaestroUbicaciones/AgregarUbicacion.jsx"
+import ModificarUbicacion from "../pages/MaestroUbicaciones/ModificarUbicacion.jsx"
+
+// Unidades De Medidas
+import DashboardUnidadesMedidas from "../pages/MaestroUnidadesMedidas/DashboardUnidadesMedidas.jsx"
+import AgregarUnidadesMedida from "../pages/MaestroUnidadesMedidas/AgregarUnidadesMedida.jsx"
+import ModificarUnidadesMedida from "../pages/MaestroUnidadesMedidas/ModificarUnidadesMedida.jsx"
+
 import MaestroFuncionario from "../pages/ConfigMaestroFuncionario.jsx";
-import Marca from "../pages/ConfigMarca.jsx";
 import TipoBien from "../pages/ConfigTipoBien.jsx";
-import Ubicaciones from "../pages/ConfigUbicaciones.jsx";
-import UnidadesMedida from "../pages/ConfigUnidadesMedida.jsx";
 import CambioResponsable from "../pages/ProcesosCambioResponsable.jsx";
 import DarAlta from "../pages/ProcesosDarDeAlta.jsx";
 import DarBaja from "../pages/ProcesosDarDeBaja.jsx";
@@ -24,13 +61,15 @@ import EtiquetaIndividual from "../pages/ReportesEtiquetaIndividual.jsx";
 import EtiquetaPorResponsable from "../pages/ReportesEtiquetaPorResponsable.jsx";
 import EtiquetasPorUbicacion from "../pages/ReportesEtiquetaPorUbicacion.jsx";
 import HojaMural from "../pages/ReportesHojaMural.jsx";
-import AgregarBien from "../pages/MaestroBienes/AgregarBien.jsx";
-import ModificarBien from "../pages/MaestroBienes/ModificarBien.jsx";
+import CorrelativosPorGrupo from "../pages/ConfigCorrelativosPorGrupo.jsx";
+
 import App from "../App.jsx"
+
 
 function AppRouter() {
     return(
         <Routes> 
+            // Auth
             <Route path="/" element={<IniciarSesion />}/>
             <Route path="/olvide-contrasenha" element={<OlvideContrasenha />}/>
             <Route path="/restablecer-contrasenha" element={<RestablecerContrasenha/>}/>
@@ -38,9 +77,46 @@ function AppRouter() {
 
             <Route element={<RutaProtegida/>}>
                 <Route element={<App/>}>
+                    // Bienes
                     <Route path="/dashboard" element={<Dashboard/>}/>
                     <Route path="/agregar-bien" element={<AgregarBien/>}/>
                     <Route path="/modificar-bien/:id" element={<ModificarBien/>}/>
+
+                    // Grupos
+                    <Route path="/dashboard-grupo" element={<DashboardGrupo/>}/>
+                    <Route path="/agregar-grupo" element={<AgregarGrupo/>}/>
+                    <Route path="/modificar-grupo/:id" element={<ModificarGrupo/>}/>
+
+                    // Clases
+                    <Route path="/dashboard-clase" element={<DashboardClase/>}/>
+                    <Route path="/agregar-clase" element={<AgregarClase/>}/>
+                    <Route path="/modificar-clase/:id" element={<ModificarClase/>}/>
+
+                    // Subclase
+                    <Route path="/dashboard-subclase" element={<DashboardSubclase/>}/>
+                    <Route path="/agregar-subclase" element={<AgregarSubclase/>}/>
+                    <Route path="/modificar-subclase/:id" element={<ModificarSubclase/>}/>
+
+                    // Marcas
+                    <Route path="/dashboard-marca" element={<DashboardMarca/>}/>
+                    <Route path="/agregar-marca" element={<AgregarMarca/>}/>
+                    <Route path="/modificar-marca/:id" element={<ModificarMarca/>}/>
+
+                    // Modelos
+                    <Route path="/dashboard-modelo" element={<DashboardModelo/>}/>
+                    <Route path="/agregar-modelo" element={<AgregarModelo/>}/>
+                    <Route path="/modificar-modelo/:id" element={<ModificarModelo/>}/>
+
+                    // Ubicaciones
+                    <Route path="/dashboard-ubicacion" element={<DashboardUbicacion/>}/>
+                    <Route path="/agregar-ubicacion" element={<AgregaUbicacion/>}/>
+                    <Route path="/modificar-ubicacion/:id" element={<ModificarUbicacion/>}/>
+
+                    // Unidades de medidas
+                    <Route path="/dashboard-unidadesM" element={<DashboardUnidadesMedidas/>}/>
+                    <Route path="/agregar-unidadesM" element={<AgregarUnidadesMedida/>}/>
+                    <Route path="/modificar-unidadesM/:id" element={<ModificarUnidadesMedida/>}/>
+
                     <Route path="/cambio-responsable" element={<CambioResponsable/>}/>
                     <Route path="/dar-alta" element={<DarAlta/>}/>
                     <Route path="/dar-baja" element={<DarBaja/>}/>
@@ -53,12 +129,8 @@ function AppRouter() {
                     <Route path="/etiquetas-ubicacion" element={<EtiquetasPorUbicacion/>}/>
                     <Route path="/hoja-mural" element={<HojaMural/>}/>
                     <Route path="/correlativo-grupo" element={<CorrelativosPorGrupo/>}/>
-                    <Route path="/grupo-clase-subclase" element={<GrupoClaseSubclase/>}/>
                     <Route path="/maestro-funcionario" element={<MaestroFuncionario/>}/>
-                    <Route path="/marca" element={<Marca/>}/>
                     <Route path="/tipo-bien" element={<TipoBien/>}/>
-                    <Route path="/ubicaciones" element={<Ubicaciones/>}/>
-                    <Route path="/unidades-medida" element={<UnidadesMedida/>}/>
                     <Route path="/depreciar" element={<Depreciar/>}/>             
                 </Route>
             </Route>

@@ -40,15 +40,19 @@ function NavBar() {
             </NavDropdown>
 
             <NavDropdown title="Configuración" id="config-dropdown">
-              <NavDropdown.Item as={Link} to='/grupo-clase-subclase'>Grupo - Clase - Subclase</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to='/ubicaciones'>Ubicaciones</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to='/unidades-medida'>Unidades de medida</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to='/dashboard-grupo'>Grupos</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to='/dashboard-clase'>Clases</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to='/dashboard-subclase'>Subclases</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to='/dashboard-marca'>Marca</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to='/dashboard-modelo'>Modelo</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to='/dashboard-ubicacion'>Ubicaciones</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to='/dashboard-unidadesM'>Unidades de medida</NavDropdown.Item>
               <NavDropdown.Item as={Link} to='/tipo-bien'>Tipo de Bien</NavDropdown.Item>
                <NavDropdown title="Correlativos" id="correlativos-nested-dropdown" drop="end">
                   <NavDropdown.Item as={Link} to='/correlativo-grupo'>Por grupo</NavDropdown.Item>
               </NavDropdown>
               <NavDropdown.Item as={Link} to='/maestro-funcionario'>Maestro de Funcionario</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to='/marca'>Marca</NavDropdown.Item>
+              
             </NavDropdown>
 
             <Nav.Link onClick={handleLogout} style={{ cursor: 'pointer' }}>

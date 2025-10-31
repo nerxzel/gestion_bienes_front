@@ -47,7 +47,7 @@ function BienGrid() {
     const bienesFiltrados = bienes.filter((bien) => {
 
       const coincideBusqueda =
-        (bien.descripcionCorta || '').toLowerCase().includes(barraBusqueda.toLowerCase()) ||
+        (bien.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase()) ||
         (bien.codigoInventario || '').toLowerCase().includes(barraBusqueda.toLowerCase());
 
       const barraCondicion =
@@ -113,7 +113,7 @@ function BienGrid() {
                     bienesFiltrados.map((bien) => (
                           <tr key={bien.codigoInventario}>
                             <td>{bien.codigoInventario}</td>
-                            <td>{bien.descripcionCorta}</td>
+                            <td>{bien.nombre}</td>
                             <td>{bien.grupo}</td>
                             <td>{bien.clase}</td>
                             <td>{bien.subClase}</td>
@@ -125,9 +125,6 @@ function BienGrid() {
                                       size="sm"
                                       onClick={() => navigate(`/modificar-bien/${bien.id}`)}>
                                   <FaPencilAlt />
-                              </Button>
-                              <Button variant="danger" size="sm">
-                                  <FaTrash />
                               </Button>
                             </td>
                           </tr>))

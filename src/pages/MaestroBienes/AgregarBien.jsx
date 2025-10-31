@@ -14,7 +14,7 @@ function AgregarBien() {
     const navigate = useNavigate();
 
     const FORMULARIO_BIEN_VACIO = {
-        descripcionCorta: '', 
+        nombre: '', 
         grupo: '', clase: '', subClase: '', marca: '', modelo: '',
         fechaAdquisicion: new Date().toISOString().split('T')[0], 
         condicion: 'Alta', idGrupo: '', idClase: '', idSubClase: '', idMarca: '', idModelo: '',
@@ -44,7 +44,6 @@ function AgregarBien() {
                     unidadesMedida: unidadesMedidaRes.data || []
                 };
                 setCatalogos(loadedCatalogos);
-                console.log("Catálogos cargados desde API:", loadedCatalogos);
 
             } catch (error) {
                 console.error("Error al cargar catálogos desde la API:", error);
@@ -62,7 +61,7 @@ function AgregarBien() {
         const selectedGroup = catalogos.grupos.find(g => g.id === parseInt(formData.idGrupo));
 
         const backendData = {
-            descripcionCorta: formData.descripcionCorta,
+            nombre: formData.nombre,
             descripcionLarga: formData.descripcionLarga,
             fechaIngreso: formData.fechaAdquisicion, 
             tipoObjeto: formData.tipoObjeto,
@@ -77,14 +76,13 @@ function AgregarBien() {
             urlFoto: formData.urlFoto,
             
             grupo: formData.idGrupo ? { 
-                id: parseInt(formData.idGrupo), nombreGrupo: selectedGroup?.nombre } : null,
+                id: parseInt(formData.idGrupo), nombre: selectedGroup?.nombre } : null,
             clase: formData.idClase ? { id: parseInt(formData.idClase) } : null,
             subclase: formData.idSubClase ? { id: parseInt(formData.idSubClase) } : null,
             marca: formData.idMarca ? { id: parseInt(formData.idMarca) } : null,
             modelo: formData.idModelo ? { id: parseInt(formData.idModelo) } : null,
             ubicacion: formData.idUbicacion ? { id: parseInt(formData.idUbicacion) } : null,
             unidadMedida: formData.idUnidadMedida ? { id: parseInt(formData.idUnidadMedida) } : null,
-          
         };
 
         Object.keys(backendData).forEach(key => {
@@ -101,7 +99,7 @@ function AgregarBien() {
 
     const handleAgregarSubmit = async (formData) => {
         const errores = [];
-        if (!formData.descripcionCorta) errores.push('Descripción Corta');
+        if (!formData.nombre) errores.push('Descripción Corta');
         if (!formData.descripcionLarga) errores.push('Descripción Larga');
         if (!formData.fechaAdquisicion) errores.push('Fecha Ingreso');
         if (!formData.tipoObjeto) errores.push('Tipo Objeto');
@@ -113,34 +111,37 @@ function AgregarBien() {
         if (!formData.alto) errores.push('Alto');
         if (!formData.ancho) errores.push('Ancho');
         if (!formData.condicion) errores.push('Condicion');
-       
+    
         if (!formData.idGrupo) errores.push('Grupo');
         if (!formData.idClase) errores.push('Clase');
         if (!formData.idSubClase) errores.push('Subclase');
-        if (!formData.marca) errores.push('Marca');
-        if (!formData.modelo) errores.push('Modelo');
-        if (!formData.ubicacion) errores.push('Ubicacion');
-        if (!formData.unidadMedida) errores.push('Unidad de Medida');
+        if (!formData.idMarca) errores.push('Marca');
+        if (!formData.idModelo) errores.push('Modelo');
+        if (!formData.idUbicacion) errores.push('Ubicacion');
+        if (!formData.idUnidadMedida) errores.push('Unidad de Medida');
 
-        const camposNumericos = ['cantidadPieza', 'largo', 'alto', 'ancho', 'responsableRut']; 
+        const camposNumericos = ['cantidadPieza', 'largo', 'alto', 'ancho', 'responsableRut'];
             camposNumericos.forEach(campo => {
-        if (formData[campo] !== undefined && formData[campo] !== null && formData[campo] !== '') {
-            const valorNumerico = parseFloat(formData[campo]);
-            if (isNaN(valorNumerico) || valorNumerico <= 0) {
+    
+    if (formData[campo] !== undefined && formData[campo] !== null && formData[campo] !== '') {
+        const valorNumerico = parseFloat(formData[campo]);
+        if (isNaN(valorNumerico) || valorNumerico <= 0) {
+
+            if (!errores.includes(`${campo} debe ser un número mayor que cero`)) {
                 errores.push(`${campo} debe ser un número mayor que cero`);
             }
         }
-    });
+    }
+});
 
         if (errores.length > 0) {
-            setErrorGuardar(`Campos obligatorios faltantes: ${errores.join(', ')}.`);
-            return;
+            setErrorGuardar(`Por favor, corrija los siguientes errores: ${errores.join('; ')}.`);
+        return;
         }
 
         const datosParaEnviar = mapFrontendToBackend(formData);
         setErrorGuardar(null);
         try {
-            console.log("Enviando datos al backend (Agregar):", datosParaEnviar);
             await api.post('/bien/add', datosParaEnviar);
             navigate('/dashboard');
         } catch (err) {

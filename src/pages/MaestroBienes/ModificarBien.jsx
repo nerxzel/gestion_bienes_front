@@ -46,17 +46,17 @@ function ModificarBien() {
                 };
                 setCatalogos(loadedCatalogos);
 
-                 const mapResponseToFormState = (backendDto, loadedCats) => {
-                     const formatDate = (dateString) => dateString ? dateString.split('T')[0] : '';
-                     const findIdByName = (catName, nameValue) => {
-                         const list = loadedCats[catName];
-                         return list?.find(item => item.nombre === nameValue)?.id || '';
-                     };
+                const mapResponseToFormState = (backendDto, loadedCats) => {
+                    const formatDate = (dateString) => dateString ? dateString.split('T')[0] : '';
+                    const findIdByName = (catName, nameValue) => {
+                        const list = loadedCats[catName];
+                        return list?.find(item => item.nombre === nameValue)?.id || '';
+                    };
 
                     return {
                         id: backendDto.id,
                         codigoInventario: backendDto.codigoInventario,
-                        descripcionCorta: backendDto.descripcionCorta,
+                        nombre: backendDto.nombre,
                         descripcionLarga: backendDto.descripcionLarga,
                         fechaAdquisicion: formatDate(backendDto.fechaIngreso),
                         tipoObjeto: backendDto.tipoObjeto,
@@ -75,7 +75,7 @@ function ModificarBien() {
                         idMarca: findIdByName('marcas', backendDto.marca),
                         idUbicacion: findIdByName('ubicaciones', backendDto.ubicacion),
                         idUnidadMedida: findIdByName('unidadesMedida', backendDto.unidadMedida),
-                      
+
                         idClase: backendDto.clase ? null : '', 
                         idModelo: backendDto.modelo ? null : '', 
                         idSubClase: backendDto.subclase ? null : '', 
@@ -93,7 +93,6 @@ function ModificarBien() {
                
                  const initialFormData = mapResponseToFormState(bienRes.data, loadedCatalogos);
                  setBienData(initialFormData); 
-                 console.log("Datos iniciales para el formulario:", initialFormData);
 
 
             } catch (error) {
@@ -116,7 +115,7 @@ function ModificarBien() {
         const backendData = {
             id: formData.id, 
             codigoInventario: formData.codigoInventario, 
-            descripcionCorta: formData.descripcionCorta,
+            nombre: formData.nombre,
             descripcionLarga: formData.descripcionLarga,
             fechaIngreso: formData.fechaAdquisicion,
             tipoObjeto: formData.tipoObjeto,
@@ -154,7 +153,7 @@ function ModificarBien() {
 
     const handleGuardarSubmit = async (formData) => {
          const errores = [];
-        if (!formData.descripcionCorta) errores.push('Descripción Corta');
+        if (!formData.nombre) errores.push('Descripción Corta');
         if (!formData.descripcionLarga) errores.push('Descripción Larga');
         if (!formData.fechaAdquisicion) errores.push('Fecha Ingreso');
         if (!formData.tipoObjeto) errores.push('Tipo Objeto');
@@ -166,41 +165,43 @@ function ModificarBien() {
         if (!formData.alto) errores.push('Alto');
         if (!formData.ancho) errores.push('Ancho');
         if (!formData.condicion) errores.push('Condicion');
-       
+
         if (!formData.idGrupo) errores.push('Grupo');
         if (!formData.idClase) errores.push('Clase');
         if (!formData.idSubClase) errores.push('Subclase');
-        if (!formData.marca) errores.push('Marca');
-        if (!formData.modelo) errores.push('Modelo');
-        if (!formData.ubicacion) errores.push('Ubicacion');
-        if (!formData.unidadMedida) errores.push('Unidad de Medida');
+        if (!formData.idMarca) errores.push('Marca');
+        if (!formData.idModelo) errores.push('Modelo');
+        if (!formData.idUbicacion) errores.push('Ubicacion');
+        if (!formData.idUnidadMedida) errores.push('Unidad de Medida');
         
-        const camposNumericos = ['cantidadPieza', 'largo', 'alto', 'ancho', 'responsableRut']; 
+        const camposNumericos = ['cantidadPieza', 'largo', 'alto', 'ancho', 'responsableRut'];
             camposNumericos.forEach(campo => {
         if (formData[campo] !== undefined && formData[campo] !== null && formData[campo] !== '') {
-            const valorNumerico = parseFloat(formData[campo]);
-            if (isNaN(valorNumerico) || valorNumerico <= 0) {
-                errores.push(`${campo} debe ser un número mayor que cero`);
+        const valorNumerico = parseFloat(formData[campo]);
+        if (isNaN(valorNumerico) || valorNumerico <= 0) {
+        
+            if (!errores.includes(`${campo} debe ser un número mayor que cero`)) {
+                    errores.push(`${campo} debe ser un número mayor que cero`);
             }
         }
-    });
+    }
+});
 
         if (errores.length > 0) {
-            setErrorGuardar(`Campos obligatorios faltantes: ${errores.join(', ')}.`);
+            setErrorGuardar(`Por favor, corrija los siguientes errores: ${errores.join('; ')}.`);
             return;
-        }
+            }
 
         const datosParaEnviar = mapFrontendToBackend(formData);
         setErrorGuardar(null);
 
         try {
-            console.log("Enviando datos al backend (Modificar):", datosParaEnviar);
-            await api.put(`/bien/${id}`, datosParaEnviar);
+            await api.put(`/bien/update`, datosParaEnviar);
             navigate('/dashboard'); 
         } catch (err) {
             console.error("Error al modificar el bien:", err.response || err);
             let errorMsg = "Error al guardar los cambios. Verifique los datos e intente nuevamente.";
-             if (err.response?.data?.message) {
+                if (err.response?.data?.message) {
                 errorMsg = err.response.data.message;
             } else if (typeof err.response?.data === 'string') {
                 errorMsg = err.response.data;
@@ -210,6 +211,19 @@ function ModificarBien() {
                 errorMsg = err.message;
             }
             setErrorGuardar(errorMsg);
+        }
+    };
+
+    const handleDelete = async () => {
+        setErrorGuardar(null); 
+        try {
+            await api.delete(`/bien/${id}`);
+            alert('Bien eliminado con éxito.'); 
+            navigate('/dashboard');
+        } catch (err) {
+            console.error("Error al eliminar el bien:", err.response || err);
+            const errorMsg = err.response?.data?.message || err.response?.data || "Error al intentar eliminar el bien.";
+            setErrorGuardar(errorMsg); 
         }
     };
 
@@ -227,7 +241,8 @@ function ModificarBien() {
                                 initialData={bienData} 
                                 onSubmit={handleGuardarSubmit}
                                 isEditing={true} 
-                                catalogos={catalogos} 
+                                catalogos={catalogos}
+                                onDelete={handleDelete}
                             />
                         </>
                     )}
