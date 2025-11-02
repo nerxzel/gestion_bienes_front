@@ -2,6 +2,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
+import { manejarErrorAPI } from '../../utils/errorHandler';
 import api from '../../api/axiosConfig';
 
 function SubclaseGrid() {
@@ -18,40 +19,25 @@ function SubclaseGrid() {
             const respuesta = await api.get('/subclase/all');
             setSubclases(respuesta.data || []);
         } catch (err) {
-            console.error('Error detallado al cargar subclases:', err);
-            setError("Error al cargar la lista de subclases.");
+            const mensajeError = manejarErrorAPI(err);
+            setError(mensajeError);
             setSubclases([]);
         }
     };
 
     useEffect(() => {
         const loadData = async () => {
-            setEstaCargando(true);
-            setError(null);
-            try {
-                await Promise.all([
-                    cargarSubclases(),
-                ]);
-            } catch (error) {
-                console.error("Error durante la carga inicial:", error);
-                setError("Ocurrió un error al cargar los datos iniciales.");
-            } finally {
-                setEstaCargando(false);
-            }
+        setEstaCargando(true);
+        setError(null);
+        await cargarSubclases();
+        setEstaCargando(false);
         };
         loadData();
     }, []);
 
-    const subclasesFiltradas = subclases.filter((subclase) => {
+    const subclasesFiltradas = subclases.filter((subclase) => (subclase.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase()));
 
-    const coincideBusqueda =
-        (subclase.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase());
-
-        return coincideBusqueda
-            }
-    );
-
-    return (
+return (
         <> 
         <Row className="mb-3 align-items-center">
             <Col sm={3}><Form.Label id='barra-busqueda' htmlFor="barra-busqueda" className="mb-0">Buscar</Form.Label></Col>

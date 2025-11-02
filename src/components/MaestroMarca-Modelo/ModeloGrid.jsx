@@ -2,6 +2,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
+import { manejarErrorAPI } from '../../utils/errorHandler';
 import api from '../../api/axiosConfig';
 
 function ModeloGrid() {
@@ -18,8 +19,8 @@ function ModeloGrid() {
             const respuesta = await api.get('/modelo/all');
             setModelos(respuesta.data || []);
         } catch (err) {
-            console.error('Error detallado al cargar modelo:', err);
-            setError("Error al cargar la lista de modelos.");
+            const mensajeError = manejarErrorAPI(err);
+            setError(mensajeError);
             setModelos([]);
         }
     };
@@ -28,30 +29,15 @@ function ModeloGrid() {
         const loadData = async () => {
             setEstaCargando(true);
             setError(null);
-            try {
-                await Promise.all([
-                    cargarModelos(),
-                ]);
-            } catch (error) {
-                console.error("Error durante la carga inicial:", error);
-                setError("Ocurrió un error al cargar los datos iniciales.");
-            } finally {
-                setEstaCargando(false);
-            }
+            await cargarModelos();
+            setEstaCargando(false);
         };
         loadData();
     }, []);
 
-    const modelosFiltrados = modelos.filter((modelo) => {
+    const modelosFiltrados = modelos.filter((modelo) => (modelo.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase()));
 
-    const coincideBusqueda =
-        (modelo.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase());
-
-        return coincideBusqueda
-            }
-    );
-
-    return (
+return (
         <> 
         <Row className="mb-3 align-items-center">
             <Col sm={3}><Form.Label id='barra-busqueda' htmlFor="barra-busqueda" className="mb-0">Buscar</Form.Label></Col>

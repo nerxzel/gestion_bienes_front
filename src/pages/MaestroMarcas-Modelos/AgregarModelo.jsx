@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Spinner, Alert, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { obtenerMensajeError } from '../../utils/errorHandler';
 import ModeloForm from '../../components/MaestroMarca-Modelo/ModeloForm';
 import api from '../../api/axiosConfig';
 
@@ -12,10 +13,7 @@ function AgregarModelo() {
     const [cargando, setCargando] = useState(false);
     const navigate = useNavigate();
 
-    const FORMULARIO_MODELO_VACIO = {
-        nombre: '',
-        idMarca: ''
-    };
+    const FORMULARIO_MODELO_VACIO = {nombre: '', idMarca: ''};
 
     useEffect(() => {
         const cargarMarcas = async () => {
@@ -25,8 +23,8 @@ function AgregarModelo() {
                 const res = await api.get('/marca/all');
                 setCatalogos({ marcas: res.data || [] });
             } catch (error) {
-                console.error("Error al cargar marcas:", error);
-                setErrorCatalogos("Error al cargar la lista de marcas.");
+                const mensajeError = obtenerMensajeError(error, "Error al cargar marcas");
+                setErrorCatalogos(mensajeError);
             } finally {
                 setCargandoCatalogos(false);
             }
@@ -43,12 +41,7 @@ function AgregarModelo() {
         };
     };
 
-    const handleAgregarSubmit = async (formData) => {
-        if (!formData.nombre || !formData.idMarca) {
-            setErrorGuardar('Debe seleccionar un Marca y asignar un Nombre al Modelo.');
-            return;
-        }
-
+    const handleAgregarSubmit = async (formData) => {   
         const datosParaEnviar = mapFrontendToBackend(formData);
         setErrorGuardar(null);
         setCargando(true);
@@ -56,9 +49,8 @@ function AgregarModelo() {
             await api.post('/modelo/add', datosParaEnviar); 
             navigate('/dashboard-modelo'); 
         } catch (err) {
-            console.error("Error al agregar el modelo:", err.response || err);
-            const errorMsg = err.response?.data?.message || err.response?.data || "Error al guardar.";
-            setErrorGuardar(errorMsg);
+            const mensajeError = obtenerMensajeError(err, "Error al agregar el modelo");
+            setErrorGuardar(mensajeError);
         } finally {
             setCargando(false);
         }
@@ -73,17 +65,13 @@ function AgregarModelo() {
                 <Card.Header as="h5">Agregar Nuevo Modelo</Card.Header>
                 <Card.Body>
                     {errorGuardar && <Alert variant="danger" onClose={() => setErrorGuardar(null)} dismissible>{errorGuardar}</Alert>}
-                    
-                    {cargando ? (
-                        <div className="text-center"><Spinner animation="border" /> Guardando...</div>
-                    ) : (
                         <ModeloForm
                             initialData={FORMULARIO_MODELO_VACIO}
                             onSubmit={handleAgregarSubmit}
                             isEditing={false}
-                            catalogos={catalogos} 
+                            catalogos={catalogos}
+                            isSubmitting={cargando}
                         />
-                    )}
                 </Card.Body>
             </Card>
         </Container>

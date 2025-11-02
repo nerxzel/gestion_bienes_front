@@ -2,6 +2,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
+import { manejarErrorAPI } from '../../utils/errorHandler';
 import api from '../../api/axiosConfig';
 
 function MarcaGrid() {
@@ -18,8 +19,8 @@ function MarcaGrid() {
             const respuesta = await api.get('/marca/all');
             setMarcas(respuesta.data || []);
         } catch (err) {
-            console.error('Error detallado al cargar marcas:', err);
-            setError("Error al cargar la lista de marcas.");
+            const mensajeError = manejarErrorAPI(err);
+            setError(mensajeError);
             setMarcas([]);
         }
     };
@@ -28,29 +29,14 @@ function MarcaGrid() {
         const loadData = async () => {
             setEstaCargando(true);
             setError(null);
-            try {
-                await Promise.all([
-                    cargarMarcas(),
-                ]);
-            } catch (error) {
-                console.error("Error durante la carga inicial:", error);
-                setError("Ocurrió un error al cargar los datos iniciales.");
-            } finally {
-                setEstaCargando(false);
-            }
+            await cargarMarcas();
+            setEstaCargando(false);
         };
         loadData();
     }, []);
 
-    const marcasFiltradas = marcas.filter((marca) => {
-
-    const coincideBusqueda =
-        (marca.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase());
-
-        return coincideBusqueda
-            }
-    );
-
+    const marcasFiltradas = marcas.filter((marca) => (marca.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase()));
+    
     return (
         <> 
         <Row className="mb-3 align-items-center">

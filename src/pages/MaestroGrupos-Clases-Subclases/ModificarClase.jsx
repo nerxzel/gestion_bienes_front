@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Spinner, Alert, Card } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
+import { obtenerMensajeError } from '../../utils/errorHandler';
 import ClaseForm from '../../components/MaestroGrupos-Clases-Subclases/ClaseForm'; 
 import api from '../../api/axiosConfig';
 
@@ -11,6 +12,7 @@ function ModificarClase() {
     const [initialData, setInitialData] = useState(null);
     const [catalogos, setCatalogos] = useState({ grupos: [] });
     const [cargando, setCargando] = useState(true);
+    const [modificando, setModificando] = useState(false);
     const [error, setError] = useState(null);
     const [errorGuardar, setErrorGuardar] = useState(null);
 
@@ -43,8 +45,8 @@ function ModificarClase() {
                 setInitialData(initialFormData); 
                 
             } catch (err) {
-                console.error("Error al cargar datos:", err.response || err);
-                setError(err.response?.status === 404 ? `No se encontró la clase con ID ${id}.` : "Error al cargar los datos.");
+                const mensajeError = obtenerMensajeError(err, `Error al cargar la clase con ID ${id}`);
+                setError(mensajeError);
             } finally {
                 setCargando(false);
             }
@@ -63,19 +65,17 @@ function ModificarClase() {
     };
 
     const handleGuardarSubmit = async (formData) => {
-        if (!formData.nombre || !formData.idGrupo) {
-            setErrorGuardar('Debe seleccionar un Grupo y asignar un Nombre a la Clase.');
-            return;
-        }
-
         const datosParaEnviar = mapFrontendToBackend(formData);
         setErrorGuardar(null);
+        setModificando(true);
         try {
             await api.put(`/clase/update`, datosParaEnviar); 
             navigate('/dashboard-clase'); 
         } catch (err) {
-            console.error("Error al modificar la clase:", err.response || err);
-            setErrorGuardar(err.response?.data?.message || "Error al guardar.");
+            const mensajeError = obtenerMensajeError(err, "Error al modificar la clase");
+            setErrorGuardar(mensajeError);
+        } finally {
+            setModificando(false);
         }
     };
 
@@ -93,7 +93,8 @@ function ModificarClase() {
                         initialData={initialData}
                         onSubmit={handleGuardarSubmit}
                         isEditing={true}
-                        catalogos={catalogos} 
+                        catalogos={catalogos}
+                        isSubmitting={modificando}
                     />
                 </Card.Body>
             </Card>

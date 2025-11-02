@@ -2,6 +2,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
+import { manejarErrorAPI } from '../../utils/errorHandler';
 import api from '../../api/axiosConfig';
 
 function ClaseGrid() {
@@ -18,8 +19,8 @@ function ClaseGrid() {
             const respuesta = await api.get('/clase/all');
             setClases(respuesta.data || []);
         } catch (err) {
-            console.error('Error detallado al cargar clases:', err);
-            setError("Error al cargar la lista de clases.");
+            const mensajeError = manejarErrorAPI(err);
+            setError(mensajeError);
             setClases([]);
         }
     };
@@ -28,30 +29,15 @@ function ClaseGrid() {
         const loadData = async () => {
             setEstaCargando(true);
             setError(null);
-            try {
-                await Promise.all([
-                    cargarClases(),
-                ]);
-            } catch (error) {
-                console.error("Error durante la carga inicial:", error);
-                setError("Ocurrió un error al cargar los datos iniciales.");
-            } finally {
-                setEstaCargando(false);
-            }
-        };
+            await cargarClases();
+            setEstaCargando(false);
+            };
         loadData();
     }, []);
 
-    const clasesFiltradas = clases.filter((clase) => {
+    const clasesFiltradas = clases.filter((clase) => (clase.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase()));
 
-    const coincideBusqueda =
-        (clase.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase());
-
-        return coincideBusqueda
-            }
-    );
-
-    return (
+return (
         <> 
         <Row className="mb-3 align-items-center">
             <Col sm={3}><Form.Label id='barra-busqueda' htmlFor="barra-busqueda" className="mb-0">Buscar</Form.Label></Col>

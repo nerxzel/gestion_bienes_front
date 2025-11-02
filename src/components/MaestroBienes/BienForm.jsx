@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
 import api from '../../api/axiosConfig'; 
 
-function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
+function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSubmitting = false}) {
     const [formData, setFormData] = useState(initialData);
     const navigate = useNavigate();
 
@@ -205,7 +205,8 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
                         type="text"
                         name="nombre" 
                         value={formData.nombre || ''} 
-                        onChange={handleInputChange} 
+                        onChange={handleInputChange}
+                        disabled={isSubmitting} 
                         required />
                 </Form.Group>
                 <Form.Group as={Col} md="6" controlId="formGridDescLarga">
@@ -214,7 +215,8 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
                         type="text" 
                         name="descripcionLarga" 
                         value={formData.descripcionLarga || ''} 
-                        onChange={handleInputChange} 
+                        onChange={handleInputChange}
+                        disabled={isSubmitting}
                         required/>
                 </Form.Group>
             </Row>
@@ -226,7 +228,8 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
                         type="date" 
                         name="fechaAdquisicion" 
                         value={formData.fechaAdquisicion || ''} 
-                        onChange={handleInputChange} 
+                        onChange={handleInputChange}
+                        disabled={isSubmitting}
                         required />
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridTipoObjeto">
@@ -235,7 +238,8 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
                         type="text" 
                         name="tipoObjeto" 
                         value={formData.tipoObjeto || ''} 
-                        onChange={handleInputChange} 
+                        onChange={handleInputChange}
+                        disabled={isSubmitting}
                         required/>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridResponsable">
@@ -245,6 +249,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
                         name="responsableRut" 
                         value={formData.responsableRut || ''} 
                         onChange={handleInputChange}
+                        disabled={isSubmitting}
                         required/>
                 </Form.Group>
                 
@@ -256,6 +261,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
                         name="idGrupo" 
                         value={formData.idGrupo || ''} 
                         onChange={handleCatalogoChange} 
+                        disabled={isSubmitting}
                         required>
                         <option value="">Seleccione Grupo</option>
                         {currentCatalogos.grupos.map(g => <option key={g.id} value={g.id}>{g.nombre}</option>)}
@@ -267,7 +273,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
                     <Form.Select 
                         name="idClase" value={formData.idClase || ''} 
                         onChange={handleCatalogoChange} 
-                        disabled={!formData.idGrupo || cargandoClases} 
+                        disabled={isSubmitting || !formData.idGrupo || cargandoClases} 
                         required>
                         <option value="">{cargandoClases ? 'Cargando...' : (!formData.idGrupo ? 'Seleccione Grupo primero' : 'Seleccione Clase')}</option>
                         {opcionesClase.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
@@ -280,7 +286,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
                         name="idSubClase" 
                         value={formData.idSubClase || ''} 
                         onChange={handleCatalogoChange} 
-                        disabled={!formData.idClase || cargandoSubclases} 
+                        disabled={isSubmitting || !formData.idClase || cargandoSubclases} 
                         required>
                         <option value="">{cargandoSubclases ? 'Cargando...' : (!formData.idClase ? 'Seleccione Clase primero' : 'Seleccione Subclase')}</option>
                         {opcionesSubclase.map(sc => <option key={sc.id} value={sc.id}>{sc.nombre}</option>)}
@@ -296,6 +302,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
                         name="idMarca" 
                         value={formData.idMarca || ''} 
                         onChange={handleCatalogoChange}
+                        disabled={isSubmitting}
                         required>
                         <option value="">Seleccione Marca</option>
                         {currentCatalogos.marcas.map(m => <option key={m.id} value={m.id}>{m.nombre}</option>)}
@@ -307,7 +314,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
                     <Form.Select name="idModelo" 
                                 value={formData.idModelo || ''} 
                                 onChange={handleCatalogoChange} 
-                                disabled={!formData.idMarca || cargandoModelos}
+                                disabled={isSubmitting || !formData.idMarca || cargandoModelos}
                                 required>
                         <option value="">{cargandoModelos ? 'Cargando...' : (!formData.idMarca ? 'Seleccione Marca primero' : 'Seleccione Modelo')}</option>
                         {opcionesModelo.map(m => <option key={m.id} value={m.id}>{m.nombre}</option>)}
@@ -317,50 +324,95 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="formGridNumSerie">
                     <Form.Label>Número de Serie</Form.Label>
-                    <Form.Control type="text" name="numSerie" value={formData.numSerie || ''} onChange={handleInputChange} required/>
+                    <Form.Control type="text" 
+                                    name="numSerie" 
+                                    value={formData.numSerie || ''} 
+                                    onChange={handleInputChange} 
+                                    disabled={isSubmitting}
+                                    required/>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridColor">
                     <Form.Label>Color</Form.Label>
-                    <Form.Control type="text" name="color" value={formData.color || ''} onChange={handleInputChange} required/>
+                    <Form.Control type="text" 
+                                    name="color"
+                                    value={formData.color || ''} 
+                                    onChange={handleInputChange}
+                                    disabled={isSubmitting}
+                                    required/>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridCantidad">
                     <Form.Label>Cantidad Piezas</Form.Label>
-                    <Form.Control type="number" name="cantidadPieza" value={formData.cantidadPieza || ''} onChange={handleInputChange} required/>
+                    <Form.Control type="number" 
+                                    name="cantidadPieza"   
+                                    value={formData.cantidadPieza || ''} 
+                                    onChange={handleInputChange}
+                                    disabled={isSubmitting}
+                                    required/>
                 </Form.Group>
             </Row>
 
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="formGridLargo">
                     <Form.Label>Largo</Form.Label>
-                    <Form.Control type="number" step="0.1" name="largo" value={formData.largo || ''} onChange={handleInputChange} required/>
+                    <Form.Control type="number" 
+                                    step="0.1" 
+                                    name="largo" 
+                                    value={formData.largo || ''} 
+                                    onChange={handleInputChange}
+                                    disabled={isSubmitting}
+                                    required/>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridAlto">
                     <Form.Label>Alto</Form.Label>
-                    <Form.Control type="number" step="0.1" name="alto" value={formData.alto || ''} onChange={handleInputChange} required/>
+                    <Form.Control type="number" 
+                                    step="0.1" 
+                                    name="alto" 
+                                    value={formData.alto || ''} 
+                                    onChange={handleInputChange}
+                                    disabled={isSubmitting}
+                                    required/>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridAncho">
                     <Form.Label>Ancho</Form.Label>
-                    <Form.Control type="number" step="0.1" name="ancho" value={formData.ancho || ''} onChange={handleInputChange} required/>
+                    <Form.Control type="number" 
+                                    step="0.1" 
+                                    name="ancho" 
+                                    value={formData.ancho || ''} 
+                                    onChange={handleInputChange}
+                                    disabled={isSubmitting}
+                                    required/>
                 </Form.Group>
             </Row>
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="formGridUbicacion">
                     <Form.Label>Ubicación</Form.Label>
-                    <Form.Select name="idUbicacion" value={formData.idUbicacion || ''} onChange={handleCatalogoChange} required>
+                    <Form.Select name="idUbicacion" 
+                                    value={formData.idUbicacion || ''} 
+                                    onChange={handleCatalogoChange}
+                                    disabled={isSubmitting}
+                                    required>
                         <option value="">Seleccione Ubicación</option>
                         {currentCatalogos.ubicaciones.map(u => <option key={u.id} value={u.id}>{u.nombre}</option>)}
                     </Form.Select>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridUnidadMed">
                     <Form.Label>Unidad Medida</Form.Label>
-                    <Form.Select name="idUnidadMedida" value={formData.idUnidadMedida || ''} onChange={handleCatalogoChange} required>
+                    <Form.Select name="idUnidadMedida" 
+                                    value={formData.idUnidadMedida || ''} 
+                                    onChange={handleCatalogoChange}
+                                    disabled={isSubmitting}
+                                    required>
                         <option value="">Seleccione Unidad</option>
                         {currentCatalogos.unidadesMedida.map(um => <option key={um.id} value={um.id}>{um.nombre}</option>)}
                     </Form.Select>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridCondicion">
                     <Form.Label>Condición</Form.Label>
-                    <Form.Select name="condicion" value={formData.condicion || 'Alta'} onChange={handleInputChange} required>
+                    <Form.Select name="condicion" 
+                                    value={formData.condicion || 'Alta'} 
+                                    onChange={handleInputChange}
+                                    disabled={isSubmitting}
+                                    required>
                         <option value="Alta">Alta</option>
                         <option value="Baja">Baja</option>
                     
@@ -370,7 +422,11 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
             <Row className="mb-3">
                 <Form.Group as={Col} md="12" controlId="formGridFoto">
                     <Form.Label>URL Foto</Form.Label>
-                    <Form.Control type="text" name="urlFoto" value={formData.urlFoto || ''} onChange={handleInputChange} />
+                    <Form.Control type="text" 
+                                    name="urlFoto" 
+                                    value={formData.urlFoto || ''} 
+                                    onChange={handleInputChange} 
+                                    disabled={isSubmitting}/>
                 </Form.Group>
             </Row>
             <div className="d-flex justify-content-end mt-4">
@@ -380,14 +436,22 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete}) {
                         onClick={handleDeleteClick}
                         className="me-auto" 
                         type="button" 
+                        disabled={isSubmitting}
                     >
                         <FaTrash /> Eliminar
                     </Button>
                 )}
-                <Button variant="secondary" onClick={() => navigate('/dashboard')} className="me-2">
+                <Button 
+                    variant="secondary" 
+                    onClick={() => navigate('/dashboard')} 
+                    className="me-2"
+                    disabled={isSubmitting}>
                     Cancelar
                 </Button>
-                <Button variant="primary" type="submit">
+                <Button 
+                    variant="primary" 
+                    type="submit"
+                    disabled={isSubmitting}>
                     {isEditing ? 'Guardar Cambios' : 'Agregar Bien'}
                 </Button>
 

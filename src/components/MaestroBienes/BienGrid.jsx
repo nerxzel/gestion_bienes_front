@@ -1,7 +1,8 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { FaPencilAlt, FaPlus, FaTrash, FaTimes } from 'react-icons/fa';
+import { FaPencilAlt, FaPlus } from 'react-icons/fa';
+import { manejarErrorAPI } from '../../utils/errorHandler';
 import api from '../../api/axiosConfig';
 
 function BienGrid() {
@@ -19,8 +20,8 @@ function BienGrid() {
             const respuesta = await api.get('/bien/grid');
             setBienes(respuesta.data || []);
         } catch (err) {
-            console.error('Error detallado al cargar bienes:', err);
-            setError("Error al cargar la lista de bienes.");
+            const mensajeError = manejarErrorAPI(err);
+            setError(mensajeError);
             setBienes([]);
         }
     };
@@ -30,16 +31,8 @@ function BienGrid() {
         const loadData = async () => {
             setEstaCargando(true);
             setError(null);
-            try {
-                await Promise.all([
-                    cargarBienes(),
-                ]);
-            } catch (error) {
-                 console.error("Error durante la carga inicial:", error);
-                 setError("Ocurrió un error al cargar los datos iniciales.");
-            } finally {
-                setEstaCargando(false);
-            }
+            await cargarBienes();
+            setEstaCargando(false);
         };
         loadData();
     }, []);
@@ -109,7 +102,7 @@ function BienGrid() {
                     </tr>
                 </thead>
                 <tbody>
-                 {bienesFiltrados.length > 0 ? (
+                {bienesFiltrados.length > 0 ? (
                     bienesFiltrados.map((bien) => (
                           <tr key={bien.codigoInventario}>
                             <td>{bien.codigoInventario}</td>

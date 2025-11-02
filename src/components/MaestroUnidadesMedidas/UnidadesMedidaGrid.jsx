@@ -2,6 +2,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
+import { manejarErrorAPI } from '../../utils/errorHandler';
 import api from '../../api/axiosConfig';
 
 function UnidadesMedidaGrid() {
@@ -18,39 +19,23 @@ function UnidadesMedidaGrid() {
             const respuesta = await api.get('/unidadMedida/all');
             setUnidadesMedida(respuesta.data || []);
         } catch (err) {
-            console.error('Error detallado al cargar las unidades de medida:', err);
-            setError("Error al cargar la lista de unidades de medida.");
+            const mensajeError = manejarErrorAPI(err);
+            setError(mensajeError);
             setUnidadesMedida([]);
         }
     };
-
 
     useEffect(() => {
         const loadData = async () => {
             setEstaCargando(true);
             setError(null);
-            try {
-                await Promise.all([
-                    cargarUnidadesMedida(),
-                ]);
-            } catch (error) {
-                console.error("Error durante la carga inicial:", error);
-                setError("Ocurrió un error al cargar los datos iniciales.");
-            } finally {
-                setEstaCargando(false);
-            }
+            await cargarUnidadesMedida();
+            setEstaCargando(false);
         };
         loadData();
     }, []);
 
-    const unidadesMedidaFiltradas = unidadesMedida.filter((unidades) => {
-
-    const coincideBusqueda =
-        (unidades.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase());
-
-        return coincideBusqueda
-            }
-    );
+    const unidadesMedidaFiltradas = unidadesMedida.filter((unidades) => (unidades.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase()))
 
     return (
         <> 

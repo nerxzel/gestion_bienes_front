@@ -1,7 +1,7 @@
 import { Container, Card } from 'react-bootstrap';
 import ModeloGrid from '../../components/MaestroMarca-Modelo/ModeloGrid';
 
-function GridModelo() {
+function DashboardModelo() {
   return (
     <Container className="mt-5">
       <Card className="p-4 shadow-sm ">
@@ -13,4 +13,4 @@ function GridModelo() {
   );
 }
 
-export default GridModelo;
+export default DashboardModelo;

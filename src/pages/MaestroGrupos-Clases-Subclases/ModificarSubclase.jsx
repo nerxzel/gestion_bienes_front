@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Spinner, Alert, Card } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
+import { obtenerMensajeError } from '../../utils/errorHandler';
 import api from '../../api/axiosConfig';
 import SubclaseForm from '../../components/MaestroGrupos-Clases-Subclases/SubclaseForm';
 
@@ -11,6 +12,7 @@ function ModificarSubclase() {
     const [initialData, setInitialData] = useState(null);
     const [catalogos, setCatalogos] = useState({ clases: [] });
     const [cargando, setCargando] = useState(true);
+    const [modificando, setModificando] = useState(false);
     const [error, setError] = useState(null);
     const [errorGuardar, setErrorGuardar] = useState(null);
 
@@ -43,8 +45,8 @@ function ModificarSubclase() {
                 setInitialData(initialFormData); 
                 
             } catch (err) {
-                console.error("Error al cargar datos:", err.response || err);
-                setError(err.response?.status === 404 ? `No se encontró la subclase con ID ${id}.` : "Error al cargar los datos.");
+                const mensajeError = obtenerMensajeError(err, `Error al cargar la subclase con ID ${id}`);
+                setError(mensajeError);
             } finally {
                 setCargando(false);
             }
@@ -62,20 +64,18 @@ function ModificarSubclase() {
         };
     };
 
-    const handleGuardarSubmit = async (formData) => {
-        if (!formData.nombre || !formData.idClase) {
-            setErrorGuardar('Debe seleccionar una Clase y asignar un Nombre a la Subclase.');
-            return;
-        }
-
+    const handleGuardarSubmit = async (formData) => {      
         const datosParaEnviar = mapFrontendToBackend(formData);
         setErrorGuardar(null);
+        setModificando(true);
         try {
             await api.put(`/subclase/update`, datosParaEnviar); 
             navigate('/dashboard-subclase'); 
         } catch (err) {
-            console.error("Error al modificar la subclase:", err.response || err);
-            setErrorGuardar(err.response?.data?.message || "Error al guardar.");
+            const mensajeError = obtenerMensajeError(err, "Error al modificar la subclase");
+            setErrorGuardar(mensajeError);
+        } finally {
+            setModificando(false);
         }
     };
 
@@ -93,7 +93,8 @@ function ModificarSubclase() {
                         initialData={initialData}
                         onSubmit={handleGuardarSubmit}
                         isEditing={true}
-                        catalogos={catalogos} 
+                        catalogos={catalogos}
+                        isSubmitting={modificando}
                     />
                 </Card.Body>
             </Card>
