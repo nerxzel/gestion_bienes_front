@@ -214,8 +214,7 @@ function AltaForm() {
                                 </ul>
                             </Alert>
                         )}
-
-                        {/* Botones de acción */}
+                        
                         <div className="d-flex justify-content-end mt-4">
                             <Button
                                 variant="secondary"

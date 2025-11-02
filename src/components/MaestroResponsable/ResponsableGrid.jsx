@@ -28,25 +28,16 @@ function ResponsableGrid() {
     const handleDescargarHojaMural = async (responsableId, responsableNombre) => {
         try {
             const response = await api.get(`/bien/hojamural/${responsableId}`, {
-                responseType: 'blob', // 1. Espera un archivo
+                responseType: 'blob', 
             });
 
-            // 2. Crea la URL temporal
             const url = window.URL.createObjectURL(new Blob([response.data]));
-            
-            // 3. Crea el link invisible
             const link = document.createElement('a');
             link.href = url;
-            
-            // 4. Asigna un nombre de archivo dinámico
             const nombreArchivo = `Hoja_Mural_${responsableNombre.replace(' ', '_')}.xlsx`;
             link.setAttribute('download', nombreArchivo); 
-            
-            // 5. Descarga
             document.body.appendChild(link);
             link.click();
-            
-            // 6. Limpieza
             document.body.removeChild(link);
             window.URL.revokeObjectURL(url);
 
