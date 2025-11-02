@@ -84,7 +84,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
         let selectedItemName = '';
 
         const safeCatalogos = {
-            grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], ...catalogos
+            grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], responsables: [], ...catalogos
         };
 
         try {
@@ -97,6 +97,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
         
                 if (name === 'idUbicacion') { update = { ...update, ubicacion: ''}; }
                 if (name === 'idUnidadMedida') { update = { ...update, unidadMedida: ''}; }
+                if (name === 'idResponsable') { update = { ...update, responsableRut: ''}; }
             } else {
     
                 if (name === 'idGrupo') {
@@ -140,6 +141,10 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                 } else if (name === 'idUnidadMedida') {
                     const item = safeCatalogos.unidadesMedida.find(um => um.id === parseInt(selectedId));
                     update = { ...update, unidadMedida: item?.nombre || '' };
+
+                } else if (name === 'idResponsable') { 
+                    const item = safeCatalogos.responsables.find(r => r.id === parseInt(selectedId));
+                    update = { ...update, responsableRut: item?.rut || '' };
                 }
             }
         } catch (error) {
@@ -168,7 +173,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
     };
 
     const currentCatalogos = {
-        grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], ...catalogos
+        grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], responsables: [], ...catalogos
     };
 
     return (
@@ -242,15 +247,22 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                         disabled={isSubmitting}
                         required/>
                 </Form.Group>
+                
                 <Form.Group as={Col} md="4" controlId="formGridResponsable">
-                    <Form.Label>Rut Responsable</Form.Label>
-                    <Form.Control 
-                        type="number" 
-                        name="responsableRut" 
-                        value={formData.responsableRut || ''} 
-                        onChange={handleInputChange}
+                    <Form.Label>Responsable</Form.Label>
+                    <Form.Select 
+                        name="idResponsable" 
+                        value={formData.idResponsable || ''} 
+                        onChange={handleCatalogoChange}
                         disabled={isSubmitting}
-                        required/>
+                        required>
+                        <option value="">Seleccione Responsable</option>
+                        {currentCatalogos.responsables.map(r => (
+                            <option key={r.id} value={r.id}>
+                                {r.rut} - {r.nombre}
+                            </option>
+                        ))}
+                    </Form.Select>
                 </Form.Group>
                 
             </Row>
@@ -408,15 +420,27 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridCondicion">
                     <Form.Label>Condición</Form.Label>
-                    <Form.Select name="condicion" 
-                                    value={formData.condicion || 'Alta'} 
-                                    onChange={handleInputChange}
-                                    disabled={isSubmitting}
-                                    required>
-                        <option value="Alta">Alta</option>
-                        <option value="Baja">Baja</option>
-                    
-                    </Form.Select>
+                    {!isEditing ? (
+                        <Form.Select
+                            name="condicion"
+                            value={formData.condicion || 'Alta'}
+                            onChange={handleInputChange}
+                            disabled={isSubmitting}
+                            required
+                        >
+                            <option value="Alta">Alta</option>
+                            <option value="Baja">Baja</option>
+                        </Form.Select>
+                    ) : (
+                        <Form.Control 
+                            type="text"
+                            name="condicion" 
+                            value={formData.condicion || ''} 
+                            readOnly
+                            disabled
+                            className={formData.condicion === 'Alta' ? 'bg-success-subtle' : 'bg-danger-subtle'}
+                        />        
+                            )}
                 </Form.Group>
             </Row>
             <Row className="mb-3">
