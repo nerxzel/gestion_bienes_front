@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Spinner, Alert, Card } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
+import { obtenerMensajeError } from '../../utils/errorHandler';
 import MarcaForm from '../../components/MaestroMarca-Modelo/MarcaForm'; 
 import api from '../../api/axiosConfig';
 
@@ -10,6 +11,7 @@ function ModificarMarca() {
 
     const [initialData, setInitialData] = useState(null);
     const [cargando, setCargando] = useState(true);
+    const [modificando, setModificando] = useState(false);
     const [error, setError] = useState(null);
     const [errorGuardar, setErrorGuardar] = useState(null);
 
@@ -22,8 +24,8 @@ function ModificarMarca() {
                 const res = await api.get(`/marca/${id}`); 
                 setInitialData(res.data);
             } catch (err) {
-                console.error("Error al cargar datos para modificar:", err.response || err);
-                setError(err.response?.status === 404 ? `No se encontró la marca con ID ${id}.` : "Error al cargar los datos.");
+                const mensajeError = obtenerMensajeError(err,`Error al cargar la marca con ID ${id}`);
+                setError(mensajeError);
             } finally {
                 setCargando(false);
             }
@@ -32,19 +34,16 @@ function ModificarMarca() {
     }, [id]);
 
     const handleGuardarSubmit = async (formData) => {
-        if (!formData.nombre || formData.nombre.trim() === '') {
-            setErrorGuardar('El nombre de la marca no puede estar vacío.');
-            return;
-        }
-
         setErrorGuardar(null);
+        setModificando(true);
         try {
             await api.put(`/marca/update`, formData); 
             navigate('/dashboard-marca'); 
         } catch (err) {
-            console.error("Error al modificar la marca:", err.response || err);
-            const errorMsg = err.response?.data?.message || err.response?.data || "Error al guardar.";
-            setErrorGuardar(errorMsg);
+            const mensajeError = obtenerMensajeError(err,"Error al modificar la marca");
+            setErrorGuardar(mensajeError);
+        } finally {
+            setModificando(false);
         }
     };
 
@@ -62,6 +61,7 @@ function ModificarMarca() {
                         initialData={initialData}
                         onSubmit={handleGuardarSubmit}
                         isEditing={true}
+                        isSubmitting={modificando}
                     />
                 </Card.Body>
             </Card>

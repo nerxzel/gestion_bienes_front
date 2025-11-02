@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
-function ClaseForm({ initialData, onSubmit, isEditing, catalogos }) {
+function ClaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmitting = false }) {
     const [formData, setFormData] = useState(initialData);
+    const [erroresValidacion, setErroresValidacion] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -16,10 +17,36 @@ function ClaseForm({ initialData, onSubmit, isEditing, catalogos }) {
             ...prev,
             [name]: value
         }));
+
+        if (erroresValidacion[name]) {
+            setErroresValidacion(prev => ({
+                ...prev, [name]:null
+            }))
+        }
     };
+
+    const validarFormulario = () => {
+        const errores = {};
+
+        if(!formData.nombre || formData.nombre.trim() === '') {
+            errores.nombre = 'El nombre de la clase no puede estar vacio.';
+        } else if (formData.nombre.length > 35) {
+            errores.nombre = 'El nombre de la clase no puede tener más de 35 caracteres'
+        }
+
+        if(!formData.idGrupo || formData.idGrupo === '') {
+        errores.idGrupo = 'Debe seleccionar un grupo.';
+    }
+
+        return errores;
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const errores = validarFormulario();
+        if(Object.keys(errores).length > 0) {
+            setErroresValidacion(errores);
+            return;}
         onSubmit(formData);
     };
 
@@ -34,6 +61,8 @@ function ClaseForm({ initialData, onSubmit, isEditing, catalogos }) {
                         name="idGrupo"
                         value={formData.idGrupo || ''}
                         onChange={handleInputChange}
+                        disabled={isSubmitting}
+                        isInvalid={!!erroresValidacion.idGrupo}
                         required
                     >
                         <option value="">Seleccione un Grupo</option>
@@ -41,6 +70,9 @@ function ClaseForm({ initialData, onSubmit, isEditing, catalogos }) {
                             <option key={g.id} value={g.id}>{g.nombre}</option>
                         ))}
                     </Form.Select>
+                    <Form.Control.Feedback type="invalid">
+                        {erroresValidacion.idGrupo}
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group as={Col} md="6" controlId="formGridNombreClase">
@@ -50,17 +82,30 @@ function ClaseForm({ initialData, onSubmit, isEditing, catalogos }) {
                         name="nombre" 
                         value={formData.nombre || ''}
                         onChange={handleInputChange}
+                        isInvalid={!!erroresValidacion.nombre}
+                        disabled={isSubmitting}
                         required
                         maxLength="35"
                     />
+                    <Form.Control.Feedback type="invalid">
+                        {erroresValidacion.nombre}
+                    </Form.Control.Feedback>
                 </Form.Group>
             </Row>
 
             <div className="d-flex justify-content-end mt-4">
-                <Button variant="secondary" onClick={() => navigate('/dashboard-clase')} className="me-2">
+                <Button 
+                    variant="secondary" 
+                    onClick={() => navigate('/dashboard-clase')}
+                    disabled={isSubmitting}
+                    className="me-2">
                     Cancelar
                 </Button>
-                <Button variant="primary" type="submit">
+                <Button 
+                    variant="primary" 
+                    type="submit"
+                    disabled={isSubmitting}>
+                    {isSubmitting && <Spinner as="span" animation="border" size="sm" className="me-2" />}
                     {isEditing ? 'Guardar Cambios' : 'Agregar Clase'}
                 </Button>
             </div>

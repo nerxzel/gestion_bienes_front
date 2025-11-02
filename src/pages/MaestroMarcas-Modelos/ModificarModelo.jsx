@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Spinner, Alert, Card } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
+import { obtenerMensajeError } from '../../utils/errorHandler';
 import ModeloForm from '../../components/MaestroMarca-Modelo/ModeloForm'; 
 import api from '../../api/axiosConfig';
 
@@ -11,6 +12,7 @@ function ModificarModelo() {
     const [initialData, setInitialData] = useState(null);
     const [catalogos, setCatalogos] = useState({ marcas: [] });
     const [cargando, setCargando] = useState(true);
+    const [modificando, setModificando] = useState(false);
     const [error, setError] = useState(null);
     const [errorGuardar, setErrorGuardar] = useState(null);
 
@@ -43,8 +45,8 @@ function ModificarModelo() {
                 setInitialData(initialFormData); 
                 
             } catch (err) {
-                console.error("Error al cargar datos:", err.response || err);
-                setError(err.response?.status === 404 ? `No se encontró el modelo con ID ${id}.` : "Error al cargar los datos.");
+                const mensajeError = obtenerMensajeError(err, `Error al cargar el modelo con ID ${id}`);
+                setError(mensajeError);
             } finally {
                 setCargando(false);
             }
@@ -63,19 +65,17 @@ function ModificarModelo() {
     };
 
     const handleGuardarSubmit = async (formData) => {
-        if (!formData.nombre || !formData.idMarca) {
-            setErrorGuardar('Debe seleccionar una Marca y asignar un Nombre al modelo.');
-            return;
-        }
-
         const datosParaEnviar = mapFrontendToBackend(formData);
         setErrorGuardar(null);
+        setModificando(true);
         try {
             await api.put(`/modelo/update`, datosParaEnviar); 
             navigate('/dashboard-modelo'); 
         } catch (err) {
-            console.error("Error al modificar el modelo:", err.response || err);
-            setErrorGuardar(err.response?.data?.message || "Error al guardar.");
+            const mensajeError = obtenerMensajeError(err, "Error al modificar el modelo");
+            setErrorGuardar(mensajeError);
+        } finally {
+            setModificando(false);
         }
     };
 
@@ -93,7 +93,8 @@ function ModificarModelo() {
                         initialData={initialData}
                         onSubmit={handleGuardarSubmit}
                         isEditing={true}
-                        catalogos={catalogos} 
+                        catalogos={catalogos}
+                        isSubmitting={modificando}
                     />
                 </Card.Body>
             </Card>

@@ -2,6 +2,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
+import { manejarErrorAPI } from '../../utils/errorHandler';
 import api from '../../api/axiosConfig';
 
 function UbicacionGrid() {
@@ -18,8 +19,8 @@ function UbicacionGrid() {
             const respuesta = await api.get('/ubicacion/all');
             setUbicaciones(respuesta.data || []);
         } catch (err) {
-            console.error('Error detallado al cargar ubicaciones:', err);
-            setError("Error al cargar la lista de ubicaciones.");
+            const mensajeError = manejarErrorAPI(err);
+            setError(mensajeError);
             setUbicaciones([]);
         }
     };
@@ -28,28 +29,13 @@ function UbicacionGrid() {
         const loadData = async () => {
             setEstaCargando(true);
             setError(null);
-            try {
-                await Promise.all([
-                    cargarUbicaciones(),
-                ]);
-            } catch (error) {
-                console.error("Error durante la carga inicial:", error);
-                setError("Ocurrió un error al cargar los datos iniciales.");
-            } finally {
-                setEstaCargando(false);
-            }
+            await cargarUbicaciones();
+            setEstaCargando(false);
         };
         loadData();
     }, []);
 
-    const ubicacionesFiltradas = ubicaciones.filter((ubicacion) => {
-
-    const coincideBusqueda =
-        (ubicacion.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase());
-
-        return coincideBusqueda
-            }
-    );
+    const ubicacionesFiltradas = ubicaciones.filter((ubicacion) => (ubicacion.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase()));
 
     return (
         <> 

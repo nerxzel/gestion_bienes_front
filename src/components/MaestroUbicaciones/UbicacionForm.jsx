@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
-import { FaTrash } from 'react-icons/fa';
 
-function UbicacionForm({ initialData, onSubmit, isEditing}) {
+function UbicacionForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
     const [formData, setFormData] = useState(initialData);
+    const [erroresValidacion, setErroresValidacion] = useState({});
     const navigate = useNavigate();
-
 
     useEffect(() => {
         setFormData(initialData);
     }, [initialData]);
-
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -19,10 +17,32 @@ function UbicacionForm({ initialData, onSubmit, isEditing}) {
             ...prev,
             [name]: value
         }));
+
+        if (erroresValidacion[name]) {
+            setErroresValidacion(prev => ({
+                ...prev, [name]:null
+            }))
+        }
     };
+
+    const validarFormulario = () => {
+        const errores = {};
+
+        if(!formData.nombre || formData.nombre.trim() === '') {
+            errores.nombre = 'El nombre de la ubicación no puede estar vacio.';
+        } else if (formData.nombre.length > 35) {
+            errores.nombre = 'El nombre de la ubicación no puede tener más de 35 caracteres'
+        }
+
+        return errores;
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const errores = validarFormulario();
+        if(Object.keys(errores).length > 0) {
+            setErroresValidacion(errores);
+            return;}
         onSubmit(formData);
     };
 
@@ -36,15 +56,21 @@ function UbicacionForm({ initialData, onSubmit, isEditing}) {
                         name="nombre"
                         value={formData.nombre}
                         onChange={handleInputChange}
+                        isInvalid={!!erroresValidacion.nombre}
+                        disabled={isSubmitting}
                         required
                         maxLength="35"
                         />
+                    <Form.Control.Feedback type="invalid">
+                        {erroresValidacion.nombre}
+                    </Form.Control.Feedback>
                 </Form.Group>
             </Row>
             <div className="d-flex justify-content-end mt-4">
                 <Button
                     variant="secondary" 
                     onClick={() => navigate('/dashboard-ubicacion')}
+                    disabled={isSubmitting}
                     className="me-2">
 
                     Cancelar
@@ -52,7 +78,9 @@ function UbicacionForm({ initialData, onSubmit, isEditing}) {
 
                 <Button
                     variant="primary" 
-                    type="submit">
+                    type="submit"
+                    disabled={isSubmitting}>
+                {isSubmitting && <Spinner as="span" animation="border" size="sm" className="me-2" />}
                 {isEditing ? 'Guardar Cambios' : 'Agregar Ubicacion'}
                 </Button>
             </div>

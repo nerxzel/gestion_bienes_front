@@ -2,6 +2,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
+import { manejarErrorAPI } from '../../utils/errorHandler';
 import api from '../../api/axiosConfig';
 
 function GrupoGrid() {
@@ -18,39 +19,23 @@ function GrupoGrid() {
             const respuesta = await api.get('/grupo/all');
             setGrupos(respuesta.data || []);
         } catch (err) {
-            console.error('Error detallado al cargar grupos:', err);
-            setError("Error al cargar la lista de grupos.");
+            const mensajeError = manejarErrorAPI(err);
+            setError(mensajeError);
             setGrupos([]);
         }
     };
-
 
     useEffect(() => {
         const loadData = async () => {
             setEstaCargando(true);
             setError(null);
-            try {
-                await Promise.all([
-                    cargarGrupos(),
-                ]);
-            } catch (error) {
-                console.error("Error durante la carga inicial:", error);
-                setError("Ocurrió un error al cargar los datos iniciales.");
-            } finally {
-                setEstaCargando(false);
-            }
+            await cargarGrupos();
+            setEstaCargando(false);
         };
         loadData();
     }, []);
 
-    const gruposFiltrados = grupos.filter((grupo) => {
-
-    const coincideBusqueda =
-        (grupo.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase());
-
-        return coincideBusqueda
-            }
-    );
+    const gruposFiltrados = grupos.filter((grupo) => (grupo.nombre || '').toLowerCase().includes(barraBusqueda.toLowerCase()));
 
     return (
         <> 

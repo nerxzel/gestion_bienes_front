@@ -1,7 +1,7 @@
 import { Container, Card } from 'react-bootstrap';
 import UbicacionGrid from '../../components/MaestroUbicaciones/UbicacionGrid';
 
-function GridUbicacion() {
+function DashboardUbicacion() {
   return (
     <Container className="mt-5">
       <Card className="p-4 shadow-sm ">
@@ -13,4 +13,4 @@ function GridUbicacion() {
   );
 }
 
-export default GridUbicacion;
+export default DashboardUbicacion;
