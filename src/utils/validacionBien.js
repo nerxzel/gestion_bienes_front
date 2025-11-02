@@ -6,7 +6,7 @@ export const validarBien = (formData) => {
         descripcionLarga: 'Descripción Larga',
         fechaAdquisicion: 'Fecha Ingreso',
         tipoObjeto: 'Tipo Objeto',
-        responsableRut: 'Rut Responsable',
+        idResponsable: 'Responsable',
         numSerie: 'Número de Serie',
         color: 'Color',
         cantidadPieza: 'Cantidad Piezas',
@@ -29,7 +29,6 @@ export const validarBien = (formData) => {
         }
     });
     
-    // Validar campos numéricos
     const camposNumericos = ['cantidadPieza', 'largo', 'alto', 'ancho', 'responsableRut'];
     camposNumericos.forEach(campo => {
         const valor = formData[campo];

@@ -1,9 +1,10 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { FaPencilAlt, FaPlus } from 'react-icons/fa';
+import { FaPencilAlt, FaPlus, FaArrowDown, FaArrowUp, FaFileDownload} from 'react-icons/fa';
 import { manejarErrorAPI } from '../../utils/errorHandler';
 import api from '../../api/axiosConfig';
+import { normalizarCondicion } from '../../utils/condicionUtils';
 
 function BienGrid() {
     const [bienes, setBienes] = useState([]);
@@ -18,11 +19,35 @@ function BienGrid() {
     const cargarBienes = async () => {
         try {
             const respuesta = await api.get('/bien/grid');
-            setBienes(respuesta.data || []);
+            const bienesNormalizados = (respuesta.data || []).map(bien => ({...bien, condicion: normalizarCondicion(bien.condicion)}));
+            setBienes(bienesNormalizados);
         } catch (err) {
             const mensajeError = manejarErrorAPI(err);
             setError(mensajeError);
             setBienes([]);
+        }
+    };
+
+    const handleDescargarReporte = async () => {
+        try {
+            const response = await api.get('/bien/excel/all', {
+                responseType: 'blob',
+            });
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'Reporte_General_Bienes.xlsx'); 
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url); 
+
+        } catch (err) {
+            console.error('Error al descargar el reporte:', err);
+            setError('No se pudo descargar el reporte.');
         }
     };
 
@@ -74,15 +99,23 @@ function BienGrid() {
                 onChange={(e) => setBarraBusqueda(e.target.value)}
             /></Col>
           </Row>
-          
+          <div className='mb-3'>
           <Button 
               variant="success" 
-              className="mb-3"
               onClick={() => navigate(`/agregar-bien/`)}
                   >
                     <FaPlus className="me-1" /> Agregar Bien
           </Button>
 
+          <Button 
+            variant="success" 
+            className="ms-2"
+            onClick={handleDescargarReporte}
+        >
+            <FaFileDownload className="me-1" /> Descargar Reporte General
+        </Button>
+        </div>
+      
         {estaCargando && <div className="text-center">Cargando datos...</div>}
         {error && <div className="alert alert-danger">Error: {error}</div>}
 
@@ -118,6 +151,23 @@ function BienGrid() {
                                       size="sm"
                                       onClick={() => navigate(`/modificar-bien/${bien.id}`)}>
                                   <FaPencilAlt />
+                              </Button>
+
+                              <Button 
+                                      variant="outline-success" 
+                                      className="me-2" 
+                                      size="sm"
+                                      onClick={() => navigate(`/dar-alta/${bien.id}`)}
+                                      title="Dar de Alta">
+                                    <FaArrowUp />
+                              </Button>
+                                            
+                              <Button 
+                                      variant="outline-danger" 
+                                      size="sm"
+                                      onClick={() => navigate(`/dar-baja/${bien.id}`)}
+                                      title="Dar de Baja">
+                                      <FaArrowDown />
                               </Button>
                             </td>
                           </tr>))

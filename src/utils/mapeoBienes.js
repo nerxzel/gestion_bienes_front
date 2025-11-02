@@ -1,3 +1,5 @@
+import { normalizarCondicion } from './condicionUtils';
+
 export const mapFrontendToBackendAdd = (formData, catalogos) => { 
 
     const grupo = catalogos?.grupos?.find(g => g.id === parseInt(formData.idGrupo));
@@ -44,6 +46,10 @@ export const mapFrontendToBackendAdd = (formData, catalogos) => {
             id: parseInt(formData.idUnidadMedida),
             nombre: unidadMedida?.nombre || null 
         } : null,
+
+        responsable: formData.idResponsable ? { 
+            id: parseInt(formData.idResponsable) 
+        } : null,
     };
     
     Object.keys(backendData).forEach(key => {
@@ -76,6 +82,10 @@ export const mapFrontendToBackendUpdate = (formData) => {
         ancho: formData.ancho ? parseFloat(formData.ancho) : null,
         responsableRut: formData.responsableRut ? parseInt(formData.responsableRut) : null,
         urlFoto: formData.urlFoto,
+
+        responsable: formData.idResponsable ? { 
+            id: parseInt(formData.idResponsable) 
+        } : null,
         
         grupo: formData.idGrupo ? { id: parseInt(formData.idGrupo) } : null,
         clase: formData.idClase ? { id: parseInt(formData.idClase) } : null,
@@ -107,6 +117,11 @@ export const mapBackendToFrontend = (backendDto, catalogos) => {
         return list?.find(item => item.nombre === nameValue)?.id || '';
     };
 
+    const findResponsableIdByRut = (rut) => {
+        const list = catalogos.responsables;
+        return list?.find(item => item.rut === rut)?.id || '';
+    };
+
     return {
         id: backendDto.id,
         codigoInventario: backendDto.codigoInventario,
@@ -114,16 +129,18 @@ export const mapBackendToFrontend = (backendDto, catalogos) => {
         descripcionLarga: backendDto.descripcionLarga,
         fechaAdquisicion: formatDate(backendDto.fechaIngreso),
         tipoObjeto: backendDto.tipoObjeto,
-        condicion: backendDto.condicion,
+        condicion: normalizarCondicion(backendDto.condicion),
         numSerie: backendDto.numSerie,
         color: backendDto.color,
         cantidadPieza: backendDto.cantidadPieza,
         largo: backendDto.largo,
         alto: backendDto.alto,
         ancho: backendDto.ancho,
-        responsableRut: backendDto.responsableRut,
         fechaUltimaToma: formatDate(backendDto.fechaUltimaToma),
         urlFoto: backendDto.urlFoto,
+
+        idResponsable: findResponsableIdByRut(backendDto.responsable),
+        responsableRut: backendDto.responsable,
         
         idGrupo: findIdByName('grupos', backendDto.grupo),
         idMarca: findIdByName('marcas', backendDto.marca),

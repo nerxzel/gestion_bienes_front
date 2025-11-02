@@ -47,11 +47,23 @@ import DashboardUnidadesMedidas from "../pages/MaestroUnidadesMedidas/DashboardU
 import AgregarUnidadesMedida from "../pages/MaestroUnidadesMedidas/AgregarUnidadesMedida.jsx"
 import ModificarUnidadesMedida from "../pages/MaestroUnidadesMedidas/ModificarUnidadesMedida.jsx"
 
+// Responsables
+import DashboardResponsable from "../pages/MaestroResponsable/DashboardResponsable.jsx"
+import AgregarResponsable from "../pages/MaestroResponsable/AgregarResponsable.jsx"
+import ModificarResponsable from "../pages/MaestroResponsable/ModificarResponsable.jsx"
+
+// Alta
+import DarAlta from "../pages/Alta-Baja/ProcesosDarDeAlta.jsx";
+
+// Baja
+import DarBaja from "../pages/Alta-Baja/ProcesosDarDeBaja.jsx";
+
+
 import MaestroFuncionario from "../pages/ConfigMaestroFuncionario.jsx";
 import TipoBien from "../pages/ConfigTipoBien.jsx";
 import CambioResponsable from "../pages/ProcesosCambioResponsable.jsx";
-import DarAlta from "../pages/ProcesosDarDeAlta.jsx";
-import DarBaja from "../pages/ProcesosDarDeBaja.jsx";
+
+
 import Depreciar from "../pages/ProcesosDepreciar.jsx";
 import TomaInventario from "../pages/ProcesosTomaInventario.jsx";
 import Traslado from "../pages/ProcesosTraslado.jsx";
@@ -117,13 +129,23 @@ function AppRouter() {
                     <Route path="/agregar-unidadesM" element={<AgregarUnidadesMedida/>}/>
                     <Route path="/modificar-unidadesM/:id" element={<ModificarUnidadesMedida/>}/>
 
+                    // Responsables
+                    <Route path="/dashboard-responsable" element={<DashboardResponsable/>}/>
+                    <Route path="/agregar-responsable" element={<AgregarResponsable/>}/>
+                    <Route path="/modificar-responsable/:id" element={<ModificarResponsable/>}/>
+
+                    // Alta
+                    <Route path="/dar-alta/:id" element={<DarAlta/>}/>
+                    <Route path="/bienes-alta" element={<BienesAlta/>}/>
+
+                    // Baja
+                    <Route path="/dar-baja/:id" element={<DarBaja/>}/>
+                    <Route path="/bienes-baja" element={<BienesBaja/>}/>
+
+
                     <Route path="/cambio-responsable" element={<CambioResponsable/>}/>
-                    <Route path="/dar-alta" element={<DarAlta/>}/>
-                    <Route path="/dar-baja" element={<DarBaja/>}/>
                     <Route path="/toma-inventario" element={<TomaInventario/>}/>
                     <Route path="/traslado" element={<Traslado/>}/>
-                    <Route path="/bienes-alta" element={<BienesAlta/>}/>
-                    <Route path="/bienes-baja" element={<BienesBaja/>}/>
                     <Route path="/etiquetas-individual" element={<EtiquetaIndividual/>}/>
                     <Route path="/etiquetas-responsable" element={<EtiquetaPorResponsable/>}/>
                     <Route path="/etiquetas-ubicacion" element={<EtiquetasPorUbicacion/>}/>

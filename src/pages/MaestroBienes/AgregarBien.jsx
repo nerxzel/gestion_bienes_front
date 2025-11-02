@@ -9,7 +9,7 @@ import api from '../../api/axiosConfig';
 
 function AgregarBien() {
     const [catalogos, setCatalogos] = useState({
-        grupos: [], marcas: [], ubicaciones: [], unidadesMedida: []
+        grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], responsables: []
     });
     const [cargandoCatalogos, setCargandoCatalogos] = useState(true);
     const [errorCatalogos, setErrorCatalogos] = useState(null);
@@ -23,7 +23,7 @@ function AgregarBien() {
         idGrupo: '', idClase: '', idSubClase: '', idMarca: '', idModelo: '',
         descripcionLarga: '', tipoObjeto: '', numSerie: '', color: '', cantidadPieza: '',
         largo: '', alto: '', ancho: '', idUbicacion: '', idUnidadMedida: '',
-        urlFoto: '', responsableRut: '',
+        urlFoto: '', responsableRut: '', idResponsable: ''
     };
 
     useEffect(() => {
@@ -32,26 +32,28 @@ function AgregarBien() {
             setErrorCatalogos(null);
             try {
                 const [
-                    gruposRes, marcasRes, ubicacionesRes, unidadesMedidaRes
+                    gruposRes, marcasRes, ubicacionesRes, unidadesMedidaRes, responsableRes
                 ] = await Promise.all([
                     api.get('/grupo/dropdown'),
                     api.get('/marca/dropdown'),
                     api.get('/ubicacion/dropdown'),
-                    api.get('/unidadMedida/dropdown') 
+                    api.get('/unidadMedida/dropdown'),
+                    api.get('/responsable/all')
                 ]);
 
                 const loadedCatalogos = {
                     grupos: gruposRes.data || [],
                     marcas: marcasRes.data || [],
                     ubicaciones: ubicacionesRes.data || [],
-                    unidadesMedida: unidadesMedidaRes.data || []
+                    unidadesMedida: unidadesMedidaRes.data || [],
+                    responsables: responsableRes.data || [],
                 };
                 setCatalogos(loadedCatalogos);
 
             } catch (error) {
                 const mensajeError = obtenerMensajeError(error, "Error al cargar catálogos");
                 setErrorCatalogos(mensajeError);
-                setCatalogos({ grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [] });
+                setCatalogos({ grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], responsables: []});
             } finally {
                 setCargandoCatalogos(false);
             }

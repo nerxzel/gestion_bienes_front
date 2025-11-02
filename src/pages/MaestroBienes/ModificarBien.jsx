@@ -13,7 +13,7 @@ function ModificarBien() {
 
     const [bienData, setBienData] = useState(null); 
     const [catalogos, setCatalogos] = useState({ 
-        grupos: [], marcas: [], ubicaciones: [], unidadesMedida: []
+        grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], responsables: []
     });
     const [cargando, setCargando] = useState(true);
     const [modificando, setModificando] = useState(false);
@@ -33,13 +33,14 @@ function ModificarBien() {
 
             try {
                 const [
-                    bienRes, gruposRes, marcasRes, ubicacionesRes, unidadesRes
+                    bienRes, gruposRes, marcasRes, ubicacionesRes, unidadesRes, responsablesRes 
                 ] = await Promise.all([
                     api.get(`/bien/${id}`), 
                     api.get('/grupo/dropdown'),
                     api.get('/marca/dropdown'),
                     api.get('/ubicacion/dropdown'),
-                    api.get('/unidadMedida/dropdown'), 
+                    api.get('/unidadMedida/dropdown'),
+                    api.get('/responsable/all')
                 ]);
 
                 const loadedCatalogos = {
@@ -47,6 +48,7 @@ function ModificarBien() {
                     marcas: marcasRes.data || [],
                     ubicaciones: ubicacionesRes.data || [],
                     unidadesMedida: unidadesRes.data || [],
+                    responsables: responsablesRes.data || []
                 };
                 setCatalogos(loadedCatalogos);
 
