@@ -49,7 +49,7 @@ function BajaForm() {
         setError(null);
 
         try {
-            await api.put(`/bien/alta/${id}`);
+            await api.put(`/bien/baja/${id}`);
             const responseActualizada = await api.get(`/bien/${id}`);
             console.log('Respuesta de la segunda llamada:', responseActualizada.data);
 
@@ -113,14 +113,14 @@ function BajaForm() {
                 <Card.Body>
                     {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
                     {exitoso && (
-                        <Alert variant="success" onClose={() => setExitoso(false)} dismissible>
+                        <Alert variant="danger" onClose={() => setExitoso(false)} dismissible>
                             ¡El bien ha sido dado de baja exitosamente!
                         </Alert>
                     )}
 
                     {yaEstaDeBaja && !exitoso && (
-                        <Alert variant="warning">
-                            Este bien ya se encuentra en condición de <strong>Baja</strong>.
+                        <Alert variant="danger">
+                            Este bien ya se encuentra de <strong>Baja</strong>.
                         </Alert>
                     )}
 

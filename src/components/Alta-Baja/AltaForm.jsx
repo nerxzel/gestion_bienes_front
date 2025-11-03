@@ -33,11 +33,13 @@ function AltaForm() {
                     condicion: normalizarCondicion(response.data.condicion)
                 };
                 setBienData(bienNormalizado);
+                console.log("Info del backend: ", bienNormalizado)
             } catch (err) {
                 const mensajeError = obtenerMensajeError(err, `Error al cargar el bien con ID ${id}`);
                 setError(mensajeError);
             } finally {
                 setCargando(false);
+                
             }
         };
 
@@ -119,8 +121,8 @@ function AltaForm() {
                     )}
 
                     {yaEstaDeAlta && !exitoso && (
-                        <Alert variant="info">
-                            Este bien ya se encuentra en condición de <strong>Alta</strong>.
+                        <Alert variant="success">
+                            Este bien ya se encuentra de <strong>Alta</strong>.
                         </Alert>
                     )}
 

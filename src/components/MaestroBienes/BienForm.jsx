@@ -200,6 +200,16 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                             readOnly />
                     </Form.Group>
                 )}
+                {isEditing && (
+                    <Form.Group as={Col} md="4" controlId="formGridFechaToma">
+                        <Form.Label>Fecha Resolución</Form.Label>
+                        <Form.Control 
+                            type="date" 
+                            name="fechaResolucion" 
+                            value={formData.fechaResolucion || ''} 
+                            readOnly />
+                    </Form.Group>
+                )}
             </Row>
 
             <Row className="mb-3">
@@ -443,16 +453,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                             )}
                 </Form.Group>
             </Row>
-            <Row className="mb-3">
-                <Form.Group as={Col} md="12" controlId="formGridFoto">
-                    <Form.Label>URL Foto</Form.Label>
-                    <Form.Control type="text" 
-                                    name="urlFoto" 
-                                    value={formData.urlFoto || ''} 
-                                    onChange={handleInputChange} 
-                                    disabled={isSubmitting}/>
-                </Form.Group>
-            </Row>
+            
             <div className="d-flex justify-content-end mt-4">
                 {isEditing && (
                     <Button
