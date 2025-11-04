@@ -186,6 +186,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                             type="text"
                             name="codigoInventario"
                             value={formData.codigoInventario || ''}
+                            disabled
                             readOnly
                         />
                     </Form.Group>
@@ -196,7 +197,19 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                         <Form.Control 
                             type="date" 
                             name="fechaUltimaToma" 
-                            value={formData.fechaUltimaToma || ''} 
+                            value={formData.fechaUltimaToma || ''}
+                            disabled
+                            readOnly />
+                    </Form.Group>
+                )}
+                {isEditing && formData.fechaResolucion && (
+                    <Form.Group as={Col} md="4" controlId="formGridFechaToma">
+                        <Form.Label>Fecha Resolución</Form.Label>
+                        <Form.Control 
+                            type="date" 
+                            name="fechaResolucion" 
+                            value={formData.fechaResolucion || ''}
+                            disabled
                             readOnly />
                     </Form.Group>
                 )}
@@ -418,41 +431,22 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                         {currentCatalogos.unidadesMedida.map(um => <option key={um.id} value={um.id}>{um.nombre}</option>)}
                     </Form.Select>
                 </Form.Group>
-                <Form.Group as={Col} md="4" controlId="formGridCondicion">
-                    <Form.Label>Condición</Form.Label>
-                    {!isEditing ? (
-                        <Form.Select
-                            name="condicion"
-                            value={formData.condicion || 'Alta'}
-                            onChange={handleInputChange}
-                            disabled={isSubmitting}
-                            required
-                        >
-                            <option value="Alta">Alta</option>
-                            <option value="Baja">Baja</option>
-                        </Form.Select>
-                    ) : (
-                        <Form.Control 
-                            type="text"
-                            name="condicion" 
-                            value={formData.condicion || ''} 
-                            readOnly
-                            disabled
-                            className={formData.condicion === 'Alta' ? 'bg-success-subtle' : 'bg-danger-subtle'}
-                        />        
-                            )}
-                </Form.Group>
+
+
+                {isEditing && (
+                    <Form.Group as={Col} md="4" controlId="formGridCondicion">
+                        <Form.Label>Condición</Form.Label>
+                            <Form.Control 
+                                type="text"
+                                name="condicion" 
+                                value={formData.condicion || ''} 
+                                readOnly
+                                disabled
+                                className={formData.condicion === 'Alta' ? 'bg-success-subtle' : 'bg-danger-subtle'}
+                                />
+                                </Form.Group>)}
             </Row>
-            <Row className="mb-3">
-                <Form.Group as={Col} md="12" controlId="formGridFoto">
-                    <Form.Label>URL Foto</Form.Label>
-                    <Form.Control type="text" 
-                                    name="urlFoto" 
-                                    value={formData.urlFoto || ''} 
-                                    onChange={handleInputChange} 
-                                    disabled={isSubmitting}/>
-                </Form.Group>
-            </Row>
+            
             <div className="d-flex justify-content-end mt-4">
                 {isEditing && (
                     <Button
