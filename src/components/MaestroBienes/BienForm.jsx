@@ -431,27 +431,20 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                         {currentCatalogos.unidadesMedida.map(um => <option key={um.id} value={um.id}>{um.nombre}</option>)}
                     </Form.Select>
                 </Form.Group>
-                <Form.Group as={Col} md="4" controlId="formGridCondicion">
-                    <Form.Label>Condición</Form.Label>
-                    {!isEditing ? (
-                        <Form.Select
-                            name="condicion"
-                            value={formData.condicion || 'Alta'}
-                            onChange={handleInputChange}
-                            disabled={isSubmitting}
-                            
-                        >
-                        </Form.Select>
-                    ) : (
-                        <Form.Control 
-                            type="text"
-                            name="condicion" 
-                            value={formData.condicion || ''} 
-                            
-                            className={formData.condicion === 'Alta' ? 'bg-success-subtle' : 'bg-danger-subtle'}
-                        />        
-                            )}
-                </Form.Group>
+
+
+                {isEditing && (
+                    <Form.Group as={Col} md="4" controlId="formGridCondicion">
+                        <Form.Label>Condición</Form.Label>
+                            <Form.Control 
+                                type="text"
+                                name="condicion" 
+                                value={formData.condicion || ''} 
+                                readOnly
+                                disabled
+                                className={formData.condicion === 'Alta' ? 'bg-success-subtle' : 'bg-danger-subtle'}
+                                />
+                                </Form.Group>)}
             </Row>
             
             <div className="d-flex justify-content-end mt-4">
