@@ -22,6 +22,11 @@ export const mapFrontendToBackendAdd = (formData, catalogos) => {
         ancho: formData.ancho ? parseFloat(formData.ancho) : null,
         responsableRut: formData.responsableRut ? parseInt(formData.responsableRut) : null,
         urlFoto: formData.urlFoto,
+        costoAdquisicion: formData.costoAdquisicion ? parseFloat(formData.costoAdquisicion) : null,
+        valorResidual: formData.valorResidual ? parseFloat(formData.valorResidual) : 0,
+        valor: formData.costoAdquisicion ? parseFloat(formData.costoAdquisicion) : null,
+        ultimaDepreciacion: formData.ultimaDepreciacion,
+
         
         grupo: formData.idGrupo ? { 
             id: parseInt(formData.idGrupo),
@@ -85,6 +90,10 @@ export const mapFrontendToBackendUpdate = (formData) => {
         ancho: formData.ancho ? parseFloat(formData.ancho) : null,
         responsableRut: formData.responsableRut ? parseInt(formData.responsableRut) : null,
         urlFoto: formData.urlFoto,
+        costoAdquisicion: formData.costoAdquisicion ? parseFloat(formData.costoAdquisicion) : null,
+        valorResidual: formData.valorResidual ? parseFloat(formData.valorResidual) : 0,
+        valor: formData.valor ? parseFloat(formData.valor) : null,
+        ultimaDepreciacion: formData.ultimaDepreciacion,
 
         responsable: formData.idResponsable ? { 
             id: parseInt(formData.idResponsable) 
@@ -143,6 +152,10 @@ export const mapBackendToFrontend = (backendDto, catalogos) => {
         ancho: backendDto.ancho,
         fechaUltimaToma: formatDate(backendDto.fechaUltimaToma),
         urlFoto: backendDto.urlFoto,
+        costoAdquisicion: backendDto.costoAdquisicion,
+        valorResidual: backendDto.valorResidual,
+        valor: backendDto.valor,
+        ultimaDepreciacion: backendDto.ultimaDepreciacion,
 
         idResponsable: findResponsableIdByRut(backendDto.responsable),
         responsableRut: backendDto.responsable,

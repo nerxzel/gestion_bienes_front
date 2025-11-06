@@ -1,10 +1,11 @@
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Row, Col, Button, Modal, Alert, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { FaPencilAlt, FaPlus, FaArrowDown, FaArrowUp, FaFileDownload} from 'react-icons/fa';
+import { FaPencilAlt, FaPlus, FaArrowDown, FaArrowUp, FaCalculator} from 'react-icons/fa';
 import { manejarErrorAPI } from '../../utils/errorHandler';
 import api from '../../api/axiosConfig';
 import { normalizarCondicion } from '../../utils/condicionUtils';
+import { formatCLP } from '../../utils/formatUtils';
 
 function BienGrid() {
     const [bienes, setBienes] = useState([]);
@@ -13,6 +14,10 @@ function BienGrid() {
 
     const [error, setError] = useState(null);
     const [estaCargando, setEstaCargando] = useState(true);
+
+    const [showDepreciateModal, setShowDepreciateModal] = useState(false);
+    const [isDepreciating, setIsDepreciating] = useState(false);
+    const [depreciateError, setDepreciateError] = useState(null);
 
     const navigate = useNavigate();
 
@@ -27,30 +32,6 @@ function BienGrid() {
             setBienes([]);
         }
     };
-
-    const handleDescargarReporte = async () => {
-        try {
-            const response = await api.get('/bien/excel/all', {
-                responseType: 'blob',
-            });
-
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'Reporte_General_Bienes.xlsx'); 
-            
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url); 
-
-        } catch (err) {
-            console.error('Error al descargar el reporte:', err);
-            setError('No se pudo descargar el reporte.');
-        }
-    };
-
   
     useEffect(() => {
         const loadData = async () => {
@@ -61,6 +42,23 @@ function BienGrid() {
         };
         loadData();
     }, []);
+
+    const handleDepreciarBienes = async () => {
+        setIsDepreciating(true);
+        setDepreciateError(null);
+        
+        try {
+            await api.post('/bien/depreciar');
+            setShowDepreciateModal(false);
+            await cargarBienes(); 
+
+        } catch (err) {
+            const mensajeError = manejarErrorAPI(err);
+            setDepreciateError(mensajeError);
+        } finally {
+            setIsDepreciating(false);
+        }
+    };
 
     const bienesFiltrados = bienes.filter((bien) => {
 
@@ -108,77 +106,113 @@ function BienGrid() {
           </Button>
 
           <Button 
-            variant="success" 
-            className="ms-2"
-            onClick={handleDescargarReporte}
-        >
-            <FaFileDownload className="me-1" /> Descargar Reporte General
-        </Button>
+                className='ms-2'
+                variant="warning" 
+                onClick={() => setShowDepreciateModal(true)}
+            >
+                <FaCalculator className="me-1" /> Depreciar Bienes
+            </Button>
+
         </div>
-      
         {estaCargando && <div className="text-center">Cargando datos...</div>}
         {error && <div className="alert alert-danger">Error: {error}</div>}
 
         {!estaCargando && !error && (
-          <div className='table-responsive'>
+        <div className='table-responsive'>
             <table className="table table-striped table-bordered table-hover table-sm table-layout-fixed">
                 <thead>
                     <tr>
-                        <th>Código Inv</th>
-                        <th>Descripción Corta</th>
-                        <th>Grupo</th>
-                        <th>Clase</th>
-                        <th>Sub Clase</th>
-                        <th>Fecha Ingreso</th>
-                        <th>Condición</th>
+                        <th className="truncate-cell">Código Inv</th>
+                        <th className="truncate-cell">Descripción Corta</th>
+                        <th className="truncate-cell">Grupo</th>
+                        <th className="truncate-cell">Clase</th>
+                        <th className="truncate-cell">Sub Clase</th>
+                        <th className="truncate-cell">Fecha Ingreso</th>
+                        <th className="truncate-cell">Condición</th>
+                        <th className="truncate-cell">Última Depreciación</th>
+                        <th>Valor</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                 {bienesFiltrados.length > 0 ? (
                     bienesFiltrados.map((bien) => (
-                          <tr key={bien.codigoInventario}>
-                            <td>{bien.codigoInventario}</td>
-                            <td>{bien.nombre}</td>
-                            <td>{bien.grupo}</td>
-                            <td>{bien.clase}</td>
-                            <td>{bien.subClase}</td>
-                            <td>{bien.fechaAdquisicion}</td>
-                            <td>{bien.condicion}</td>
+                        <tr key={bien.codigoInventario}>
+                            <td className="truncate-cell">{bien.codigoInventario}</td>
+                            <td className="truncate-cell">{bien.nombre}</td>
+                            <td className="truncate-cell">{bien.grupo}</td>
+                            <td className="truncate-cell">{bien.clase}</td>
+                            <td className="truncate-cell">{bien.subClase}</td>
+                            <td className="truncate-cell">{bien.fechaAdquisicion}</td>
+                            <td className="truncate-cell">{bien.condicion}</td>
+                            <td className="truncate-cell">{bien.ultimaDepreciacion}</td>
+                            <td>{formatCLP(bien.valor)}</td>
                             <td className="text-nowrap">
-                              <Button variant="outline-primary" 
-                                      className="me-2" 
-                                      size="sm"
-                                      onClick={() => navigate(`/modificar-bien/${bien.id}`)}>
-                                  <FaPencilAlt />
-                              </Button>
+                            <Button variant="outline-primary" 
+                                    className="me-2" 
+                                    size="sm"
+                                    onClick={() => navigate(`/modificar-bien/${bien.id}`)}>
+                                <FaPencilAlt />
+                            </Button>
 
-                              <Button 
-                                      variant="outline-success" 
-                                      className="me-2" 
-                                      size="sm"
-                                      onClick={() => navigate(`/dar-alta/${bien.id}`)}
-                                      title="Dar de Alta">
-                                    <FaArrowUp />
-                              </Button>
+                            <Button 
+                                    variant="outline-success" 
+                                    className="me-2" 
+                                    size="sm"
+                                    onClick={() => navigate(`/dar-alta/${bien.id}`)}
+                                    title="Dar de Alta">
+                                <FaArrowUp />
+                            </Button>
                                             
-                              <Button 
-                                      variant="outline-danger" 
-                                      size="sm"
-                                      onClick={() => navigate(`/dar-baja/${bien.id}`)}
-                                      title="Dar de Baja">
-                                      <FaArrowDown />
-                              </Button>
+                            <Button 
+                                    variant="outline-danger" 
+                                    size="sm"
+                                    onClick={() => navigate(`/dar-baja/${bien.id}`)}
+                                    title="Dar de Baja">
+                                    <FaArrowDown />
+                            </Button>
                             </td>
-                          </tr>))
-                              ) : (
-                          <tr>
+                        </tr>))
+                            ) : (
+                        <tr>
                             <td colSpan="8" className="text-center">No se encontraron bienes.</td>
-                          </tr>)}
+                        </tr>)}
                 </tbody>
             </table>
-          </div>
+        </div>
             )}
+
+        <Modal show={showDepreciateModal} onHide={() => setShowDepreciateModal(false)} centered>
+            <Modal.Header closeButton>
+                <Modal.Title>Confirmar Depreciación Masiva</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <p>Estás a punto de recalcular el valor para <strong>todos los bienes</strong> del sistema basado en su costo de adquisición y años de depreciación.</p>
+                <p className="fw-bold">Esta acción es irreversible y actualizará la información del "Valor" y "Última Depreciación".</p>
+                <p>¿Estás seguro de que deseas continuar?</p>
+                
+                {depreciateError && <Alert variant="danger">{depreciateError}</Alert>}
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => setShowDepreciateModal(false)} disabled={isDepreciating}>
+                    Cancelar
+                </Button>
+                <Button 
+                    variant="warning" 
+                    onClick={handleDepreciarBienes}
+                    disabled={isDepreciating}
+                >
+                    {isDepreciating ? (
+                        <>
+                            <Spinner as="span" animation="border" size="sm" className="me-2" />
+                            Procesando...
+                        </>
+                    ) : (
+                        'Sí, ejecutar depreciación'
+                    )}
+                </Button>
+            </Modal.Footer>
+        </Modal>
         </>
     );
 }

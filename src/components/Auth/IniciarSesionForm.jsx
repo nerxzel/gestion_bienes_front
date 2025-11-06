@@ -96,6 +96,10 @@ function IniciarSesionForm() {
 
           {serverError && <p className="text-danger small mt-3">{serverError}</p>}
           
+          <div className="text-end mt-2">
+            <Link to="/olvide-contrasenha" className="small text-muted">¿Olvidaste tu contraseña?</Link>
+          </div>
+          
           <div className="d-grid mt-4">
             <Button variant="primary" type="submit" size="lg" disabled={loading}>
               {loading ? (

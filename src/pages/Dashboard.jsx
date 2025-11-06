@@ -4,7 +4,7 @@ import BienGrid from '../components/MaestroBienes/BienGrid';
 
 function Dashboard() {
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 container-ancho-personalizado">
       <Card className="p-4 shadow-sm ">
         <Card.Body>
           <BienGrid /> 

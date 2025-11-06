@@ -1,15 +1,59 @@
-import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Container, Spinner, Alert} from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { FaPencilAlt, FaPlus, FaArrowDown, FaArrowUp, FaFileDownload} from 'react-icons/fa';
+import api from '../api/axiosConfig';
 import '../styles/themes.css';
 
 function NavBar() {
+
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState(null);
+
   const navigate = useNavigate()
   const handleLogout = () => {
   localStorage.removeItem('userToken');
   navigate('/'); 
 };
 
+  const handleDescargarReporte = async () => {
+    setIsDownloading(true);
+    setDownloadError(null);
+
+    try {
+      const response = await api.get('/bien/excel/all', {
+        responseType: 'blob',
+      });
+
+
+      let filename = 'Reporte_General_Bienes.xlsx';
+      const contentDisposition = response.headers['content-disposition'];
+      if (contentDisposition) {
+          const filenameMatch = contentDisposition.match(/filename="?(.+?)"?$/i);
+          if (filenameMatch && filenameMatch[1]) {
+              filename = filenameMatch[1];
+          }
+      }
+      
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', filename); 
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url); 
+
+    } catch (err) {
+        console.error('Error al descargar el reporte:', err);
+        setDownloadError('No se pudo descargar el reporte.');
+    } finally {
+        setIsDownloading(false);
+    }
+  };
+
   return (
+    <>
     <Navbar expand="lg" bg="light" data-bs-theme="light">
       <Container>
         <Navbar.Brand as={Link} to="/dashboard">Gestión de Activos</Navbar.Brand>
@@ -17,20 +61,35 @@ function NavBar() {
         <Navbar.Collapse id="basic-navbar-nav" className='justify-content-center'>
           <Nav >
 
-            <NavDropdown title="Procesos" id="procesos-dropdown">
-              {/*<NavDropdown title="Traslado" id="traslado-nested-dropdown" drop="end" className='ms-2'>
+          {/*<NavDropdown title="Procesos" id="procesos-dropdown">
+              <NavDropdown title="Traslado" id="traslado-nested-dropdown" drop="end" className='ms-2'>
                   <NavDropdown.Item as={Link} to='/traslado'>Traslado</NavDropdown.Item>
                   <NavDropdown.Item as={Link} to='/cambio-responsable'>Cambio de Responsable</NavDropdown.Item>
               </NavDropdown>*/}
-              {/*<NavDropdown.Item as={Link} to='/toma-inventario'>Toma de Inventario</NavDropdown.Item>*/}
+              {/*<NavDropdown.Item as={Link} to='/toma-inventario'>Toma de Inventario</NavDropdown.Item>
               <NavDropdown.Item>Depreciar</NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown>*/}
 
             <NavDropdown title="Reportes" id="reportes-dropdown">
               {/*<NavDropdown.Item as={Link} to='/bienes-alta'>Bienes Alta</NavDropdown.Item>
               <NavDropdown.Item as={Link} to='/bienes-baja'>Bienes Baja</NavDropdown.Item>*/}
-              <NavDropdown.Item as={Link} to='/dashboard-responsable'>Hoja Mural</NavDropdown.Item> {/* La hoja mural se descarga por responsable, por eso se redirige a ese dashboard */}
-              {/*<NavDropdown title="Etiquetas" id="etiquetas-nested-dropdown" drop="end" className='ms-2'>
+              <NavDropdown.Item 
+                onClick={handleDescargarReporte} 
+                disabled={isDownloading}
+              >
+                {isDownloading ? (
+                  <>
+                    <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                    <span className="ms-2">Descargando...</span>
+                  </>
+                ) : (
+                  <>
+                    <FaFileDownload className="me-1" /> Descargar Reporte General
+                  </>
+                )}
+              </NavDropdown.Item>
+            {/*<NavDropdown.Item as={Link} to='/dashboard-responsable'>Hoja Mural</NavDropdown.Item>
+              <NavDropdown title="Etiquetas" id="etiquetas-nested-dropdown" drop="end" className='ms-2'>
                   <NavDropdown.Item as={Link} to='/etiquetas-individual'>Individual</NavDropdown.Item>
                   <NavDropdown.Item as={Link} to='/etiquetas-responsable'>Por Responsable</NavDropdown.Item>
                   <NavDropdown.Item as={Link} to='/etiquetas-ubicacion'>Por Ubicación</NavDropdown.Item>
@@ -63,7 +122,17 @@ function NavBar() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+
+    {downloadError && (
+          <Container className='mt-3'>
+              <Alert variant="danger" onClose={() => setDownloadError(null)} dismissible>
+                  {downloadError}
+              </Alert>
+          </Container>
+      )}
+    </>
   );
+  
 }
 
 export default NavBar;

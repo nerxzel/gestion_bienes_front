@@ -34,6 +34,12 @@ function GrupoForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
             errores.nombre = 'El nombre del grupo no puede tener más de 35 caracteres'
         }
 
+        if(!formData.vidaUtil) {
+            errores.vidaUtil = 'Los años de depreciación no pueden quedar vacíos, favor asignar un valor'
+        } else if (parseInt(formData.vidaUtil, 10) <= 0) {
+            errores.vidaUtil = 'Los años de depreciación deben ser un número mayor que 0.';
+        }
+
         return errores;
     }
 
@@ -49,7 +55,7 @@ function GrupoForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
     return (
         <Form onSubmit={handleSubmit}>
             <Row>
-                <Form.Group as={Col} md="12">
+                <Form.Group as={Col} md="8">
                     <Form.Label>Nombre del grupo</Form.Label>
                     <Form.Control
                         type="text"
@@ -63,6 +69,23 @@ function GrupoForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
                         />
                     <Form.Control.Feedback type="invalid">
                         {erroresValidacion.nombre}
+                    </Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group as={Col} md="4">
+                    <Form.Label>Años depreciación</Form.Label>
+                    <Form.Control
+                        type="number"
+                        name="vidaUtil"
+                        value={formData.vidaUtil}
+                        onChange={handleInputChange}
+                        isInvalid={!!erroresValidacion.vidaUtil}
+                        disabled={isSubmitting}
+                        min="1"
+                        required
+                        />
+                    <Form.Control.Feedback type="invalid">
+                        {erroresValidacion.vidaUtil}
                     </Form.Control.Feedback>
                 </Form.Group>
             </Row>
