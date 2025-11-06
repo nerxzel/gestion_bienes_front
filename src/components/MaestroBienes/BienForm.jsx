@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
+import { formatCLP } from '../../utils/formatUtils';
 import api from '../../api/axiosConfig'; 
 
 function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSubmitting = false}) {
@@ -280,7 +281,55 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                 
             </Row>
 
-            
+            <Row className="mb-3">
+                <Form.Group as={Col} md="4" controlId="formGridCostoAdquisicion">
+                    <Form.Label>Costo de Adquisición ($) (Sin puntos ni comas)</Form.Label>
+                    <Form.Control 
+                        type="number" 
+                        name="costoAdquisicion"
+                        value={formData.costoAdquisicion ?? ''}
+                        onChange={handleInputChange}
+                        disabled={isSubmitting || isEditing} 
+                        readOnly={isEditing}
+                        required
+                        min="0"
+                    />
+                    {isEditing && (
+                        <Form.Text muted>
+                            Valor: {formatCLP(formData.costoAdquisicion)}
+                        </Form.Text>
+                    )}
+                </Form.Group>
+
+                <Form.Group as={Col} md="4" controlId="formGridValorResidual">
+                    <Form.Label>Valor Residual ($) (Sin puntos ni comas)</Form.Label>
+                    <Form.Control 
+                        type="number" 
+                        name="valorResidual"
+                        value={formData.valorResidual ?? ''}
+                        onChange={handleInputChange}
+                        disabled={isSubmitting}
+                        required
+                        min="0"
+                    />
+                </Form.Group>
+
+                <Form.Group as={Col} md="4" controlId="formGridValorActual">
+                    <Form.Label>Valor Actual ($)</Form.Label>
+                    <Form.Control 
+                        type="text" 
+                        name="valor"
+                        value={!isEditing 
+                                ? (formData.costoAdquisicion ? formatCLP(formData.costoAdquisicion) : '$ 0') 
+                                : formatCLP(formData.valor)}
+                        readOnly 
+                        disabled
+                        className="bg-light" 
+                    />
+                </Form.Group>
+            </Row>
+    
+
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="formGridGrupo">
                     <Form.Label>Grupo</Form.Label>
@@ -374,6 +423,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                                     value={formData.cantidadPieza || ''} 
                                     onChange={handleInputChange}
                                     disabled={isSubmitting}
+                                    min="0"
                                     required/>
                 </Form.Group>
             </Row>
@@ -397,6 +447,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                                     value={formData.alto || ''} 
                                     onChange={handleInputChange}
                                     disabled={isSubmitting}
+                                    min="0"
                                     required/>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridAncho">
@@ -407,6 +458,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                                     value={formData.ancho || ''} 
                                     onChange={handleInputChange}
                                     disabled={isSubmitting}
+                                    min="0"
                                     required/>
                 </Form.Group>
             </Row>
@@ -417,6 +469,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                                     value={formData.idUbicacion || ''} 
                                     onChange={handleCatalogoChange}
                                     disabled={isSubmitting}
+                                    min="0"
                                     required>
                         <option value="">Seleccione Ubicación</option>
                         {currentCatalogos.ubicaciones.map(u => <option key={u.id} value={u.id}>{u.nombre}</option>)}

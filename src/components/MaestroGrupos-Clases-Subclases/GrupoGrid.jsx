@@ -66,6 +66,7 @@ function GrupoGrid() {
                 <thead>
                     <tr>
                         <th>Grupos</th>
+                        <th>Años depreciación</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -74,6 +75,7 @@ function GrupoGrid() {
                     gruposFiltrados.map((grupo) => (
                         <tr key={grupo.id}>
                             <td>{grupo.nombre}</td>
+                            <td>{grupo.vidaUtil}</td>
                             <td className="text-nowrap">
                                 <Button variant="outline-primary" 
                                     className="me-2" 

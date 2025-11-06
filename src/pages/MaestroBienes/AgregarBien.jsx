@@ -23,7 +23,7 @@ function AgregarBien() {
         idGrupo: '', idClase: '', idSubClase: '', idMarca: '', idModelo: '',
         descripcionLarga: '', tipoObjeto: '', numSerie: '', color: '', cantidadPieza: '',
         largo: '', alto: '', ancho: '', idUbicacion: '', idUnidadMedida: '',
-        urlFoto: '', responsableRut: '', idResponsable: ''
+        urlFoto: '', responsableRut: '', idResponsable: '', costoAdquisicion: '', valorResidual: '', valor: ''
     };
 
     useEffect(() => {

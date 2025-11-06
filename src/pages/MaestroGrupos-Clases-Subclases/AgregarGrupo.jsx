@@ -10,7 +10,7 @@ function AgregarGrupo() {
     const [cargando, setCargando] = useState(false); 
     const navigate = useNavigate();
 
-    const FORMULARIO_GRUPO_VACIO = {    nombre: '', vidaUtil: 1};
+    const FORMULARIO_GRUPO_VACIO = {    nombre: '', vidaUtil: ''};
 
     const handleAgregarSubmit = async (formData) => {
         setErrorGuardar(null);
