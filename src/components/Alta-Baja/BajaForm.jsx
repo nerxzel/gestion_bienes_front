@@ -51,7 +51,7 @@ function BajaForm() {
         try {
             await api.put(`/bien/baja/${id}`);
             const responseActualizada = await api.get(`/bien/${id}`);
-            console.log('Respuesta de la segunda llamada:', responseActualizada.data);
+           
 
             const bienActualizado = {
                 ...responseActualizada.data,

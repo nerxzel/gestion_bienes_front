@@ -25,7 +25,7 @@ function ValidarCodigoForm() {
     }
 
     setErrors({});
-    console.log('Código enviado para verificación:', code);
+   
     
     navigate('/restablecer-contrasenha'); 
   };

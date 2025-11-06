@@ -33,7 +33,7 @@ function AltaForm() {
                     condicion: normalizarCondicion(response.data.condicion)
                 };
                 setBienData(bienNormalizado);
-                console.log("Info del backend: ", bienNormalizado)
+                
             } catch (err) {
                 const mensajeError = obtenerMensajeError(err, `Error al cargar el bien con ID ${id}`);
                 setError(mensajeError);
@@ -53,7 +53,6 @@ function AltaForm() {
         try {
             await api.put(`/bien/alta/${id}`);
             const responseActualizada = await api.get(`/bien/${id}`);
-            console.log('Respuesta de la segunda llamada:', responseActualizada.data);
 
             const bienActualizado = {
                 ...responseActualizada.data,

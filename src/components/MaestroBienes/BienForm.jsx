@@ -279,6 +279,8 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                 </Form.Group>
                 
             </Row>
+
+            
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="formGridGrupo">
                     <Form.Label>Grupo</Form.Label>
