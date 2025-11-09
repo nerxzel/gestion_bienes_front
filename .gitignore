@@ -25,3 +25,6 @@ dist-ssr
 
 # Environment variables
 /.env*
+
+# Directorios personalizados a ignorar
+references/

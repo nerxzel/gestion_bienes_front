@@ -84,12 +84,13 @@ function NavBar() {
                   </>
                 ) : (
                   <>
-                    <FaFileDownload className="me-1" /> Descargar Reporte General
+                    <FaFileDownload className="me-1" /> Descarga Total Bienes
                   </>
                 )}
               </NavDropdown.Item>
-            {/*<NavDropdown.Item as={Link} to='/dashboard-responsable'>Hoja Mural</NavDropdown.Item>
-              <NavDropdown title="Etiquetas" id="etiquetas-nested-dropdown" drop="end" className='ms-2'>
+              
+            <NavDropdown.Item as={Link} to='/dashboard-responsable'>Hoja Mural</NavDropdown.Item>
+              {/*<NavDropdown title="Etiquetas" id="etiquetas-nested-dropdown" drop="end" className='ms-2'>
                   <NavDropdown.Item as={Link} to='/etiquetas-individual'>Individual</NavDropdown.Item>
                   <NavDropdown.Item as={Link} to='/etiquetas-responsable'>Por Responsable</NavDropdown.Item>
                   <NavDropdown.Item as={Link} to='/etiquetas-ubicacion'>Por Ubicación</NavDropdown.Item>
