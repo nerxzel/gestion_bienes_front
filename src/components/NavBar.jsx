@@ -1,7 +1,8 @@
-import { Navbar, Nav, NavDropdown, Container, Spinner, Alert} from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Container, Spinner, Alert, Modal, Button} from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { FaPencilAlt, FaPlus, FaArrowDown, FaArrowUp, FaFileDownload} from 'react-icons/fa';
+import { FaArrowDown, FaArrowUp, FaFileDownload, FaCalculator} from 'react-icons/fa';
+import { manejarErrorAPI } from '../utils/errorHandler';
 import api from '../api/axiosConfig';
 import '../styles/themes.css';
 
@@ -9,6 +10,10 @@ function NavBar() {
 
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState(null);
+
+  const [showDepreciateModal, setShowDepreciateModal] = useState(false);
+  const [isDepreciating, setIsDepreciating] = useState(false);
+  const [depreciateError, setDepreciateError] = useState(null);
 
   const navigate = useNavigate()
   const handleLogout = () => {
@@ -52,6 +57,23 @@ function NavBar() {
     }
   };
 
+  const handleDepreciarBienes = async () => {
+      setIsDepreciating(true);
+      setDepreciateError(null);
+      
+      try {
+          await api.post('/bien/depreciar');
+          setShowDepreciateModal(false);
+          navigate(0); 
+
+      } catch (err) {
+          const mensajeError = manejarErrorAPI(err, "Error al ejecutar la depreciación masiva");
+          setDepreciateError(mensajeError);
+      } finally {
+          setIsDepreciating(false);
+      }
+  };
+
   return (
     <>
     <Navbar expand="lg" bg="light" data-bs-theme="light">
@@ -61,14 +83,16 @@ function NavBar() {
         <Navbar.Collapse id="basic-navbar-nav" className='justify-content-center'>
           <Nav >
 
-          {/*<NavDropdown title="Procesos" id="procesos-dropdown">
-              <NavDropdown title="Traslado" id="traslado-nested-dropdown" drop="end" className='ms-2'>
+          <NavDropdown title="Procesos" id="procesos-dropdown">
+              {/*<NavDropdown title="Traslado" id="traslado-nested-dropdown" drop="end" className='ms-2'>
                   <NavDropdown.Item as={Link} to='/traslado'>Traslado</NavDropdown.Item>
                   <NavDropdown.Item as={Link} to='/cambio-responsable'>Cambio de Responsable</NavDropdown.Item>
-              </NavDropdown>*/}
-              {/*<NavDropdown.Item as={Link} to='/toma-inventario'>Toma de Inventario</NavDropdown.Item>
-              <NavDropdown.Item>Depreciar</NavDropdown.Item>
-            </NavDropdown>*/}
+              </NavDropdown>
+              <NavDropdown.Item as={Link} to='/toma-inventario'>Toma de Inventario</NavDropdown.Item>*/}
+              <NavDropdown.Item onClick={() => setShowDepreciateModal(true)}>
+                <FaCalculator className="me-1" /> Depreciar Bienes
+              </NavDropdown.Item>
+            </NavDropdown>
 
             <NavDropdown title="Reportes" id="reportes-dropdown">
               {/*<NavDropdown.Item as={Link} to='/bienes-alta'>Bienes Alta</NavDropdown.Item>
@@ -89,7 +113,9 @@ function NavBar() {
                 )}
               </NavDropdown.Item>
               
-            <NavDropdown.Item as={Link} to='/dashboard-responsable'>Hoja Mural</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to='/dashboard-responsable'>
+              <FaFileDownload className="me-1" /> Hoja Mural
+            </NavDropdown.Item>
               {/*<NavDropdown title="Etiquetas" id="etiquetas-nested-dropdown" drop="end" className='ms-2'>
                   <NavDropdown.Item as={Link} to='/etiquetas-individual'>Individual</NavDropdown.Item>
                   <NavDropdown.Item as={Link} to='/etiquetas-responsable'>Por Responsable</NavDropdown.Item>
@@ -113,7 +139,7 @@ function NavBar() {
               <NavDropdown.Item as={Link} to='/maestro-funcionario'>Maestro de Funcionario</NavDropdown.Item>*/}
             </NavDropdown>
 
-            {/* Quedan comentadas las páginas pendientes de implementación en el futuro. */}
+          
 
             <Nav.Link onClick={handleLogout} style={{ cursor: 'pointer' }}>
               Cerrar Sesión
@@ -131,6 +157,38 @@ function NavBar() {
               </Alert>
           </Container>
       )}
+
+      <Modal show={showDepreciateModal} onHide={() => setShowDepreciateModal(false)} centered>
+        <Modal.Header closeButton>
+        <Modal.Title>Confirmar Depreciación Masiva</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <p>Estás a punto de recalcular el valor para <strong>todos los bienes</strong> del sistema basado en su costo de adquisición y años de depreciación.</p>
+            <p className="fw-bold">Esta acción es irreversible y actualizará la información del "Valor" y "Última Depreciación".</p>
+            <p>¿Estás seguro de que deseas continuar?</p>
+            
+            {depreciateError && <Alert variant="danger" onClose={() => setDepreciateError(null)} dismissible>{depreciateError}</Alert>}
+        </Modal.Body>
+        <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowDepreciateModal(false)} disabled={isDepreciating}>
+                Cancelar
+            </Button>
+            <Button 
+                variant="warning" 
+                onClick={handleDepreciarBienes}
+                disabled={isDepreciating}
+            >
+                {isDepreciating ? (
+                    <>
+                        <Spinner as="span" animation="border" size="sm" className="me-2" />
+                        Procesando...
+                    </>
+                ) : (
+                    'Sí, ejecutar depreciación'
+                )}
+            </Button>
+        </Modal.Footer>
+    </Modal>
     </>
   );
   
