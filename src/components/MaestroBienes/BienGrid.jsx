@@ -21,6 +21,7 @@ function BienGrid() {
         try {
             const respuesta = await api.get('/bien/grid');
             const bienesNormalizados = (respuesta.data || []).map(bien => ({...bien, condicion: normalizarCondicion(bien.condicion)}));
+            bienesNormalizados.sort((a, b) => (a.codigoInventario || '').localeCompare(b.codigoInventario || ''));
             setBienes(bienesNormalizados);
         } catch (err) {
             const mensajeError = manejarErrorAPI(err);
