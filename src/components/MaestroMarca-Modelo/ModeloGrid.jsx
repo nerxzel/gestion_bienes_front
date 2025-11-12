@@ -43,7 +43,7 @@ return (
             <Col sm={3}><Form.Label id='barra-busqueda' htmlFor="barra-busqueda" className="mb-0">Buscar</Form.Label></Col>
 
             <Col sm={4}><Form.Control  
-                placeholder="Buscar por nombre..."
+                placeholder="Buscar por nombre de modelo..."
                 value={barraBusqueda}
                 onChange={(e) => setBarraBusqueda(e.target.value)}
             /></Col>
@@ -66,6 +66,7 @@ return (
                 <thead>
                     <tr>
                         <th>Modelos</th>
+                        <th>Marca a la que pertenece</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -74,6 +75,7 @@ return (
                     modelosFiltrados.map((modelo) => (
                         <tr key={modelo.id}>
                             <td>{modelo.nombre}</td>
+                            <td>{modelo.marca}</td>
                             <td className="text-nowrap">
                                 <Button variant="outline-primary" 
                                     className="me-2" 

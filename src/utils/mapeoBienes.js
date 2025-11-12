@@ -26,6 +26,9 @@ export const mapFrontendToBackendAdd = (formData, catalogos) => {
         valorResidual: formData.valorResidual ? parseFloat(formData.valorResidual) : 0,
         valor: formData.costoAdquisicion ? parseFloat(formData.costoAdquisicion) : null,
         ultimaDepreciacion: formData.ultimaDepreciacion,
+        isla: formData.isla,
+        fila: formData.fila,
+        columna: formData.columna,
 
         
         grupo: formData.idGrupo ? { 
@@ -94,6 +97,9 @@ export const mapFrontendToBackendUpdate = (formData) => {
         valorResidual: formData.valorResidual ? parseFloat(formData.valorResidual) : 0,
         valor: formData.valor ? parseFloat(formData.valor) : null,
         ultimaDepreciacion: formData.ultimaDepreciacion,
+        isla: formData.isla,
+        fila: formData.fila,
+        columna: formData.columna,
 
         responsable: formData.idResponsable ? { 
             id: parseInt(formData.idResponsable) 
@@ -156,6 +162,10 @@ export const mapBackendToFrontend = (backendDto, catalogos) => {
         valorResidual: backendDto.valorResidual,
         valor: backendDto.valor,
         ultimaDepreciacion: backendDto.ultimaDepreciacion,
+        isla: backendDto.isla,
+        fila: backendDto.fila,
+        columna: backendDto.columna,
+
 
         idResponsable: findResponsableIdByRut(backendDto.responsable),
         responsableRut: backendDto.responsable,
