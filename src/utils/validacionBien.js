@@ -7,7 +7,6 @@ export const validarBien = (formData) => {
         fechaAdquisicion: 'Fecha Ingreso',
         tipoObjeto: 'Tipo Objeto',
         idResponsable: 'Responsable',
-        numSerie: 'Número de Serie',
         color: 'Color',
         cantidadPieza: 'Cantidad Piezas',
         largo: 'Largo',
@@ -29,14 +28,14 @@ export const validarBien = (formData) => {
         }
     });
     
-    const camposNumericos = ['cantidadPieza', 'largo', 'alto', 'ancho', 'responsableRut'];
+    const camposNumericos = ['cantidadPieza', 'largo', 'alto', 'ancho'];
     camposNumericos.forEach(campo => {
         const valor = formData[campo];
         if (valor !== undefined && valor !== null && valor !== '') {
             const valorNumerico = parseFloat(valor);
-            if (isNaN(valorNumerico) || valorNumerico <= 0) {
-                if (!errores.includes(`${campo} debe ser un número mayor que cero`)) {
-                    errores.push(`${campo} debe ser un número mayor que cero`);
+            if (isNaN(valorNumerico) || valorNumerico < 0) {
+                if (!errores.includes(`${campo}`)) {
+                    errores.push(`${campo}`);
                 }
             }
         }
@@ -46,7 +45,7 @@ export const validarBien = (formData) => {
         esValido: errores.length === 0,
         errores,
         mensajeError: errores.length > 0 
-            ? `Por favor, corrija los siguientes errores: ${errores.join('; ')}.`
+            ? `Por favor, corrija los siguientes campos: ${errores.join('; ')}.`
             : null
     };
 };

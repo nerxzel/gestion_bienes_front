@@ -53,7 +53,6 @@ function ModificarBien() {
                 setCatalogos(loadedCatalogos);
 
                 const initialFormData = mapBackendToFrontend(bienRes.data, loadedCatalogos);
-           
                 setBienData(initialFormData);
 
             } catch (error) {

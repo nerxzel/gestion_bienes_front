@@ -83,7 +83,7 @@ function ClaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmitting =
                         value={formData.nombre || ''}
                         onChange={handleInputChange}
                         isInvalid={!!erroresValidacion.nombre}
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || !formData.idGrupo}
                         required
                         maxLength="35"
                     />

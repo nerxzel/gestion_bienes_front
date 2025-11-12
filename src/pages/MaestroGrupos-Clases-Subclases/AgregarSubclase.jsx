@@ -13,31 +13,30 @@ function AgregarSubclase() {
     const [cargando, setCargando] = useState(false);
     const navigate = useNavigate();
 
-    const FORMULARIO_SUBCLASE_VACIO = {nombre: '', idClase: ''};
+    const FORMULARIO_SUBCLASE_VACIO = {nombre: '', idGrupo: '', idClase: ''};
 
     useEffect(() => {
-        const cargarClases = async () => {
+        const cargarGrupos = async () => {
             setCargandoCatalogos(true);
             setErrorCatalogos(null);
             try {
-                const res = await api.get('/clase/all');
-                setCatalogos({ clases: res.data || [] });
+                const res = await api.get('/grupo/dropdown'); 
+                setCatalogos({ grupos: res.data || [] });
             } catch (error) {
-                const mensajeError = obtenerMensajeError(error, "Error al cargar clases");
+                const mensajeError = obtenerMensajeError(error, "Error al cargar grupos");
                 setErrorCatalogos(mensajeError);
             } finally {
                 setCargandoCatalogos(false);
             }
         };
-        cargarClases();
+        cargarGrupos();
     }, []);
 
     const mapFrontendToBackend = (formData) => {
         return {
             nombre: formData.nombre,
-            clase: {
-                id: parseInt(formData.idClase)
-            }
+            clase: {id: parseInt(formData.idClase)},
+            grupo: {id: parseInt(formData.idGrupo)}
         };
     };
 

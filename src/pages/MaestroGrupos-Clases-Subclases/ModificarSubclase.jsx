@@ -10,7 +10,7 @@ function ModificarSubclase() {
     const navigate = useNavigate();
 
     const [initialData, setInitialData] = useState(null);
-    const [catalogos, setCatalogos] = useState({ clases: [] });
+    const [catalogos, setCatalogos] = useState({ grupos: [], clases: [] });
     const [cargando, setCargando] = useState(true);
     const [modificando, setModificando] = useState(false);
     const [error, setError] = useState(null);
@@ -19,30 +19,33 @@ function ModificarSubclase() {
     useEffect(() => {
         const cargarDatos = async () => {
             try {
-                const [subclasesRes, clasesRes] = await Promise.all([
+                const [subclaseRes, gruposRes] = await Promise.all([
                     api.get(`/subclase/${id}`), 
-                    api.get('/clase/all')
+                    api.get('/grupo/dropdown') 
                 ]);
 
-                const loadedCatalogos = { clases: clasesRes.data || [] };
-                setCatalogos(loadedCatalogos);
+                const subclaseData = subclaseRes.data;
+                const grupos = gruposRes.data || [];
+                
+                const idGrupo = grupos.find(g => g.nombre === subclaseData.grupo)?.id || '';
 
-                const mapResponseToFormState = (backendDto, loadedCats) => {
-                    const findIdByName = (catName, nameValue) => {
-                        const list = loadedCats[catName] || [];
-                        const item = list.find(item => item.nombre === nameValue);
-                        return item ? item.id : ''; 
-                    };
+                let clases = [];
+                let idClase = '';
 
-                    return {
-                        id: backendDto.id,
-                        nombre: backendDto.nombre,
-                        idClase: findIdByName('clases', backendDto.clase) 
-                    };
-                };
+                if (idGrupo) {
+                    const clasesRes = await api.get(`/clase/dropdown/${idGrupo}`);
+                    clases = clasesRes.data || [];
+                    idClase = clases.find(c => c.nombre === subclaseData.clase)?.id || '';
+                }
 
-                const initialFormData = mapResponseToFormState(subclasesRes.data, loadedCatalogos);
-                setInitialData(initialFormData); 
+                setCatalogos({ grupos, clases });
+                
+                setInitialData({
+                    id: subclaseData.id,
+                    nombre: subclaseData.nombre,
+                    idGrupo: idGrupo,
+                    idClase: idClase
+                }); 
                 
             } catch (err) {
                 const mensajeError = obtenerMensajeError(err, `Error al cargar la subclase con ID ${id}`);

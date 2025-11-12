@@ -226,6 +226,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                         value={formData.nombre || ''} 
                         onChange={handleInputChange}
                         disabled={isSubmitting} 
+                        maxLength="35"
                         required />
                 </Form.Group>
                 <Form.Group as={Col} md="6" controlId="formGridDescLarga">
@@ -236,6 +237,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                         value={formData.descripcionLarga || ''} 
                         onChange={handleInputChange}
                         disabled={isSubmitting}
+                        maxLength="50"
                         required/>
                 </Form.Group>
             </Row>
@@ -405,7 +407,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                                     value={formData.numSerie || ''} 
                                     onChange={handleInputChange} 
                                     disabled={isSubmitting}
-                                    required/>
+                                    maxLength="20"/>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridColor">
                     <Form.Label>Color</Form.Label>
@@ -447,7 +449,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                                     value={formData.alto || ''} 
                                     onChange={handleInputChange}
                                     disabled={isSubmitting}
-                                    min="0"
+                                    
                                     required/>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridAncho">
@@ -462,6 +464,40 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                                     required/>
                 </Form.Group>
             </Row>
+
+            <Row className="mb-3">
+                <Form.Group as={Col} md="4" controlId="formGridIsla">
+                    <Form.Label>Isla</Form.Label>
+                    <Form.Control type="text" 
+                                    name="isla" 
+                                    value={formData.isla || ''} 
+                                    onChange={handleInputChange}
+                                    disabled={isSubmitting}
+                                    maxLength="2"
+                                    required/>
+                </Form.Group>
+                <Form.Group as={Col} md="4" controlId="formGridFila">
+                    <Form.Label>Fila</Form.Label>
+                    <Form.Control type="text" 
+                                    name="fila" 
+                                    value={formData.fila || ''} 
+                                    onChange={handleInputChange}
+                                    disabled={isSubmitting}
+                                    maxLength="2"
+                                    required/>
+                </Form.Group>
+                <Form.Group as={Col} md="4" controlId="formGridColumna">
+                    <Form.Label>Columna</Form.Label>
+                    <Form.Control type="text" 
+                                    name="columna" 
+                                    value={formData.columna || ''} 
+                                    onChange={handleInputChange}
+                                    disabled={isSubmitting}
+                                    maxLength="2"
+                                    required/>
+                </Form.Group>
+            </Row>
+
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="formGridUbicacion">
                     <Form.Label>Ubicación</Form.Label>

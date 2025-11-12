@@ -7,6 +7,16 @@ import { mapFrontendToBackendAdd } from '../../utils/mapeoBienes';
 import BienForm from '../../components/MaestroBienes/BienForm'; 
 import api from '../../api/axiosConfig'; 
 
+const FORMULARIO_BIEN_VACIO = {
+        nombre: '', grupo: '', clase: '', subClase: '', marca: '', modelo: '',
+        fechaAdquisicion: new Date().toISOString().split('T')[0], condicion: 'Alta', 
+        idGrupo: '', idClase: '', idSubClase: '', idMarca: '', idModelo: '',
+        descripcionLarga: '', tipoObjeto: '', numSerie: '', color: '', cantidadPieza: '',
+        largo: '', alto: '', ancho: '', idUbicacion: '', idUnidadMedida: '',
+        urlFoto: '', responsableRut: '', idResponsable: '', costoAdquisicion: '', valorResidual: '', 
+        valor: '', isla: '', fila: '', columna: ''
+    };
+
 function AgregarBien() {
     const [catalogos, setCatalogos] = useState({
         grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], responsables: []
@@ -16,15 +26,6 @@ function AgregarBien() {
     const [errorGuardar, setErrorGuardar] = useState(null);
     const [cargando, setCargando] = useState(false);
     const navigate = useNavigate();
-
-    const FORMULARIO_BIEN_VACIO = {
-        nombre: '', grupo: '', clase: '', subClase: '', marca: '', modelo: '',
-        fechaAdquisicion: new Date().toISOString().split('T')[0], condicion: 'Alta', 
-        idGrupo: '', idClase: '', idSubClase: '', idMarca: '', idModelo: '',
-        descripcionLarga: '', tipoObjeto: '', numSerie: '', color: '', cantidadPieza: '',
-        largo: '', alto: '', ancho: '', idUbicacion: '', idUnidadMedida: '',
-        urlFoto: '', responsableRut: '', idResponsable: '', costoAdquisicion: '', valorResidual: '', valor: ''
-    };
 
     useEffect(() => {
         const cargarCatalogosNecesarios = async () => {
