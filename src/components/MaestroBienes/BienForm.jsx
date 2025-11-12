@@ -473,8 +473,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                                     value={formData.isla || ''} 
                                     onChange={handleInputChange}
                                     disabled={isSubmitting}
-                                    maxLength="2"
-                                    required/>
+                                    maxLength="2"/>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridFila">
                     <Form.Label>Fila</Form.Label>
@@ -483,8 +482,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                                     value={formData.fila || ''} 
                                     onChange={handleInputChange}
                                     disabled={isSubmitting}
-                                    maxLength="2"
-                                    required/>
+                                    maxLength="2"/>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridColumna">
                     <Form.Label>Columna</Form.Label>
@@ -493,8 +491,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                                     value={formData.columna || ''} 
                                     onChange={handleInputChange}
                                     disabled={isSubmitting}
-                                    maxLength="2"
-                                    required/>
+                                    maxLength="2"/>
                 </Form.Group>
             </Row>
 
