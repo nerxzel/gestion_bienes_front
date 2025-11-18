@@ -355,7 +355,7 @@ export const db = {
     },
 
     // --- RESPONSABLES ---
-    getResponsables: () => mockResponsables, // Para el grid y dropdown
+    getResponsables: () => mockResponsables,
     getResponsableById: (id) => mockResponsables.find(r => r.id === parseInt(id)),
     addResponsable: (data) => {
         const newResponsable = { ...data, id: getNextId(mockResponsables) };

@@ -5,16 +5,13 @@ import AppRouter from './router/AppRouter.jsx';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-async function enableMocking() {
-  
-  if (import.meta.env.DEV) {
+async function enableMocking() {  
     const { worker } = await import('./api/mocks/browser.js');
     
     return worker.start({
       onUnhandledRequest: "bypass",
     });
   }
-}
 
 enableMocking().then(() => {
 createRoot(document.getElementById('root')).render(
