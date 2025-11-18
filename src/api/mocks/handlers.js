@@ -1,19 +1,15 @@
 import { http, HttpResponse } from 'msw'
 import { db } from './db'
 
-// Helper para simular latencia de red
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// Definimos la URL base de tu API (la sacamos de tu axiosConfig)
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const handlers = [
     
     // --- AUTH ---
-    // Tu IniciarSesionForm hace un GET a /users/all
     http.get(`${API_URL}/users/all`, async () => {
         await delay(400);
-        // El form solo necesita una respuesta 200 para guardar el token
         return HttpResponse.json(db.login());
     }),
 
@@ -29,7 +25,6 @@ export const handlers = [
         if (bien) {
             return HttpResponse.json(bien);
         }
-        // Simula un error 404
         return new HttpResponse(null, { status: 404, statusText: 'Bien no encontrado' });
     }),
     
@@ -68,7 +63,7 @@ export const handlers = [
 
     // --- PROCESOS ---
     http.post(`${API_URL}/bien/depreciar`, async () => {
-        await delay(2000); // Simula un proceso masivo
+        await delay(2000); 
         const resultado = db.depreciar();
         return HttpResponse.json(resultado);
     }),
@@ -97,6 +92,7 @@ export const handlers = [
         await delay(150);
         return HttpResponse.json(db.getGrupos());
     }),
+
     http.get(`${API_URL}/grupo/dropdown`, async () => {
         await delay(150);
         return HttpResponse.json(db.getGruposDropdown());
@@ -112,15 +108,18 @@ export const handlers = [
         await delay(150);
         return HttpResponse.json(db.getClases());
     }),
+
     http.get(`${API_URL}/clase/:id`, async ({ params }) => {
         await delay(100);
         return HttpResponse.json(db.getClaseById(params.id));
     }),
+
     http.post(`${API_URL}/clase/add`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
         return HttpResponse.json(db.addClase(data), { status: 201 });
     }),
+
     http.put(`${API_URL}/clase/update`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
@@ -132,15 +131,18 @@ export const handlers = [
         await delay(150);
         return HttpResponse.json(db.getSubclases());
     }),
+
     http.get(`${API_URL}/subclase/:id`, async ({ params }) => {
         await delay(100);
         return HttpResponse.json(db.getSubclaseById(params.id));
     }),
+
     http.post(`${API_URL}/subclase/add`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
         return HttpResponse.json(db.addSubclase(data), { status: 201 });
     }),
+
     http.put(`${API_URL}/subclase/update`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
@@ -152,19 +154,23 @@ export const handlers = [
         await delay(150);
         return HttpResponse.json(db.getMarcas());
     }),
+
     http.get(`${API_URL}/marca/dropdown`, async () => {
         await delay(150);
         return HttpResponse.json(db.getMarcasDropdown());
     }),
+
     http.get(`${API_URL}/marca/:id`, async ({ params }) => {
         await delay(100);
         return HttpResponse.json(db.getMarcaById(params.id));
     }),
+
     http.post(`${API_URL}/marca/add`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
         return HttpResponse.json(db.addMarca(data), { status: 201 });
     }),
+    
     http.put(`${API_URL}/marca/update`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
@@ -176,15 +182,18 @@ export const handlers = [
         await delay(150);
         return HttpResponse.json(db.getModelos());
     }),
+
     http.get(`${API_URL}/modelo/:id`, async ({ params }) => {
         await delay(100);
         return HttpResponse.json(db.getModeloById(params.id));
     }),
+
     http.post(`${API_URL}/modelo/add`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
         return HttpResponse.json(db.addModelo(data), { status: 201 });
     }),
+    
     http.put(`${API_URL}/modelo/update`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
@@ -196,19 +205,23 @@ export const handlers = [
         await delay(150);
         return HttpResponse.json(db.getUbicaciones());
     }),
+
     http.get(`${API_URL}/ubicacion/dropdown`, async () => {
         await delay(150);
         return HttpResponse.json(db.getUbicacionesDropdown());
     }),
+
     http.get(`${API_URL}/ubicacion/:id`, async ({ params }) => {
         await delay(100);
         return HttpResponse.json(db.getUbicacionById(params.id));
     }),
+
     http.post(`${API_URL}/ubicacion/add`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
         return HttpResponse.json(db.addUbicacion(data), { status: 201 });
     }),
+
     http.put(`${API_URL}/ubicacion/update`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
@@ -220,45 +233,52 @@ export const handlers = [
         await delay(150);
         return HttpResponse.json(db.getUnidadesMedida());
     }),
+
     http.get(`${API_URL}/unidadMedida/dropdown`, async () => {
         await delay(150);
         return HttpResponse.json(db.getUnidadesMedidaDropdown());
     }),
+    
     http.get(`${API_URL}/unidadMedida/:id`, async ({ params }) => {
         await delay(100);
         return HttpResponse.json(db.getUnidadMedidaById(params.id));
     }),
+
     http.post(`${API_URL}/unidadMedida/add`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
         return HttpResponse.json(db.addUnidadMedida(data), { status: 201 });
     }),
+    
     http.put(`${API_URL}/unidadMedida/update`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
         return HttpResponse.json(db.updateUnidadMedida(data));
     }),
 
-    // --- Responsables (GET all ya lo tienes, faltan los otros) ---
+    // --- Responsables
     http.get(`${API_URL}/responsable/:id`, async ({ params }) => {
         await delay(100);
         return HttpResponse.json(db.getResponsableById(params.id));
     }),
+
     http.post(`${API_URL}/responsable/add`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
         return HttpResponse.json(db.addResponsable(data), { status: 201 });
     }),
+    
     http.put(`${API_URL}/responsable/update`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
         return HttpResponse.json(db.updateResponsable(data));
     }),
-    // Ejemplo:
+    
     http.get(`${API_URL}/marca/all`, async () => {
         await delay(150);
         return HttpResponse.json(db.getMarcas());
     }),
+
     http.get(`${API_URL}/marca/dropdown`, async () => {
         await delay(150);
         return HttpResponse.json(db.getMarcasDropdown());
@@ -267,7 +287,6 @@ export const handlers = [
     // --- REPORTES (Simulación de descarga) ---
     http.get(`${API_URL}/bien/excel/all`, async () => {
         await delay(1500);
-        // Simula la creación de un archivo Excel en memoria
         const fakeExcelBlob = new Blob(
             ["Este es un reporte Excel de bienes (simulado por MSW)"], 
             { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }

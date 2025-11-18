@@ -69,8 +69,8 @@ export let mockUbicaciones = [
 ];
 
 export let mockUnidadesMedida = [
-{ id: 1, nombre: "Unidad" },
-{ id: 2, nombre: "Set" },
+{ id: 1, nombre: "Metro" },
+{ id: 2, nombre: "Centimetro" },
 ];
 
 export let mockResponsables = [
@@ -88,12 +88,10 @@ export const db = {
     getBienesGrid: () => mockBienes.map(b => ({ 
         ...b, 
         fechaAdquisicion: b.fechaIngreso.split('T')[0],
-        // Filtramos los eliminados para que no aparezcan en el grid
     })).filter(b => !b.isDeleted),
 
     getBienById: (id) => {
         const bien = mockBienes.find(b => b.id === parseInt(id));
-        // Simulamos el mapeo que haría el frontend
         if (bien) {
             const responsable = mockResponsables.find(r => r.rut === bien.responsable);
             return {
@@ -107,7 +105,6 @@ export const db = {
 
     addBien: (data) => {
         const newId = getNextId(mockBienes);
-        // Denormalizamos los nombres como haría el backend
         const grupo = mockGrupos.find(g => g.id === data.grupo.id)?.nombre || "N/A";
         const clase = mockClases.find(c => c.id === data.clase.id)?.nombre || "N/A";
         const subclase = mockSubclases.find(sc => sc.id === data.subclase.id)?.nombre || "N/A";
@@ -124,8 +121,7 @@ export const db = {
             valor: data.costoAdquisicion,
             condicion: "Alta",
             isDeleted: false,
-            fechaIngreso: data.fechaAdquisicion, // El form usa 'fechaAdquisicion'
-            // Guardamos los valores denormalizados
+            fechaIngreso: data.fechaAdquisicion, 
             grupo, clase, subclase, marca, modelo, ubicacion, unidadMedida, responsable
         };
         mockBienes.push(nuevoBien);
@@ -133,7 +129,6 @@ export const db = {
     },
 
     updateBien: (data) => {
-        // Denormalizamos los nombres al actualizar
         const grupo = mockGrupos.find(g => g.id === data.grupo.id)?.nombre || "N/A";
         const clase = mockClases.find(c => c.id === data.clase.id)?.nombre || "N/A";
         const subclase = mockSubclases.find(sc => sc.id === data.subclase.id)?.nombre || "N/A";
@@ -147,10 +142,9 @@ export const db = {
         mockBienes = mockBienes.map(b => {
             if (b.id === data.id) {
                 bienActualizado = { 
-                    ...b, // Mantenemos datos antiguos (como 'isDeleted')
-                    ...data, // Sobreescribimos con los datos del form
-                    fechaIngreso: data.fechaAdquisicion, // Ajuste de nombre de campo
-                    // Actualizamos valores denormalizados
+                    ...b, 
+                    ...data, 
+                    fechaIngreso: data.fechaAdquisicion,
                     grupo, clase, subclase, marca, modelo, ubicacion, unidadMedida, responsable
                 };
                 return bienActualizado;
@@ -160,19 +154,17 @@ export const db = {
         return bienActualizado;
     },
 
-    // ¡CORREGIDO! Esta es la versión de "borrado lógico" (soft delete) que discutimos.
     deleteBien: (id) => {
         let bienEliminado = null;
         mockBienes = mockBienes.map(b => {
             if (b.id === parseInt(id)) {
                 console.warn(`MOCK: Borrado lógico de bien ID: ${id}`);
-                // Actualizamos el estado, no lo filtramos
                 bienEliminado = { ...b, isDeleted: true, condicion: 'Baja' }; 
                 return bienEliminado;
             }
             return b;
         });
-        return bienEliminado; // Devolvemos el objeto "eliminado"
+        return bienEliminado;
     },
 
     setBienCondicion: (id, condicion) => {
@@ -197,7 +189,7 @@ export const db = {
                 if (grupo && grupo.vidaUtil > 0) {
                     const depreciacionAnual = (b.costoAdquisicion - b.valorResidual) / grupo.vidaUtil;
                     const depreciacionMensual = depreciacionAnual / 12;
-                    b.valor = Math.max(b.valor - depreciacionMensual, b.valorResidual); // Simula 1 mes
+                    b.valor = Math.max(b.valor - depreciacionMensual, b.valorResidual); 
                     b.ultimaDepreciacion = new Date().toISOString().split('T')[0];
                 }
             }
@@ -206,35 +198,42 @@ export const db = {
     },
 
     // --- GRUPOS ---
-    getGrupos: () => mockGrupos, // Para el grid
+    getGrupos: () => mockGrupos, 
+
     getGruposDropdown: () => mockGrupos.map(g => ({ id: g.id, nombre: g.nombre })),
+
     getGrupoById: (id) => mockGrupos.find(g => g.id === parseInt(id)),
+
     addGrupo: (data) => {
         const newGrupo = { ...data, id: getNextId(mockGrupos) };
         mockGrupos.push(newGrupo);
         return newGrupo;
     },
+
     updateGrupo: (data) => {
         mockGrupos = mockGrupos.map(g => (g.id === data.id ? { ...g, ...data } : g));
         return data;
     },
 
     // --- CLASES ---
-    getClases: () => mockClases, // Para el grid
+    getClases: () => mockClases,
+
     getClaseById: (id) => mockClases.find(c => c.id === parseInt(id)),
+
     addClase: (data) => {
         const grupo = mockGrupos.find(g => g.id === parseInt(data.grupo.id));
         const newClase = {
             id: getNextId(mockClases),
             nombre: data.nombre,
             idGrupo: grupo.id,
-            grupo: grupo.nombre // Añadimos el nombre para el grid
+            grupo: grupo.nombre 
         };
         mockClases.push(newClase);
         return newClase;
     },
+
     updateClase: (data) => {
-        const grupo = mockGrupos.find(g => g.id === parseInt(data.idGrupo)); // El form modificar envía idGrupo
+        const grupo = mockGrupos.find(g => g.id === parseInt(data.idGrupo)); 
         let updatedClase = null;
         mockClases = mockClases.map(c => {
             if (c.id === data.id) {
@@ -245,12 +244,13 @@ export const db = {
         });
         return updatedClase;
     },
-    getClasesDropdownByGrupo: (idGrupo) => mockClases
+
+    getClasesDropdown: (idGrupo) => mockClases
         .filter(c => c.idGrupo === parseInt(idGrupo))
         .map(c => ({ id: c.id, nombre: c.nombre })),
 
     // --- SUBCLASES ---
-    getSubclases: () => mockSubclases, // Para el grid
+    getSubclases: () => mockSubclases, 
     getSubclaseById: (id) => mockSubclases.find(s => s.id === parseInt(id)),
     addSubclase: (data) => {
         const clase = mockClases.find(c => c.id === parseInt(data.clase.id));
@@ -260,14 +260,14 @@ export const db = {
             nombre: data.nombre,
             idClase: clase.id,
             clase: clase.nombre,
-            grupo: grupo.nombre // Añadimos el nombre para el grid
+            grupo: grupo.nombre 
         };
         mockSubclases.push(newSubclase);
         return newSubclase;
     },
     updateSubclase: (data) => {
-        const clase = mockClases.find(c => c.id === parseInt(data.idClase)); // El form modificar envía idClase
-        const grupo = mockGrupos.find(g => g.id === clase.idGrupo); // Obtenemos el grupo desde la clase
+        const clase = mockClases.find(c => c.id === parseInt(data.idClase));
+        const grupo = mockGrupos.find(g => g.id === clase.idGrupo);
         let updatedSubclase = null;
         mockSubclases = mockSubclases.map(s => {
             if (s.id === data.id) {
@@ -278,12 +278,12 @@ export const db = {
         });
         return updatedSubclase;
     },
-    getSubclasesDropdownByClase: (idClase) => mockSubclases
+    getSubclasesDropdown: (idClase) => mockSubclases
         .filter(s => s.idClase === parseInt(idClase))
         .map(s => ({ id: s.id, nombre: s.nombre })),
 
     // --- MARCAS ---
-    getMarcas: () => mockMarcas, // Para el grid
+    getMarcas: () => mockMarcas, 
     getMarcasDropdown: () => mockMarcas.map(m => ({ id: m.id, nombre: m.nombre })),
     getMarcaById: (id) => mockMarcas.find(m => m.id === parseInt(id)),
     addMarca: (data) => {
@@ -297,7 +297,7 @@ export const db = {
     },
 
     // --- MODELOS ---
-    getModelos: () => mockModelos, // Para el grid
+    getModelos: () => mockModelos, 
     getModeloById: (id) => mockModelos.find(m => m.id === parseInt(id)),
     addModelo: (data) => {
         const marca = mockMarcas.find(m => m.id === parseInt(data.marca.id));
@@ -305,13 +305,13 @@ export const db = {
             id: getNextId(mockModelos),
             nombre: data.nombre,
             idMarca: marca.id,
-            marca: marca.nombre // Añadimos el nombre para el grid
+            marca: marca.nombre 
         };
         mockModelos.push(newModelo);
         return newModelo;
     },
     updateModelo: (data) => {
-        const marca = mockMarcas.find(m => m.id === parseInt(data.idMarca)); // El form modificar envía idMarca
+        const marca = mockMarcas.find(m => m.id === parseInt(data.idMarca));
         let updatedModelo = null;
         mockModelos = mockModelos.map(m => {
             if (m.id === data.id) {
@@ -327,7 +327,7 @@ export const db = {
         .map(m => ({ id: m.id, nombre: m.nombre })),
 
     // --- UBICACIONES ---
-    getUbicaciones: () => mockUbicaciones, // Para el grid
+    getUbicaciones: () => mockUbicaciones,
     getUbicacionesDropdown: () => mockUbicaciones.map(u => ({ id: u.id, nombre: u.nombre })),
     getUbicacionById: (id) => mockUbicaciones.find(u => u.id === parseInt(id)),
     addUbicacion: (data) => {
@@ -341,7 +341,7 @@ export const db = {
     },
 
     // --- UNIDADES DE MEDIDA ---
-    getUnidadesMedida: () => mockUnidadesMedida, // Para el grid
+    getUnidadesMedida: () => mockUnidadesMedida, 
     getUnidadesMedidaDropdown: () => mockUnidadesMedida.map(u => ({ id: u.id, nombre: u.nombre })),
     getUnidadMedidaById: (id) => mockUnidadesMedida.find(u => u.id === parseInt(id)),
     addUnidadMedida: (data) => {
