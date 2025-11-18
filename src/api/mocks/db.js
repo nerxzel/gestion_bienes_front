@@ -35,6 +35,42 @@ export let mockBienes = [
     idUnidadMedida: 1,
 },
 
+{
+    id: 1,
+    codigoInventario: "GRU-CLA-002",
+    nombre: "Silla de Oficina Ergonómica",
+    descripcionLarga: "Silla ejecutiva con soporte lumbar",
+    valor: 150000,
+    fechaIngreso: "2023-01-15",
+    tipoObjeto: "Activo Fijo",
+    numSerie: "SN-AERON-123-MOD",
+    color: "Gris Oscuro",
+    cantidadPieza: 1,
+    largo: 0.65,
+    alto: 1.1,
+    ancho: 0.6,
+    condicion: "Alta",
+    costoAdquisicion: 180000,
+    valorResidual: 18000,
+    isla: "AA",
+    fila: "A1",
+    columna: "A2",
+    grupo: "Mobiliario",
+    clase: "Sillas",
+    subClase: "Sillas de Oficina",
+    marca: "Herman Miller",
+    modelo: "Aeron",
+    responsable: "123456789",
+    idResponsable: 1,
+    idGrupo: 1,
+    idClase: 1,
+    idSubClase: 1,
+    idMarca: 1,
+    idModelo: 1,
+    idUbicacion: 1,
+    idUnidadMedida: 1,
+},
+
 ];
 
 export let mockGrupos = [
@@ -233,16 +269,27 @@ export const db = {
     },
 
     updateClase: (data) => {
-        const grupo = mockGrupos.find(g => g.id === parseInt(data.idGrupo)); 
-        let updatedClase = null;
+        const idGrupoEntrante = data.grupo?.id || data.idGrupo;
+        const grupo = mockGrupos.find(g => g.id === parseInt(idGrupoEntrante));
+        if (!grupo) {
+            console.error(`ERROR: No se encontró el grupo con ID: ${idGrupoEntrante}`);
+            return null; 
+        }
+
+        let updateClase = null;
         mockClases = mockClases.map(c => {
             if (c.id === data.id) {
-                updatedClase = { ...c, nombre: data.nombre, idGrupo: grupo.id, grupo: grupo.nombre };
-                return updatedClase;
+                updateClase = { 
+                    ...c, 
+                    nombre: data.nombre, 
+                    idGrupo: grupo.id,    
+                    grupo: grupo.nombre    
+                };
+                return updateClase;
             }
             return c;
         });
-        return updatedClase;
+        return updateClase;
     },
 
     getClasesDropdown: (idGrupo) => mockClases
@@ -266,7 +313,7 @@ export const db = {
         return newSubclase;
     },
     updateSubclase: (data) => {
-        const clase = mockClases.find(c => c.id === parseInt(data.idClase));
+        const clase = mockClases.find(c => c.id === parseInt(data.clase.id));
         const grupo = mockGrupos.find(g => g.id === clase.idGrupo);
         let updatedSubclase = null;
         mockSubclases = mockSubclases.map(s => {
@@ -310,18 +357,31 @@ export const db = {
         mockModelos.push(newModelo);
         return newModelo;
     },
+
     updateModelo: (data) => {
-        const marca = mockMarcas.find(m => m.id === parseInt(data.idMarca));
+        const idMarcaEntrante = data.marca?.id || data.idMarca;
+        const marca = mockMarcas.find(m => m.id === parseInt(idMarcaEntrante));
+        if (!marca) {
+            console.error(`ERROR: No se encontró la marca con ID: ${idMarcaEntrante}`);
+            return null; 
+        }
+
         let updatedModelo = null;
         mockModelos = mockModelos.map(m => {
             if (m.id === data.id) {
-                updatedModelo = { ...m, nombre: data.nombre, idMarca: marca.id, marca: marca.nombre };
+                updatedModelo = { 
+                    ...m, 
+                    nombre: data.nombre, 
+                    idMarca: marca.id,    
+                    marca: marca.nombre    
+                };
                 return updatedModelo;
             }
             return m;
         });
         return updatedModelo;
     },
+
     getModelosDropdownByMarca: (idMarca) => mockModelos
         .filter(m => m.idMarca === parseInt(idMarca))
         .map(m => ({ id: m.id, nombre: m.nombre })),
