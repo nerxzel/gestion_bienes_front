@@ -1,44 +1,16 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FaPencilAlt, FaPlus, FaArrowDown, FaArrowUp, } from 'react-icons/fa';
-import { manejarErrorAPI } from '../../utils/errorHandler';
-import api from '../../api/axiosConfig';
-import { normalizarCondicion } from '../../utils/condicionUtils';
 import { formatCLP } from '../../utils/formatUtils';
+import { useBienes } from '../../hooks/useBienes';
 
 function BienGrid() {
-    const [bienes, setBienes] = useState([]);
     const [barraBusqueda, setBarraBusqueda] = useState('');
     const [filtroCondicion, setFiltroCondicion] = useState('Todas');
-
-    const [error, setError] = useState(null);
-    const [estaCargando, setEstaCargando] = useState(true);
+    const {bienes, estaCargando, error} = useBienes()
 
     const navigate = useNavigate();
-
-    const cargarBienes = async () => {
-        try {
-            const respuesta = await api.get('/bien/grid');
-            const bienesNormalizados = (respuesta.data || []).map(bien => ({...bien, condicion: normalizarCondicion(bien.condicion)}));
-            bienesNormalizados.sort((a, b) => (a.codigoInventario || '').localeCompare(b.codigoInventario || ''));
-            setBienes(bienesNormalizados);
-        } catch (err) {
-            const mensajeError = manejarErrorAPI(err);
-            setError(mensajeError);
-            setBienes([]);
-        }
-    };
-
-    useEffect(() => {
-        const loadData = async () => {
-            setEstaCargando(true);
-            setError(null);
-            await cargarBienes();
-            setEstaCargando(false);
-        };
-        loadData();
-    }, []);
 
     const bienesFiltrados = bienes.filter((bien) => {
 

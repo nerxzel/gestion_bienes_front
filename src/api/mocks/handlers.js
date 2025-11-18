@@ -43,7 +43,7 @@ export const handlers = [
     }),
 
     http.delete(`${API_URL}/bien/:id`, async ({ params }) => {
-        await delay(1000); // Simula un borrado lento
+        await delay(1000);
         db.deleteBien(params.id);
         return new HttpResponse(null, { status: 204 });
     }),
@@ -91,6 +91,12 @@ export const handlers = [
     http.get(`${API_URL}/grupo/all`, async () => {
         await delay(150);
         return HttpResponse.json(db.getGrupos());
+    }),
+    
+    http.put(`${API_URL}/grupo/update`, async ({ request }) => {
+        await delay(300);
+        const data = await request.json();
+        return HttpResponse.json(db.updateGrupo(data));
     }),
 
     http.get(`${API_URL}/grupo/dropdown`, async () => {
@@ -249,7 +255,7 @@ export const handlers = [
         const data = await request.json();
         return HttpResponse.json(db.addUnidadMedida(data), { status: 201 });
     }),
-    
+
     http.put(`${API_URL}/unidadMedida/update`, async ({ request }) => {
         await delay(300);
         const data = await request.json();

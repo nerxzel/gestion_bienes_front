@@ -59,11 +59,9 @@ import DarAlta from "../pages/Alta-Baja/ProcesosDarDeAlta.jsx";
 import DarBaja from "../pages/Alta-Baja/ProcesosDarDeBaja.jsx";
 
 
-import MaestroFuncionario from "../pages/ConfigMaestroFuncionario.jsx";
+{/*import MaestroFuncionario from "../pages/ConfigMaestroFuncionario.jsx";
 import TipoBien from "../pages/ConfigTipoBien.jsx";
 import CambioResponsable from "../pages/ProcesosCambioResponsable.jsx";
-
-
 import Depreciar from "../pages/ProcesosDepreciar.jsx";
 import TomaInventario from "../pages/ProcesosTomaInventario.jsx";
 import Traslado from "../pages/ProcesosTraslado.jsx";
@@ -73,7 +71,7 @@ import EtiquetaIndividual from "../pages/ReportesEtiquetaIndividual.jsx";
 import EtiquetaPorResponsable from "../pages/ReportesEtiquetaPorResponsable.jsx";
 import EtiquetasPorUbicacion from "../pages/ReportesEtiquetaPorUbicacion.jsx";
 import HojaMural from "../pages/ReportesHojaMural.jsx";
-import CorrelativosPorGrupo from "../pages/ConfigCorrelativosPorGrupo.jsx";
+import CorrelativosPorGrupo from "../pages/ConfigCorrelativosPorGrupo.jsx";*/}
 
 import App from "../App.jsx"
 
@@ -136,14 +134,14 @@ function AppRouter() {
 
                     // Alta
                     <Route path="/dar-alta/:id" element={<DarAlta/>}/>
-                    <Route path="/bienes-alta" element={<BienesAlta/>}/>
+                    {/*<Route path="/bienes-alta" element={<BienesAlta/>}/>*/} 
 
                     // Baja
                     <Route path="/dar-baja/:id" element={<DarBaja/>}/>
-                    <Route path="/bienes-baja" element={<BienesBaja/>}/>
+                    {/*<Route path="/bienes-baja" element={<BienesBaja/>}/>*/} 
 
 
-                    <Route path="/cambio-responsable" element={<CambioResponsable/>}/>
+                    {/*<Route path="/cambio-responsable" element={<CambioResponsable/>}/>
                     <Route path="/toma-inventario" element={<TomaInventario/>}/>
                     <Route path="/traslado" element={<Traslado/>}/>
                     <Route path="/etiquetas-individual" element={<EtiquetaIndividual/>}/>
@@ -153,7 +151,7 @@ function AppRouter() {
                     <Route path="/correlativo-grupo" element={<CorrelativosPorGrupo/>}/>
                     <Route path="/maestro-funcionario" element={<MaestroFuncionario/>}/>
                     <Route path="/tipo-bien" element={<TipoBien/>}/>
-                    <Route path="/depreciar" element={<Depreciar/>}/>             
+                    <Route path="/depreciar" element={<Depreciar/>}/>*/}    
                 </Route>
             </Route>
         </Routes>

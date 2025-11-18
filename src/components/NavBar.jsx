@@ -1,9 +1,11 @@
 import { Navbar, Nav, NavDropdown, Container, Spinner, Alert, Modal, Button} from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { FaArrowDown, FaArrowUp, FaFileDownload, FaCalculator} from 'react-icons/fa';
+import { FaFileDownload, FaCalculator} from 'react-icons/fa';
 import { manejarErrorAPI } from '../utils/errorHandler';
+import { useBienes } from '../hooks/useBienes';
 import api from '../api/axiosConfig';
+
 import '../styles/themes.css';
 
 function NavBar() {
@@ -16,6 +18,9 @@ function NavBar() {
   const [depreciateError, setDepreciateError] = useState(null);
 
   const navigate = useNavigate()
+
+  const { cargarBienes } = useBienes();
+
   const handleLogout = () => {
   localStorage.removeItem('userToken');
   navigate('/'); 
@@ -64,7 +69,8 @@ function NavBar() {
       try {
           await api.post('/bien/depreciar');
           setShowDepreciateModal(false);
-          navigate(0); 
+          
+          cargarBienes();
 
       } catch (err) {
           const mensajeError = manejarErrorAPI(err, "Error al ejecutar la depreciación masiva");
