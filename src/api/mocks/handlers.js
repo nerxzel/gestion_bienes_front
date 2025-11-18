@@ -93,7 +93,7 @@ export const handlers = [
         return HttpResponse.json(db.getGrupos());
     }),
 
-    http.get('/grupo/:id', async ({ params }) => {
+    http.get(`${API_URL}/grupo/:id`, async ({ params }) => {
         await delay(100);
         const grupo = db.getGrupoById(params.id);
         if (grupo) {
@@ -102,7 +102,7 @@ export const handlers = [
         return new HttpResponse(null, { status: 404 });
     }),
 
-    http.post('/grupo/add', async ({ request }) => {
+    http.post(`${API_URL}/grupo/add`, async ({ request }) => {
         await delay(300);
         const data = await request.json();
         return HttpResponse.json(db.addGrupo(data), { status: 201 });
