@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container, Spinner, Alert, Card } from 'react-bootstrap';
+import { Container, Alert, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { obtenerMensajeError } from '../../utils/errorHandler';
 import GrupoForm from '../../components/MaestroGrupos-Clases-Subclases/GrupoForm'; 
@@ -10,7 +10,7 @@ function AgregarGrupo() {
     const [cargando, setCargando] = useState(false); 
     const navigate = useNavigate();
 
-    const FORMULARIO_GRUPO_VACIO = {    nombre: '', vidaUtil: ''};
+    const FORMULARIO_GRUPO_VACIO = { nombre: '', vidaUtil: ''};
 
     const handleAgregarSubmit = async (formData) => {
         setErrorGuardar(null);

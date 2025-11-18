@@ -241,13 +241,26 @@ export const db = {
     getGrupoById: (id) => mockGrupos.find(g => g.id === parseInt(id)),
 
     addGrupo: (data) => {
-        const newGrupo = { ...data, id: getNextId(mockGrupos) };
+        const newGrupo = { 
+            ...data, 
+            id: getNextId(mockGrupos),
+            vidaUtil: parseInt(data.vidaUtil) 
+        };
         mockGrupos.push(newGrupo);
         return newGrupo;
     },
 
     updateGrupo: (data) => {
-        mockGrupos = mockGrupos.map(g => (g.id === data.id ? { ...g, ...data } : g));
+        mockGrupos = mockGrupos.map(g => {
+            if (g.id === data.id) {
+                return { 
+                    ...g, 
+                    ...data,
+                    vidaUtil: parseInt(data.vidaUtil) 
+                };
+            }
+            return g;
+        });
         return data;
     },
 
@@ -297,8 +310,10 @@ export const db = {
         .map(c => ({ id: c.id, nombre: c.nombre })),
 
     // --- SUBCLASES ---
-    getSubclases: () => mockSubclases, 
+    getSubclases: () => mockSubclases,
+
     getSubclaseById: (id) => mockSubclases.find(s => s.id === parseInt(id)),
+
     addSubclase: (data) => {
         const clase = mockClases.find(c => c.id === parseInt(data.clase.id));
         const grupo = mockGrupos.find(g => g.id === parseInt(data.grupo.id));
@@ -312,19 +327,41 @@ export const db = {
         mockSubclases.push(newSubclase);
         return newSubclase;
     },
+
     updateSubclase: (data) => {
-        const clase = mockClases.find(c => c.id === parseInt(data.clase.id));
+        const idClaseEntrante = data.clase?.id || data.idClase;
+        const clase = mockClases.find(c => c.id === parseInt(idClaseEntrante));
+
+        if (!clase) {
+            console.error(`MOCK ERROR: No se encontró la clase con ID: ${idClaseEntrante}`);
+            return null;
+        }
+
         const grupo = mockGrupos.find(g => g.id === clase.idGrupo);
+        
+        if (!grupo) {
+            console.error(`MOCK ERROR: La clase "${clase.nombre}" apunta a un grupo inexistente (ID: ${clase.idGrupo})`);
+            return null;
+        }
+
         let updatedSubclase = null;
         mockSubclases = mockSubclases.map(s => {
             if (s.id === data.id) {
-                updatedSubclase = { ...s, nombre: data.nombre, idClase: clase.id, clase: clase.nombre, grupo: grupo.nombre };
+                updatedSubclase = { 
+                    ...s, 
+                    nombre: data.nombre, 
+                    // Actualizamos ambos niveles de la jerarquía
+                    idClase: clase.id, 
+                    clase: clase.nombre, 
+                    grupo: grupo.nombre // <-- Aquí se actualiza el grupo automáticamente
+                };
                 return updatedSubclase;
             }
             return s;
         });
         return updatedSubclase;
     },
+
     getSubclasesDropdown: (idClase) => mockSubclases
         .filter(s => s.idClase === parseInt(idClase))
         .map(s => ({ id: s.id, nombre: s.nombre })),

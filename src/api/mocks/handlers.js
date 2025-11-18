@@ -92,6 +92,21 @@ export const handlers = [
         await delay(150);
         return HttpResponse.json(db.getGrupos());
     }),
+
+    http.get('/grupo/:id', async ({ params }) => {
+        await delay(100);
+        const grupo = db.getGrupoById(params.id);
+        if (grupo) {
+            return HttpResponse.json(grupo);
+        }
+        return new HttpResponse(null, { status: 404 });
+    }),
+
+    http.post('/grupo/add', async ({ request }) => {
+        await delay(300);
+        const data = await request.json();
+        return HttpResponse.json(db.addGrupo(data), { status: 201 });
+    }),
     
     http.put(`${API_URL}/grupo/update`, async ({ request }) => {
         await delay(300);
