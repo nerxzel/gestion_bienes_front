@@ -68,29 +68,15 @@ export const handlers = [
         return HttpResponse.json(resultado);
     }),
 
-    // --- DROPDOWNS DINÁMICOS ---
-    http.get(`${API_URL}/clase/dropdown/:grupoId`, async ({ params }) => {
-        await delay(250);
-        const clases = db.getClasesDropdown(params.grupoId);
-        return HttpResponse.json(clases);
-    }),
-
-    http.get(`${API_URL}/subclase/dropdown/:claseId`, async ({ params }) => {
-        await delay(250);
-        const subclases = db.getSubclasesDropdown(params.claseId);
-        return HttpResponse.json(subclases);
-    }),
-
-    http.get(`${API_URL}/modelo/dropdown/:marcaId`, async ({ params }) => {
-        await delay(250);
-        const modelos = db.getModelosDropdown(params.marcaId);
-        return HttpResponse.json(modelos);
-    }),
-
     // --- GRIDS Y DROPDOWNS ESTÁTICOS ---
     http.get(`${API_URL}/grupo/all`, async () => {
         await delay(150);
         return HttpResponse.json(db.getGrupos());
+    }),
+
+    http.get(`${API_URL}/grupo/dropdown`, async () => {
+        await delay(150);
+        return HttpResponse.json(db.getGruposDropdown());
     }),
 
     http.get(`${API_URL}/grupo/:id`, async ({ params }) => {
@@ -113,11 +99,6 @@ export const handlers = [
         const data = await request.json();
         return HttpResponse.json(db.updateGrupo(data));
     }),
-
-    http.get(`${API_URL}/grupo/dropdown`, async () => {
-        await delay(150);
-        return HttpResponse.json(db.getGruposDropdown());
-    }),
     
     http.get(`${API_URL}/responsable/all`, async () => {
         await delay(150);
@@ -128,6 +109,12 @@ export const handlers = [
     http.get(`${API_URL}/clase/all`, async () => {
         await delay(150);
         return HttpResponse.json(db.getClases());
+    }),
+
+    http.get(`${API_URL}/clase/dropdown/:grupoId`, async ({ params }) => {
+        await delay(250);
+        const clases = db.getClasesDropdown(params.grupoId);
+        return HttpResponse.json(clases);
     }),
 
     http.get(`${API_URL}/clase/:id`, async ({ params }) => {
@@ -151,6 +138,12 @@ export const handlers = [
     http.get(`${API_URL}/subclase/all`, async () => {
         await delay(150);
         return HttpResponse.json(db.getSubclases());
+    }),
+
+    http.get(`${API_URL}/subclase/dropdown/:claseId`, async ({ params }) => {
+        await delay(250);
+        const subclases = db.getSubclasesDropdown(params.claseId);
+        return HttpResponse.json(subclases);
     }),
 
     http.get(`${API_URL}/subclase/:id`, async ({ params }) => {
@@ -202,6 +195,12 @@ export const handlers = [
     http.get(`${API_URL}/modelo/all`, async () => {
         await delay(150);
         return HttpResponse.json(db.getModelos());
+    }),
+
+    http.get(`${API_URL}/modelo/dropdown/:marcaId`, async ({ params }) => {
+        await delay(250);
+        const modelos = db.getModelosDropdown(params.marcaId);
+        return HttpResponse.json(modelos);
     }),
 
     http.get(`${API_URL}/modelo/:id`, async ({ params }) => {

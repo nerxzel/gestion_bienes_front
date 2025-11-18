@@ -350,10 +350,9 @@ export const db = {
                 updatedSubclase = { 
                     ...s, 
                     nombre: data.nombre, 
-                    // Actualizamos ambos niveles de la jerarquía
                     idClase: clase.id, 
                     clase: clase.nombre, 
-                    grupo: grupo.nombre // <-- Aquí se actualiza el grupo automáticamente
+                    grupo: grupo.nombre
                 };
                 return updatedSubclase;
             }
