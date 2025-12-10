@@ -1,4 +1,4 @@
-import NavBar from './components/NavBar'
+import NavBar from "./layouts/NavBar.jsx"
 import { Outlet } from 'react-router-dom';
 import './styles/themes.css';
 import { BienesProvider } from './context/BienContext';
@@ -8,9 +8,9 @@ function App() {
     <>
       <BienesProvider>
         <NavBar />
-          <main>
-            <Outlet/>
-          </main>
+        <main>
+          <Outlet />
+        </main>
       </BienesProvider>
     </>
   )

@@ -1,117 +1,117 @@
 export let mockBienes = [
-{
-    id: 1,
-    codigoInventario: "GRU-CLA-001",
-    nombre: "Silla de Oficina Ergonómica",
-    descripcionLarga: "Silla ejecutiva con soporte lumbar",
-    valor: 150000,
-    fechaIngreso: "2023-01-15",
-    tipoObjeto: "Activo Fijo",
-    numSerie: "SN-AERON-123-MOD",
-    color: "Gris Oscuro",
-    cantidadPieza: 1,
-    largo: 0.65,
-    alto: 1.1,
-    ancho: 0.6,
-    condicion: "Alta",
-    costoAdquisicion: 180000,
-    valorResidual: 18000,
-    isla: "AA",
-    fila: "A1",
-    columna: "A2",
-    grupo: "Mobiliario",
-    clase: "Sillas",
-    subClase: "Sillas de Oficina",
-    marca: "Herman Miller",
-    modelo: "Aeron",
-    responsable: "123456789",
-    idResponsable: 1,
-    idGrupo: 1,
-    idClase: 1,
-    idSubClase: 1,
-    idMarca: 1,
-    idModelo: 1,
-    idUbicacion: 1,
-    idUnidadMedida: 1,
-},
+    {
+        id: 1,
+        codigoInventario: "GRU-CLA-001",
+        nombre: "Silla de Oficina Ergonómica",
+        descripcionLarga: "Silla ejecutiva con soporte lumbar",
+        valor: 150000,
+        fechaIngreso: "2023-01-15",
+        tipoObjeto: "Activo Fijo",
+        numSerie: "SN-AERON-123-MOD",
+        color: "Gris Oscuro",
+        cantidadPieza: 1,
+        largo: 0.65,
+        alto: 1.1,
+        ancho: 0.6,
+        condicion: "Alta",
+        costoAdquisicion: 180000,
+        valorResidual: 18000,
+        isla: "AA",
+        fila: "A1",
+        columna: "A2",
+        grupo: "Mobiliario",
+        clase: "Sillas",
+        subClase: "Sillas de Oficina",
+        marca: "Herman Miller",
+        modelo: "Aeron",
+        responsable: "123456789",
+        idResponsable: 1,
+        idGrupo: 1,
+        idClase: 1,
+        idSubClase: 1,
+        idMarca: 1,
+        idModelo: 1,
+        idUbicacion: 1,
+        idUnidadMedida: 1,
+    },
 
-{
-    id: 1,
-    codigoInventario: "GRU-CLA-002",
-    nombre: "Silla de Oficina Ergonómica",
-    descripcionLarga: "Silla ejecutiva con soporte lumbar",
-    valor: 150000,
-    fechaIngreso: "2023-01-15",
-    tipoObjeto: "Activo Fijo",
-    numSerie: "SN-AERON-123-MOD",
-    color: "Gris Oscuro",
-    cantidadPieza: 1,
-    largo: 0.65,
-    alto: 1.1,
-    ancho: 0.6,
-    condicion: "Alta",
-    costoAdquisicion: 180000,
-    valorResidual: 18000,
-    isla: "AA",
-    fila: "A1",
-    columna: "A2",
-    grupo: "Mobiliario",
-    clase: "Sillas",
-    subClase: "Sillas de Oficina",
-    marca: "Herman Miller",
-    modelo: "Aeron",
-    responsable: "123456789",
-    idResponsable: 1,
-    idGrupo: 1,
-    idClase: 1,
-    idSubClase: 1,
-    idMarca: 1,
-    idModelo: 1,
-    idUbicacion: 1,
-    idUnidadMedida: 1,
-},
+    {
+        id: 1,
+        codigoInventario: "GRU-CLA-002",
+        nombre: "Silla de Oficina Ergonómica",
+        descripcionLarga: "Silla ejecutiva con soporte lumbar",
+        valor: 150000,
+        fechaIngreso: "2023-01-15",
+        tipoObjeto: "Activo Fijo",
+        numSerie: "SN-AERON-123-MOD",
+        color: "Gris Oscuro",
+        cantidadPieza: 1,
+        largo: 0.65,
+        alto: 1.1,
+        ancho: 0.6,
+        condicion: "Alta",
+        costoAdquisicion: 180000,
+        valorResidual: 18000,
+        isla: "AA",
+        fila: "A1",
+        columna: "A2",
+        grupo: "Mobiliario",
+        clase: "Sillas",
+        subClase: "Sillas de Oficina",
+        marca: "Herman Miller",
+        modelo: "Aeron",
+        responsable: "123456789",
+        idResponsable: 1,
+        idGrupo: 1,
+        idClase: 1,
+        idSubClase: 1,
+        idMarca: 1,
+        idModelo: 1,
+        idUbicacion: 1,
+        idUnidadMedida: 1,
+    },
 
 ];
 
 export let mockGrupos = [
-{ id: 1, nombre: "Mobiliario", vidaUtil: 10 },
-{ id: 2, nombre: "Equipos Computacionales", vidaUtil: 5 },
+    { id: 1, nombre: "Mobiliario", vidaUtil: 10 },
+    { id: 2, nombre: "Equipos Computacionales", vidaUtil: 5 },
 ];
 
 export let mockClases = [
-{ id: 1, nombre: "Sillas", idGrupo: 1, grupo: "Mobiliario" },
-{ id: 2, nombre: "Mesas", idGrupo: 1, grupo: "Mobiliario" },
-{ id: 3, nombre: "Notebooks", idGrupo: 2, grupo: "Equipos Computacionales" },
+    { id: 1, nombre: "Sillas", idGrupo: 1, grupo: "Mobiliario" },
+    { id: 2, nombre: "Mesas", idGrupo: 1, grupo: "Mobiliario" },
+    { id: 3, nombre: "Notebooks", idGrupo: 2, grupo: "Equipos Computacionales" },
 ];
 
 export let mockSubclases = [
-{ id: 1, nombre: "Sillas de Oficina", idClase: 1, clase: "Sillas", grupo: "Mobiliario" },
-{ id: 2, nombre: "Sillas de Espera", idClase: 1, clase: "Sillas", grupo: "Mobiliario" },
+    { id: 1, nombre: "Sillas de Oficina", idClase: 1, clase: "Sillas", grupo: "Mobiliario" },
+    { id: 2, nombre: "Sillas de Espera", idClase: 1, clase: "Sillas", grupo: "Mobiliario" },
 ];
 
 export let mockMarcas = [
-{ id: 1, nombre: "Herman Miller" },
-{ id: 2, nombre: "Dell" },
+    { id: 1, nombre: "Herman Miller" },
+    { id: 2, nombre: "Dell" },
 ];
 
 export let mockModelos = [
-{ id: 1, nombre: "Aeron", idMarca: 1, marca: "Herman Miller" },
-{ id: 2, nombre: "Latitude 5490", idMarca: 2, marca: "Dell" },
+    { id: 1, nombre: "Aeron", idMarca: 1, marca: "Herman Miller" },
+    { id: 2, nombre: "Latitude 5490", idMarca: 2, marca: "Dell" },
 ];
 
 export let mockUbicaciones = [
-{ id: 1, nombre: "Oficina Gerencia" },
-{ id: 2, nombre: "Sala de Reuniones A" },
+    { id: 1, nombre: "Oficina Gerencia" },
+    { id: 2, nombre: "Sala de Reuniones A" },
 ];
 
 export let mockUnidadesMedida = [
-{ id: 1, nombre: "Metro" },
-{ id: 2, nombre: "Centimetro" },
+    { id: 1, nombre: "Metro" },
+    { id: 2, nombre: "Centimetro" },
 ];
 
 export let mockResponsables = [
-{ id: 1, nombre: "Juan Pérez", rut: "123456789", cargo: "Gerente TI", estado: "activo" },
-{ id: 2, nombre: "Maria López", rut: "998887776", cargo: "Asistente", estado: "activo" },
+    { id: 1, nombre: "Juan Pérez", rut: "123456789", cargo: "Gerente TI", estado: "activo" },
+    { id: 2, nombre: "Maria López", rut: "998887776", cargo: "Asistente", estado: "activo" },
 ];
 
 const getNextId = (array) => {
@@ -121,8 +121,8 @@ const getNextId = (array) => {
 export const db = {
 
     // --- BIENES ---
-    getBienesGrid: () => mockBienes.map(b => ({ 
-        ...b, 
+    getBienesGrid: () => mockBienes.map(b => ({
+        ...b,
         fechaAdquisicion: b.fechaIngreso.split('T')[0],
     })).filter(b => !b.isDeleted),
 
@@ -157,7 +157,7 @@ export const db = {
             valor: data.costoAdquisicion,
             condicion: "Alta",
             isDeleted: false,
-            fechaIngreso: data.fechaAdquisicion, 
+            fechaIngreso: data.fechaAdquisicion,
             grupo, clase, subclase, marca, modelo, ubicacion, unidadMedida, responsable
         };
         mockBienes.push(nuevoBien);
@@ -177,9 +177,9 @@ export const db = {
         let bienActualizado = null;
         mockBienes = mockBienes.map(b => {
             if (b.id === data.id) {
-                bienActualizado = { 
-                    ...b, 
-                    ...data, 
+                bienActualizado = {
+                    ...b,
+                    ...data,
                     fechaIngreso: data.fechaAdquisicion,
                     grupo, clase, subclase, marca, modelo, ubicacion, unidadMedida, responsable
                 };
@@ -195,7 +195,7 @@ export const db = {
         mockBienes = mockBienes.map(b => {
             if (b.id === parseInt(id)) {
                 console.warn(`MOCK: Borrado lógico de bien ID: ${id}`);
-                bienEliminado = { ...b, isDeleted: true, condicion: 'Baja' }; 
+                bienEliminado = { ...b, isDeleted: true, condicion: 'Baja' };
                 return bienEliminado;
             }
             return b;
@@ -207,17 +207,17 @@ export const db = {
         let bienActualizado = null;
         mockBienes = mockBienes.map(b =>
             b.id === parseInt(id)
-                ? (bienActualizado = { 
-                    ...b, 
-                    condicion, 
-                    nroResolucion: `RES-MOCK-${id}`, 
-                    fechaResolucion: new Date().toISOString() 
+                ? (bienActualizado = {
+                    ...b,
+                    condicion,
+                    nroResolucion: `RES-MOCK-${id}`,
+                    fechaResolucion: new Date().toISOString()
                 })
                 : b
         );
         return bienActualizado;
     },
-    
+
     depreciar: () => {
         mockBienes.forEach(b => {
             if (b.condicion === "Alta" && b.valor > b.valorResidual) {
@@ -225,7 +225,7 @@ export const db = {
                 if (grupo && grupo.vidaUtil > 0) {
                     const depreciacionAnual = (b.costoAdquisicion - b.valorResidual) / grupo.vidaUtil;
                     const depreciacionMensual = depreciacionAnual / 12;
-                    b.valor = Math.max(b.valor - depreciacionMensual, b.valorResidual); 
+                    b.valor = Math.max(b.valor - depreciacionMensual, b.valorResidual);
                     b.ultimaDepreciacion = new Date().toISOString().split('T')[0];
                 }
             }
@@ -234,17 +234,17 @@ export const db = {
     },
 
     // --- GRUPOS ---
-    getGrupos: () => mockGrupos, 
+    getGrupos: () => mockGrupos,
 
     getGruposDropdown: () => mockGrupos.map(g => ({ id: g.id, nombre: g.nombre })),
 
     getGrupoById: (id) => mockGrupos.find(g => g.id === parseInt(id)),
 
     addGrupo: (data) => {
-        const newGrupo = { 
-            ...data, 
+        const newGrupo = {
+            ...data,
             id: getNextId(mockGrupos),
-            vidaUtil: parseInt(data.vidaUtil) 
+            vidaUtil: parseInt(data.vidaUtil)
         };
         mockGrupos.push(newGrupo);
         return newGrupo;
@@ -253,10 +253,10 @@ export const db = {
     updateGrupo: (data) => {
         mockGrupos = mockGrupos.map(g => {
             if (g.id === data.id) {
-                return { 
-                    ...g, 
+                return {
+                    ...g,
                     ...data,
-                    vidaUtil: parseInt(data.vidaUtil) 
+                    vidaUtil: parseInt(data.vidaUtil)
                 };
             }
             return g;
@@ -275,7 +275,7 @@ export const db = {
             id: getNextId(mockClases),
             nombre: data.nombre,
             idGrupo: grupo.id,
-            grupo: grupo.nombre 
+            grupo: grupo.nombre
         };
         mockClases.push(newClase);
         return newClase;
@@ -286,17 +286,17 @@ export const db = {
         const grupo = mockGrupos.find(g => g.id === parseInt(idGrupoEntrante));
         if (!grupo) {
             console.error(`ERROR: No se encontró el grupo con ID: ${idGrupoEntrante}`);
-            return null; 
+            return null;
         }
 
         let updateClase = null;
         mockClases = mockClases.map(c => {
             if (c.id === data.id) {
-                updateClase = { 
-                    ...c, 
-                    nombre: data.nombre, 
-                    idGrupo: grupo.id,    
-                    grupo: grupo.nombre    
+                updateClase = {
+                    ...c,
+                    nombre: data.nombre,
+                    idGrupo: grupo.id,
+                    grupo: grupo.nombre
                 };
                 return updateClase;
             }
@@ -322,7 +322,7 @@ export const db = {
             nombre: data.nombre,
             idClase: clase.id,
             clase: clase.nombre,
-            grupo: grupo.nombre 
+            grupo: grupo.nombre
         };
         mockSubclases.push(newSubclase);
         return newSubclase;
@@ -338,7 +338,7 @@ export const db = {
         }
 
         const grupo = mockGrupos.find(g => g.id === clase.idGrupo);
-        
+
         if (!grupo) {
             console.error(`MOCK ERROR: La clase "${clase.nombre}" apunta a un grupo inexistente (ID: ${clase.idGrupo})`);
             return null;
@@ -347,11 +347,11 @@ export const db = {
         let updatedSubclase = null;
         mockSubclases = mockSubclases.map(s => {
             if (s.id === data.id) {
-                updatedSubclase = { 
-                    ...s, 
-                    nombre: data.nombre, 
-                    idClase: clase.id, 
-                    clase: clase.nombre, 
+                updatedSubclase = {
+                    ...s,
+                    nombre: data.nombre,
+                    idClase: clase.id,
+                    clase: clase.nombre,
                     grupo: grupo.nombre
                 };
                 return updatedSubclase;
@@ -366,7 +366,7 @@ export const db = {
         .map(s => ({ id: s.id, nombre: s.nombre })),
 
     // --- MARCAS ---
-    getMarcas: () => mockMarcas, 
+    getMarcas: () => mockMarcas,
     getMarcasDropdown: () => mockMarcas.map(m => ({ id: m.id, nombre: m.nombre })),
     getMarcaById: (id) => mockMarcas.find(m => m.id === parseInt(id)),
     addMarca: (data) => {
@@ -380,7 +380,7 @@ export const db = {
     },
 
     // --- MODELOS ---
-    getModelos: () => mockModelos, 
+    getModelos: () => mockModelos,
     getModeloById: (id) => mockModelos.find(m => m.id === parseInt(id)),
     addModelo: (data) => {
         const marca = mockMarcas.find(m => m.id === parseInt(data.marca.id));
@@ -388,7 +388,7 @@ export const db = {
             id: getNextId(mockModelos),
             nombre: data.nombre,
             idMarca: marca.id,
-            marca: marca.nombre 
+            marca: marca.nombre
         };
         mockModelos.push(newModelo);
         return newModelo;
@@ -399,17 +399,17 @@ export const db = {
         const marca = mockMarcas.find(m => m.id === parseInt(idMarcaEntrante));
         if (!marca) {
             console.error(`ERROR: No se encontró la marca con ID: ${idMarcaEntrante}`);
-            return null; 
+            return null;
         }
 
         let updatedModelo = null;
         mockModelos = mockModelos.map(m => {
             if (m.id === data.id) {
-                updatedModelo = { 
-                    ...m, 
-                    nombre: data.nombre, 
-                    idMarca: marca.id,    
-                    marca: marca.nombre    
+                updatedModelo = {
+                    ...m,
+                    nombre: data.nombre,
+                    idMarca: marca.id,
+                    marca: marca.nombre
                 };
                 return updatedModelo;
             }
@@ -418,7 +418,7 @@ export const db = {
         return updatedModelo;
     },
 
-    getModelosDropdownByMarca: (idMarca) => mockModelos
+    getModelosDropdown: (idMarca) => mockModelos
         .filter(m => m.idMarca === parseInt(idMarca))
         .map(m => ({ id: m.id, nombre: m.nombre })),
 
@@ -437,7 +437,7 @@ export const db = {
     },
 
     // --- UNIDADES DE MEDIDA ---
-    getUnidadesMedida: () => mockUnidadesMedida, 
+    getUnidadesMedida: () => mockUnidadesMedida,
     getUnidadesMedidaDropdown: () => mockUnidadesMedida.map(u => ({ id: u.id, nombre: u.nombre })),
     getUnidadMedidaById: (id) => mockUnidadesMedida.find(u => u.id === parseInt(id)),
     addUnidadMedida: (data) => {
