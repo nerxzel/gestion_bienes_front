@@ -16,7 +16,7 @@ function MarcaGrid() {
 
     const cargarMarcas = async () => {
         try {
-            const respuesta = await api.get('/marca/all');
+            const respuesta = await api.get('/marca');
             setMarcas(respuesta.data || []);
         } catch (err) {
             const mensajeError = manejarErrorAPI(err);

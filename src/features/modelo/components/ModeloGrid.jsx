@@ -16,7 +16,7 @@ function ModeloGrid() {
 
     const cargarModelos = async () => {
         try {
-            const respuesta = await api.get('/modelo/all');
+            const respuesta = await api.get('/modelo/grid');
             setModelos(respuesta.data || []);
         } catch (err) {
             const mensajeError = manejarErrorAPI(err);
@@ -75,7 +75,7 @@ function ModeloGrid() {
                                 modelosFiltrados.map((modelo) => (
                                     <tr key={modelo.id}>
                                         <td>{modelo.nombre}</td>
-                                        <td>{modelo.marca}</td>
+                                        <td>{modelo.marca?.nombre}</td>
                                         <td className="text-nowrap">
                                             <Button variant="outline-primary"
                                                 className="me-2"

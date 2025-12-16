@@ -37,7 +37,7 @@ function ModificarUnidadesMedida() {
         setErrorGuardar(null);
         setModificando(true);
         try {
-            await api.put(`/unidadMedida/update`, formData);
+            await api.put(`/unidadMedida/${formData.id}`, formData);
             navigate('/dashboard-unidadesM');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al modificar la unidad de medida");

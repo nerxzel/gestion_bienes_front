@@ -72,7 +72,7 @@ function ModificarSubclase() {
         setErrorGuardar(null);
         setModificando(true);
         try {
-            await api.put(`/subclase/update`, datosParaEnviar);
+            await api.put(`/subclase/${formData.id}`, datosParaEnviar);
             navigate('/dashboard-subclase');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al modificar la subclase");

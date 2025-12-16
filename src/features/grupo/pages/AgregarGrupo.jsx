@@ -16,7 +16,7 @@ function AgregarGrupo() {
         setErrorGuardar(null);
         setCargando(true);
         try {
-            await api.post('/grupo/add', formData);
+            await api.post('/grupo', formData);
             navigate('/dashboard-grupo');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al agregar el grupo");

@@ -37,7 +37,7 @@ function ModificarUbicacion() {
         setErrorGuardar(null);
         setModificando(true);
         try {
-            await api.put(`/ubicacion/update`, formData);
+            await api.put(`/ubicacion/${formData.id}`, formData);
             navigate('/dashboard-ubicacion');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al modificar la ubicación");

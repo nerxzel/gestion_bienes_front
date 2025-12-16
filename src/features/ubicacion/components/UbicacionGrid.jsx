@@ -16,7 +16,7 @@ function UbicacionGrid() {
 
     const cargarUbicaciones = async () => {
         try {
-            const respuesta = await api.get('/ubicacion/all');
+            const respuesta = await api.get('/ubicacion');
             setUbicaciones(respuesta.data || []);
         } catch (err) {
             const mensajeError = manejarErrorAPI(err);

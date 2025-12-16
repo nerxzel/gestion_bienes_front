@@ -69,7 +69,7 @@ function ModificarModelo() {
         setErrorGuardar(null);
         setModificando(true);
         try {
-            await api.put(`/modelo/update`, datosParaEnviar);
+            await api.put(`/modelo/${formData.id}`, datosParaEnviar);
             navigate('/dashboard-modelo');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al modificar el modelo");

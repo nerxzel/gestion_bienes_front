@@ -93,7 +93,7 @@ function ModificarBien() {
     const handleDelete = async () => {
         setErrorGuardar(null);
         try {
-            await api.delete(`/bien/${id}`);
+            await api.post(`/bien/${id}`);
             navigate('/dashboard');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al eliminar el bien");

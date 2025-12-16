@@ -69,7 +69,7 @@ function ModificarClase() {
         setErrorGuardar(null);
         setModificando(true);
         try {
-            await api.put(`/clase/update`, datosParaEnviar);
+            await api.put(`/clase/${formData.id}`, datosParaEnviar);
             navigate('/dashboard-clase');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al modificar la clase");

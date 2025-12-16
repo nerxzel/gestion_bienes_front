@@ -16,7 +16,7 @@ function ClaseGrid() {
 
     const cargarClases = async () => {
         try {
-            const respuesta = await api.get('/clase/all');
+            const respuesta = await api.get('/clase/grid');
             setClases(respuesta.data || []);
         } catch (err) {
             const mensajeError = manejarErrorAPI(err);
@@ -75,7 +75,7 @@ function ClaseGrid() {
                                 clasesFiltradas.map((clase) => (
                                     <tr key={clase.id}>
                                         <td>{clase.nombre}</td>
-                                        <td>{clase.grupo}</td>
+                                        <td>{clase.grupo?.nombre}</td>
                                         <td className="text-nowrap">
                                             <Button variant="outline-primary"
                                                 className="me-2"

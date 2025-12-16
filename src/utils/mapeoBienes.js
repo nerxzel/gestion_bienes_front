@@ -1,7 +1,7 @@
 import { normalizarCondicion } from './condicionUtils';
 
 const parseIdInt = (value) => (value && value !== "" ? parseInt(value) : null);
-const parseFloat = (value) => (value && value !== "" ? parseFloar(value) : null);
+const parseFloat = (value) => (value && value !== "" ? parseFloat(value) : null);
 
 export const mapFrontendToBackendAdd = (formData) => { 
 
@@ -21,7 +21,7 @@ export const mapFrontendToBackendAdd = (formData) => {
         ultimaDepreciacion: formData.ultimaDepreciacion ? new Date(formData.ultimaDepreciacion) : null,
 
         // Campos numéricos
-        cantidadPieza: parseIdInt(formData.cantidadPiezas),
+        cantidadPieza: parseIdInt(formData.cantidadPieza),
         largo: parseFloat(formData.largo),
         alto: parseFloat(formData.alto),
         ancho: parseFloat(formData.ancho),
@@ -53,7 +53,7 @@ export const mapFrontendToBackendUpdate = (formData) => {
              ...data };
 };
 
-export const mapBackendToFrontend = (backendDto, catalogos) => {
+export const mapBackendToFrontend = (backendDto) => {
     const formatDate = (dateString) => dateString ? dateString.split('T')[0] : '';
     
     return {

@@ -16,7 +16,7 @@ function SubclaseGrid() {
 
     const cargarSubclases = async () => {
         try {
-            const respuesta = await api.get('/subclase/all');
+            const respuesta = await api.get('/subclase/grid');
             setSubclases(respuesta.data || []);
         } catch (err) {
             const mensajeError = manejarErrorAPI(err);
@@ -76,8 +76,8 @@ function SubclaseGrid() {
                                 subclasesFiltradas.map((subclase) => (
                                     <tr key={subclase.id}>
                                         <td>{subclase.nombre}</td>
-                                        <td>{subclase.clase}</td>
-                                        <td>{subclase.grupo}</td>
+                                        <td>{subclase.clase?.nombre}</td>
+                                        <td>{subclase.clase?.grupo?.nombre}</td>
                                         <td className="text-nowrap">
                                             <Button variant="outline-primary"
                                                 className="me-2"

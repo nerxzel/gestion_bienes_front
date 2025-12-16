@@ -31,7 +31,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
             if (currentData.idGrupo) {
                 setCargandoClases(true);
                 try {
-                    const res = await api.get(`/clase/${currentData.idGrupo}`);
+                    const res = await api.get(`/clase?grupoId=${currentData.idGrupo}`);
                     setOpcionesClase(res.data || []);
                     clasesLoaded = true;
                 } catch (err) { console.error("Error cargando clases iniciales", err); }
@@ -41,7 +41,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
             if (currentData.idClase && (clasesLoaded || opcionesClase.length > 0)) {
                 setCargandoSubclases(true);
                 try {
-                    const res = await api.get(`/subclase/dropdown/${currentData.idClase}`);
+                    const res = await api.get(`/subclase?claseId=${currentData.idClase}`);
                     setOpcionesSubclase(res.data || []);
                 } catch (err) { console.error("Error cargando subclases iniciales", err); }
                 finally { setCargandoSubclases(false); }
@@ -50,7 +50,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
             if (currentData.idMarca) {
                 setCargandoModelos(true);
                 try {
-                    const res = await api.get(`/modelo?dropdown=true/${currentData.idMarca}`);
+                    const res = await api.get(`/modelo?marcaId=${currentData.idMarca}`);
                     setOpcionesModelo(res.data || []);
                 } catch (err) { console.error("Error cargando modelos iniciales", err); }
                 finally { setCargandoModelos(false); }
