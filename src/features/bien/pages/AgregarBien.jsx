@@ -9,7 +9,7 @@ import api from '../../../api/axiosConfig';
 
 const FORMULARIO_BIEN_VACIO = {
     nombre: '', grupo: '', clase: '', subClase: '', marca: '', modelo: '',
-    fechaAdquisicion: new Date().toISOString().split('T')[0], condicion: 'Alta',
+    fechaIngreso: new Date().toISOString().split('T')[0], condicion: 'Alta',
     idGrupo: '', idClase: '', idSubClase: '', idMarca: '', idModelo: '',
     descripcionLarga: '', tipoObjeto: '', numSerie: '', color: '', cantidadPieza: '',
     largo: '', alto: '', ancho: '', idUbicacion: '', idUnidadMedida: '',
