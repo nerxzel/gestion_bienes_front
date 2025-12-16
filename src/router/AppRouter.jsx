@@ -1,69 +1,67 @@
 import { Routes, Route } from "react-router-dom";
 
 // Auth
-import RutaProtegida from "../components/RutaProtegida.jsx";
-import IniciarSesion from '../pages/Auth/AuthIniciarSesion.jsx';
-import OlvideContrasenha from "../pages/Auth/AuthOlvideContrasenha.jsx";
-import RestablecerContrasenha from "../pages/Auth/AuthRestablecerContrasenha.jsx";
-import ValidarCodigo from "../pages/Auth/AuthValidarCodigo.jsx";
+import RutaProtegida from "../router/RutaProtegida.jsx";
+import IniciarSesion from "../features/auth/pages/AuthIniciarSesion.jsx";
+import OlvideContrasenha from "../features/auth/pages/AuthOlvideContrasenha.jsx";
+import RestablecerContrasenha from "../features/auth/pages/AuthRestablecerContrasenha.jsx";
+import ValidarCodigo from "../features/auth/pages/AuthValidarCodigo.jsx";
 
 // Bienes
-import Dashboard from "../pages/Dashboard.jsx";
-import AgregarBien from "../pages/MaestroBienes/AgregarBien.jsx";
-import ModificarBien from "../pages/MaestroBienes/ModificarBien.jsx";
+import Dashboard from "../features/bien/pages/Dashboard.jsx";
+import AgregarBien from "../features/bien/pages/AgregarBien.jsx";
+import ModificarBien from "../features/bien/pages/ModificarBien.jsx";
 
 // Grupos
-import DashboardGrupo from "../pages/MaestroGrupos-Clases-Subclases/DashboardGrupo.jsx"
-import AgregarGrupo from "../pages/MaestroGrupos-Clases-Subclases/AgregarGrupo.jsx"
-import ModificarGrupo from "../pages/MaestroGrupos-Clases-Subclases/ModificarGrupo.jsx"
+import DashboardGrupo from "../features/grupo/pages/DashboardGrupo.jsx"
+import AgregarGrupo from "../features/grupo/pages/AgregarGrupo.jsx"
+import ModificarGrupo from "../features/grupo/pages/ModificarGrupo.jsx"
 
 // Clases
-import DashboardClase from "../pages/MaestroGrupos-Clases-Subclases/DashboardClase.jsx"
-import AgregarClase from "../pages/MaestroGrupos-Clases-Subclases/AgregarClase.jsx"
-import ModificarClase from "../pages/MaestroGrupos-Clases-Subclases/ModificarClase.jsx"
+import DashboardClase from "../features/clase/pages/DashboardClase.jsx"
+import AgregarClase from "../features/clase/pages/AgregarClase.jsx"
+import ModificarClase from "../features/clase/pages/ModificarClase.jsx"
 
 // Subclases
-import DashboardSubclase from "../pages/MaestroGrupos-Clases-Subclases/DashboardSubclase.jsx"
-import AgregarSubclase from "../pages/MaestroGrupos-Clases-Subclases/AgregarSubclase.jsx"
-import ModificarSubclase from "../pages/MaestroGrupos-Clases-Subclases/ModificarSubclase.jsx"
+import DashboardSubclase from "../features/subclase/pages/DashboardSubclase.jsx"
+import AgregarSubclase from "../features/subclase/pages/AgregarSubclase.jsx"
+import ModificarSubclase from "../features/subclase/pages/ModificarSubclase.jsx"
 
 // Marcas
-import DashboardMarca from "../pages/MaestroMarcas-Modelos/DashboardMarca.jsx"
-import AgregarMarca from "../pages/MaestroMarcas-Modelos/AgregarMarca.jsx"
-import ModificarMarca from "../pages/MaestroMarcas-Modelos/ModificarMarca.jsx"
+import DashboardMarca from "../features/marca/pages/DashboardMarca.jsx"
+import AgregarMarca from "../features/marca/pages/AgregarMarca.jsx"
+import ModificarMarca from "../features/marca/pages/ModificarMarca.jsx"
 
 // Modelos
-import DashboardModelo from "../pages/MaestroMarcas-Modelos/DashboardModelo.jsx"
-import AgregarModelo from "../pages/MaestroMarcas-Modelos/AgregarModelo.jsx"
-import ModificarModelo from "../pages/MaestroMarcas-Modelos/ModificarModelo.jsx"
+import DashboardModelo from "../features/modelo/pages/DashboardModelo.jsx"
+import AgregarModelo from "../features/modelo/pages/AgregarModelo.jsx"
+import ModificarModelo from "../features/modelo/pages/ModificarModelo.jsx"
 
 // Ubicaciones
-import DashboardUbicacion from "../pages/MaestroUbicaciones/DashboardUbicacion.jsx"
-import AgregaUbicacion from "../pages/MaestroUbicaciones/AgregarUbicacion.jsx"
-import ModificarUbicacion from "../pages/MaestroUbicaciones/ModificarUbicacion.jsx"
+import DashboardUbicacion from "../features/ubicacion/pages/DashboardUbicacion.jsx"
+import AgregaUbicacion from "../features/ubicacion/pages/AgregarUbicacion.jsx"
+import ModificarUbicacion from "../features/ubicacion/pages/ModificarUbicacion.jsx"
 
 // Unidades De Medidas
-import DashboardUnidadesMedidas from "../pages/MaestroUnidadesMedidas/DashboardUnidadesMedidas.jsx"
-import AgregarUnidadesMedida from "../pages/MaestroUnidadesMedidas/AgregarUnidadesMedida.jsx"
-import ModificarUnidadesMedida from "../pages/MaestroUnidadesMedidas/ModificarUnidadesMedida.jsx"
+import DashboardUnidadesMedidas from "../features/unidad-medida/pages/DashboardUnidadesMedidas.jsx"
+import AgregarUnidadesMedida from "../features/unidad-medida/pages/AgregarUnidadesMedida.jsx"
+import ModificarUnidadesMedida from "../features/unidad-medida/pages/ModificarUnidadesMedida.jsx"
 
 // Responsables
-import DashboardResponsable from "../pages/MaestroResponsable/DashboardResponsable.jsx"
-import AgregarResponsable from "../pages/MaestroResponsable/AgregarResponsable.jsx"
-import ModificarResponsable from "../pages/MaestroResponsable/ModificarResponsable.jsx"
+import DashboardResponsable from "../features/responsable/pages/DashboardResponsable.jsx"
+import AgregarResponsable from "../features/responsable/pages/AgregarResponsable.jsx"
+import ModificarResponsable from "../features/responsable/pages/ModificarResponsable.jsx"
 
 // Alta
-import DarAlta from "../pages/Alta-Baja/ProcesosDarDeAlta.jsx";
+import DarAlta from "../features/alta-baja/pages/ProcesosDarDeAlta.jsx";
 
 // Baja
-import DarBaja from "../pages/Alta-Baja/ProcesosDarDeBaja.jsx";
+import DarBaja from "../features/alta-baja/pages/ProcesosDarDeBaja.jsx";
 
 
-import MaestroFuncionario from "../pages/ConfigMaestroFuncionario.jsx";
+{/*import MaestroFuncionario from "../pages/ConfigMaestroFuncionario.jsx";
 import TipoBien from "../pages/ConfigTipoBien.jsx";
 import CambioResponsable from "../pages/ProcesosCambioResponsable.jsx";
-
-
 import Depreciar from "../pages/ProcesosDepreciar.jsx";
 import TomaInventario from "../pages/ProcesosTomaInventario.jsx";
 import Traslado from "../pages/ProcesosTraslado.jsx";
@@ -73,77 +71,77 @@ import EtiquetaIndividual from "../pages/ReportesEtiquetaIndividual.jsx";
 import EtiquetaPorResponsable from "../pages/ReportesEtiquetaPorResponsable.jsx";
 import EtiquetasPorUbicacion from "../pages/ReportesEtiquetaPorUbicacion.jsx";
 import HojaMural from "../pages/ReportesHojaMural.jsx";
-import CorrelativosPorGrupo from "../pages/ConfigCorrelativosPorGrupo.jsx";
+import CorrelativosPorGrupo from "../pages/ConfigCorrelativosPorGrupo.jsx";*/}
 
 import App from "../App.jsx"
 
 
 function AppRouter() {
-    return(
-        <Routes> 
+    return (
+        <Routes>
             // Auth
-            <Route path="/" element={<IniciarSesion />}/>
-            <Route path="/olvide-contrasenha" element={<OlvideContrasenha />}/>
-            <Route path="/restablecer-contrasenha" element={<RestablecerContrasenha/>}/>
-            <Route path="/validar-codigo" element={<ValidarCodigo/>}/>
+            <Route path="/" element={<IniciarSesion />} />
+            <Route path="/olvide-contrasenha" element={<OlvideContrasenha />} />
+            <Route path="/restablecer-contrasenha" element={<RestablecerContrasenha />} />
+            <Route path="/validar-codigo" element={<ValidarCodigo />} />
 
-            <Route element={<RutaProtegida/>}>
-                <Route element={<App/>}>
+            <Route element={<RutaProtegida />}>
+                <Route element={<App />}>
                     // Bienes
-                    <Route path="/dashboard" element={<Dashboard/>}/>
-                    <Route path="/agregar-bien" element={<AgregarBien/>}/>
-                    <Route path="/modificar-bien/:id" element={<ModificarBien/>}/>
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/agregar-bien" element={<AgregarBien />} />
+                    <Route path="/modificar-bien/:id" element={<ModificarBien />} />
 
                     // Grupos
-                    <Route path="/dashboard-grupo" element={<DashboardGrupo/>}/>
-                    <Route path="/agregar-grupo" element={<AgregarGrupo/>}/>
-                    <Route path="/modificar-grupo/:id" element={<ModificarGrupo/>}/>
+                    <Route path="/dashboard-grupo" element={<DashboardGrupo />} />
+                    <Route path="/agregar-grupo" element={<AgregarGrupo />} />
+                    <Route path="/modificar-grupo/:id" element={<ModificarGrupo />} />
 
                     // Clases
-                    <Route path="/dashboard-clase" element={<DashboardClase/>}/>
-                    <Route path="/agregar-clase" element={<AgregarClase/>}/>
-                    <Route path="/modificar-clase/:id" element={<ModificarClase/>}/>
+                    <Route path="/dashboard-clase" element={<DashboardClase />} />
+                    <Route path="/agregar-clase" element={<AgregarClase />} />
+                    <Route path="/modificar-clase/:id" element={<ModificarClase />} />
 
                     // Subclase
-                    <Route path="/dashboard-subclase" element={<DashboardSubclase/>}/>
-                    <Route path="/agregar-subclase" element={<AgregarSubclase/>}/>
-                    <Route path="/modificar-subclase/:id" element={<ModificarSubclase/>}/>
+                    <Route path="/dashboard-subclase" element={<DashboardSubclase />} />
+                    <Route path="/agregar-subclase" element={<AgregarSubclase />} />
+                    <Route path="/modificar-subclase/:id" element={<ModificarSubclase />} />
 
                     // Marcas
-                    <Route path="/dashboard-marca" element={<DashboardMarca/>}/>
-                    <Route path="/agregar-marca" element={<AgregarMarca/>}/>
-                    <Route path="/modificar-marca/:id" element={<ModificarMarca/>}/>
+                    <Route path="/dashboard-marca" element={<DashboardMarca />} />
+                    <Route path="/agregar-marca" element={<AgregarMarca />} />
+                    <Route path="/modificar-marca/:id" element={<ModificarMarca />} />
 
                     // Modelos
-                    <Route path="/dashboard-modelo" element={<DashboardModelo/>}/>
-                    <Route path="/agregar-modelo" element={<AgregarModelo/>}/>
-                    <Route path="/modificar-modelo/:id" element={<ModificarModelo/>}/>
+                    <Route path="/dashboard-modelo" element={<DashboardModelo />} />
+                    <Route path="/agregar-modelo" element={<AgregarModelo />} />
+                    <Route path="/modificar-modelo/:id" element={<ModificarModelo />} />
 
                     // Ubicaciones
-                    <Route path="/dashboard-ubicacion" element={<DashboardUbicacion/>}/>
-                    <Route path="/agregar-ubicacion" element={<AgregaUbicacion/>}/>
-                    <Route path="/modificar-ubicacion/:id" element={<ModificarUbicacion/>}/>
+                    <Route path="/dashboard-ubicacion" element={<DashboardUbicacion />} />
+                    <Route path="/agregar-ubicacion" element={<AgregaUbicacion />} />
+                    <Route path="/modificar-ubicacion/:id" element={<ModificarUbicacion />} />
 
                     // Unidades de medidas
-                    <Route path="/dashboard-unidadesM" element={<DashboardUnidadesMedidas/>}/>
-                    <Route path="/agregar-unidadesM" element={<AgregarUnidadesMedida/>}/>
-                    <Route path="/modificar-unidadesM/:id" element={<ModificarUnidadesMedida/>}/>
+                    <Route path="/dashboard-unidadesM" element={<DashboardUnidadesMedidas />} />
+                    <Route path="/agregar-unidadesM" element={<AgregarUnidadesMedida />} />
+                    <Route path="/modificar-unidadesM/:id" element={<ModificarUnidadesMedida />} />
 
                     // Responsables
-                    <Route path="/dashboard-responsable" element={<DashboardResponsable/>}/>
-                    <Route path="/agregar-responsable" element={<AgregarResponsable/>}/>
-                    <Route path="/modificar-responsable/:id" element={<ModificarResponsable/>}/>
+                    <Route path="/dashboard-responsable" element={<DashboardResponsable />} />
+                    <Route path="/agregar-responsable" element={<AgregarResponsable />} />
+                    <Route path="/modificar-responsable/:id" element={<ModificarResponsable />} />
 
                     // Alta
-                    <Route path="/dar-alta/:id" element={<DarAlta/>}/>
-                    <Route path="/bienes-alta" element={<BienesAlta/>}/>
+                    <Route path="/dar-alta/:id" element={<DarAlta />} />
+                    {/*<Route path="/bienes-alta" element={<BienesAlta/>}/>*/}
 
                     // Baja
-                    <Route path="/dar-baja/:id" element={<DarBaja/>}/>
-                    <Route path="/bienes-baja" element={<BienesBaja/>}/>
+                    <Route path="/dar-baja/:id" element={<DarBaja />} />
+                    {/*<Route path="/bienes-baja" element={<BienesBaja/>}/>*/}
 
 
-                    <Route path="/cambio-responsable" element={<CambioResponsable/>}/>
+                    {/*<Route path="/cambio-responsable" element={<CambioResponsable/>}/>
                     <Route path="/toma-inventario" element={<TomaInventario/>}/>
                     <Route path="/traslado" element={<Traslado/>}/>
                     <Route path="/etiquetas-individual" element={<EtiquetaIndividual/>}/>
@@ -153,7 +151,7 @@ function AppRouter() {
                     <Route path="/correlativo-grupo" element={<CorrelativosPorGrupo/>}/>
                     <Route path="/maestro-funcionario" element={<MaestroFuncionario/>}/>
                     <Route path="/tipo-bien" element={<TipoBien/>}/>
-                    <Route path="/depreciar" element={<Depreciar/>}/>             
+                    <Route path="/depreciar" element={<Depreciar/>}/>*/}
                 </Route>
             </Route>
         </Routes>
