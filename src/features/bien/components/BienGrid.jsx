@@ -2,7 +2,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { FaPencilAlt, FaPlus, FaArrowDown, FaArrowUp, } from 'react-icons/fa';
-import { formatCLP } from '../../../utils/formatUtils';
+import { formatCLP, formatDate } from '../../../utils/formatUtils';
 import { useBienes } from '../../../hooks/useBienes';
 
 function BienGrid() {
@@ -86,10 +86,10 @@ function BienGrid() {
                                         <td className="truncate-cell">{bien.nombre}</td>
                                         <td className="truncate-cell">{bien.grupo}</td>
                                         <td className="truncate-cell">{bien.clase}</td>
-                                        <td className="truncate-cell">{bien.subClase}</td>
-                                        <td className="truncate-cell">{bien.fechaAdquisicion}</td>
+                                        <td className="truncate-cell">{bien.subclase}</td>
+                                        <td className="truncate-cell">{formatDate(bien.fechaIngreso)}</td>
                                         <td className="truncate-cell">{bien.condicion}</td>
-                                        <td className="truncate-cell">{bien.ultimaDepreciacion}</td>
+                                        <td className="truncate-cell">{formatDate(bien.ultimaDepreciacion)}</td>
                                         <td>{formatCLP(bien.valor)}</td>
                                         <td className="text-nowrap">
                                             <Button variant="outline-primary"

@@ -21,7 +21,7 @@ function ModificarSubclase() {
             try {
                 const [subclaseRes, gruposRes] = await Promise.all([
                     api.get(`/subclase/${id}`),
-                    api.get('/grupo/dropdown')
+                    api.get('/grupo?dropdown=true')
                 ]);
 
                 const subclaseData = subclaseRes.data;

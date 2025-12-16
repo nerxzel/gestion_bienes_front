@@ -36,11 +36,11 @@ function ModificarBien() {
                     bienRes, gruposRes, marcasRes, ubicacionesRes, unidadesRes, responsablesRes
                 ] = await Promise.all([
                     api.get(`/bien/${id}`),
-                    api.get('/grupo/dropdown'),
-                    api.get('/marca/dropdown'),
-                    api.get('/ubicacion/dropdown'),
-                    api.get('/unidadMedida/dropdown'),
-                    api.get('/responsable/all')
+                    api.get('/grupo?dropdown=true'),
+                    api.get('/marca'),
+                    api.get('/ubicacion'),
+                    api.get('/unidadMedida'),
+                    api.get('/responsable?dropdown=true')
                 ]);
 
                 const loadedCatalogos = {

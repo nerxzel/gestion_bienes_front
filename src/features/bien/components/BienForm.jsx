@@ -31,7 +31,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
             if (currentData.idGrupo) {
                 setCargandoClases(true);
                 try {
-                    const res = await api.get(`/clase/dropdown/${currentData.idGrupo}`);
+                    const res = await api.get(`/clase/${currentData.idGrupo}`);
                     setOpcionesClase(res.data || []);
                     clasesLoaded = true;
                 } catch (err) { console.error("Error cargando clases iniciales", err); }
@@ -50,7 +50,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
             if (currentData.idMarca) {
                 setCargandoModelos(true);
                 try {
-                    const res = await api.get(`/modelo/dropdown/${currentData.idMarca}`);
+                    const res = await api.get(`/modelo?dropdown=true/${currentData.idMarca}`);
                     setOpcionesModelo(res.data || []);
                 } catch (err) { console.error("Error cargando modelos iniciales", err); }
                 finally { setCargandoModelos(false); }
@@ -106,7 +106,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                     selectedItemName = item?.nombre || '';
                     update = { ...update, grupo: selectedItemName, idClase: '', clase: '', idSubClase: '', subClase: '' };
                     setOpcionesClase([]); setOpcionesSubclase([]); setCargandoClases(true);
-                    const res = await api.get(`/clase/dropdown/${selectedId}`);
+                    const res = await api.get(`/clase?grupoId=${selectedId}`);
                     setOpcionesClase(res.data || []);
 
                 } else if (name === 'idClase') {
@@ -114,7 +114,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                     selectedItemName = item?.nombre || '';
                     update = { ...update, clase: selectedItemName, idSubClase: '', subClase: '' };
                     setOpcionesSubclase([]); setCargandoSubclases(true);
-                    const res = await api.get(`/subclase/dropdown/${selectedId}`);
+                    const res = await api.get(`/subclase?clasId=${selectedId}`);
                     setOpcionesSubclase(res.data || []);
 
                 } else if (name === 'idSubClase') {
@@ -127,7 +127,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                     selectedItemName = item?.nombre || '';
                     update = { ...update, marca: selectedItemName, idModelo: '', modelo: '' };
                     setOpcionesModelo([]); setCargandoModelos(true);
-                    const res = await api.get(`/modelo/dropdown/${selectedId}`);
+                    const res = await api.get(`/modelo?dropdown=true/${selectedId}`);
                     setOpcionesModelo(res.data || []);
 
                 } else if (name === 'idModelo') {

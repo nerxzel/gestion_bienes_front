@@ -39,15 +39,20 @@ function IniciarSesionForm() {
     }
 
     setErrors({})
-
     setLoading(true);
-    try {
-      const encodedCredentials = btoa(user + ':' + password);
-      await api.get('/users/all', {
-        headers: { 'Authorization': 'Basic ' + encodedCredentials }
-      });
 
-      localStorage.setItem('userToken', encodedCredentials);
+    try {
+      const loginPayload = {
+        email: user,
+        password: password
+      };
+
+      const response = await api.post('/user/login', loginPayload)
+      const token = response.data.token;
+      const userData = response.data.user;
+
+      localStorage.setItem('userToken', token);
+      localStorage.setItem('userInfo', JSON.stringify(userData))
 
       navigate('/dashboard');
 

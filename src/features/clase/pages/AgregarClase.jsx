@@ -20,7 +20,7 @@ function AgregarClase() {
             setCargandoCatalogos(true);
             setErrorCatalogos(null);
             try {
-                const res = await api.get('/grupo/dropdown');
+                const res = await api.get('/grupo?dropdown=true');
                 setCatalogos({ grupos: res.data || [] });
             } catch (error) {
                 const mensajeError = obtenerMensajeError(error, "Error al cargar grupos");

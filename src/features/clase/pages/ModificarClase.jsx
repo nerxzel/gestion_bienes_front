@@ -21,7 +21,7 @@ function ModificarClase() {
             try {
                 const [claseRes, gruposRes] = await Promise.all([
                     api.get(`/clase/${id}`),
-                    api.get('/grupo/dropdown')
+                    api.get('/grupo?dropdown=true')
                 ]);
 
                 const loadedCatalogos = { grupos: gruposRes.data || [] };

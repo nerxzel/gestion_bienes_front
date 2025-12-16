@@ -35,11 +35,11 @@ function AgregarBien() {
                 const [
                     gruposRes, marcasRes, ubicacionesRes, unidadesMedidaRes, responsableRes
                 ] = await Promise.all([
-                    api.get('/grupo/dropdown'),
-                    api.get('/marca/dropdown'),
-                    api.get('/ubicacion/dropdown'),
-                    api.get('/unidadMedida/dropdown'),
-                    api.get('/responsable/all')
+                    api.get('/grupo?dropdown=true'),
+                    api.get('/marca'),
+                    api.get('/ubicacion'),
+                    api.get('/unidadMedida'),
+                    api.get('/responsable?dropdown=true')
                 ]);
 
                 const loadedCatalogos = {
@@ -74,7 +74,7 @@ function AgregarBien() {
         setErrorGuardar(null);
         setCargando(true);
         try {
-            await api.post('/bien/add', datosParaEnviar);
+            await api.post('/bien/', datosParaEnviar);
             navigate('/dashboard');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al agregar el bien");
