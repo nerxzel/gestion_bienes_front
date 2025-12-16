@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
 import { formatCLP } from '../../../utils/formatUtils';
@@ -28,35 +28,34 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
             const currentData = initialData || {};
             let clasesLoaded = false;
 
-            if (currentData.idGrupo) {
+            if (currentData.grupoId) {
                 setCargandoClases(true);
                 try {
-                    const res = await api.get(`/clase?grupoId=${currentData.idGrupo}`);
+                    const res = await api.get(`/clase?grupoId=${currentData.grupoId}`);
                     setOpcionesClase(res.data || []);
                     clasesLoaded = true;
                 } catch (err) { console.error("Error cargando clases iniciales", err); }
                 finally { setCargandoClases(false); }
             }
 
-            if (currentData.idClase && (clasesLoaded || opcionesClase.length > 0)) {
+            if (currentData.claseId && (clasesLoaded || opcionesClase.length > 0)) {
                 setCargandoSubclases(true);
                 try {
-                    const res = await api.get(`/subclase?claseId=${currentData.idClase}`);
+                    const res = await api.get(`/subclase?claseId=${currentData.claseId}`);
                     setOpcionesSubclase(res.data || []);
                 } catch (err) { console.error("Error cargando subclases iniciales", err); }
                 finally { setCargandoSubclases(false); }
             }
 
-            if (currentData.idMarca) {
+            if (currentData.marcaId) {
                 setCargandoModelos(true);
                 try {
-                    const res = await api.get(`/modelo?marcaId=${currentData.idMarca}`);
+                    const res = await api.get(`/modelo?marcaId=${currentData.marcaId}`);
                     setOpcionesModelo(res.data || []);
                 } catch (err) { console.error("Error cargando modelos iniciales", err); }
                 finally { setCargandoModelos(false); }
             }
         };
-
 
         if (isEditing && initialData) {
             cargarOpcionesIniciales();
@@ -90,60 +89,60 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
 
         try {
             if (!selectedId) {
-                if (name === 'idGrupo') { update = { ...update, grupo: '', idClase: '', clase: '', idSubClase: '', subClase: '' }; setOpcionesClase([]); setOpcionesSubclase([]); }
-                if (name === 'idClase') { update = { ...update, clase: '', idSubClase: '', subClase: '' }; setOpcionesSubclase([]); }
-                if (name === 'idSubClase') { update = { ...update, subClase: '' }; }
-                if (name === 'idMarca') { update = { ...update, marca: '', idModelo: '', modelo: '' }; setOpcionesModelo([]); }
-                if (name === 'idModelo') { update = { ...update, modelo: '' }; }
+                if (name === 'grupoId') { update = { ...update, grupo: '', claseId: '', clase: '', subclaseId: '', subClase: '' }; setOpcionesClase([]); setOpcionesSubclase([]); }
+                if (name === 'claseId') { update = { ...update, clase: '', subclaseId: '', subClase: '' }; setOpcionesSubclase([]); }
+                if (name === 'subclaseId') { update = { ...update, subClase: '' }; }
+                if (name === 'marcaId') { update = { ...update, marca: '', modeloId: '', modelo: '' }; setOpcionesModelo([]); }
+                if (name === 'modeloId') { update = { ...update, modelo: '' }; }
 
-                if (name === 'idUbicacion') { update = { ...update, ubicacion: '' }; }
-                if (name === 'idUnidadMedida') { update = { ...update, unidadMedida: '' }; }
-                if (name === 'idResponsable') { update = { ...update, responsableRut: '' }; }
+                if (name === 'ubicacionId') { update = { ...update, ubicacion: '' }; }
+                if (name === 'unidadMedidaId') { update = { ...update, unidadMedida: '' }; }
+                if (name === 'responsableId') { update = { ...update, responsableRut: '' }; }
             } else {
 
-                if (name === 'idGrupo') {
+                if (name === 'grupoId') {
                     const item = safeCatalogos.grupos.find(g => g.id === parseInt(selectedId));
                     selectedItemName = item?.nombre || '';
-                    update = { ...update, grupo: selectedItemName, idClase: '', clase: '', idSubClase: '', subClase: '' };
+                    update = { ...update, grupo: selectedItemName, claseId: '', clase: '', subclaseId: '', subClase: '' };
                     setOpcionesClase([]); setOpcionesSubclase([]); setCargandoClases(true);
                     const res = await api.get(`/clase?grupoId=${selectedId}`);
                     setOpcionesClase(res.data || []);
 
-                } else if (name === 'idClase') {
+                } else if (name === 'claseId') {
                     const item = opcionesClase.find(c => c.id === parseInt(selectedId));
                     selectedItemName = item?.nombre || '';
-                    update = { ...update, clase: selectedItemName, idSubClase: '', subClase: '' };
+                    update = { ...update, clase: selectedItemName, subclaseId: '', subClase: '' };
                     setOpcionesSubclase([]); setCargandoSubclases(true);
                     const res = await api.get(`/subclase?clasId=${selectedId}`);
                     setOpcionesSubclase(res.data || []);
 
-                } else if (name === 'idSubClase') {
+                } else if (name === 'subclaseId') {
                     const item = opcionesSubclase.find(sc => sc.id === parseInt(selectedId));
                     selectedItemName = item?.nombre || '';
                     update = { ...update, subClase: selectedItemName };
 
-                } else if (name === 'idMarca') {
+                } else if (name === 'marcaId') {
                     const item = safeCatalogos.marcas.find(m => m.id === parseInt(selectedId));
                     selectedItemName = item?.nombre || '';
-                    update = { ...update, marca: selectedItemName, idModelo: '', modelo: '' };
+                    update = { ...update, marca: selectedItemName, modeloId: '', modelo: '' };
                     setOpcionesModelo([]); setCargandoModelos(true);
                     const res = await api.get(`/modelo?dropdown=true/${selectedId}`);
                     setOpcionesModelo(res.data || []);
 
-                } else if (name === 'idModelo') {
+                } else if (name === 'modeloId') {
                     const item = opcionesModelo.find(m => m.id === parseInt(selectedId));
                     selectedItemName = item?.nombre || '';
                     update = { ...update, modelo: selectedItemName };
 
-                } else if (name === 'idUbicacion') {
+                } else if (name === 'ubicacionId') {
                     const item = safeCatalogos.ubicaciones.find(u => u.id === parseInt(selectedId));
                     update = { ...update, ubicacion: item?.nombre || '' };
 
-                } else if (name === 'idUnidadMedida') {
+                } else if (name === 'unidadMedidaId') {
                     const item = safeCatalogos.unidadesMedida.find(um => um.id === parseInt(selectedId));
                     update = { ...update, unidadMedida: item?.nombre || '' };
 
-                } else if (name === 'idResponsable') {
+                } else if (name === 'responsableId') {
                     const item = safeCatalogos.responsables.find(r => r.id === parseInt(selectedId));
                     update = { ...update, responsableRut: item?.rut || '' };
                 }
@@ -151,9 +150,9 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
         } catch (error) {
             console.error(`Error al procesar cambio de ${name}:`, error);
         } finally {
-            if (name === 'idGrupo') setCargandoClases(false);
-            if (name === 'idClase') setCargandoSubclases(false);
-            if (name === 'idMarca') setCargandoModelos(false);
+            if (name === 'grupoId') setCargandoClases(false);
+            if (name === 'claseId') setCargandoSubclases(false);
+            if (name === 'marcaId') setCargandoModelos(false);
         }
 
         setFormData(prev => ({ ...prev, ...update }));
@@ -267,8 +266,8 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                 <Form.Group as={Col} md="4" controlId="formGridResponsable">
                     <Form.Label>Responsable</Form.Label>
                     <Form.Select
-                        name="idResponsable"
-                        value={formData.idResponsable || ''}
+                        name="responsableId"
+                        value={formData.responsableId || ''}
                         onChange={handleCatalogoChange}
                         disabled={isSubmitting}
                         required>
@@ -336,8 +335,8 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                 <Form.Group as={Col} md="4" controlId="formGridGrupo">
                     <Form.Label>Grupo</Form.Label>
                     <Form.Select
-                        name="idGrupo"
-                        value={formData.idGrupo || ''}
+                        name="grupoId"
+                        value={formData.grupoId || ''}
                         onChange={handleCatalogoChange}
                         disabled={isSubmitting}
                         required>
@@ -349,11 +348,11 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                 <Form.Group as={Col} md="4" controlId="formGridClase">
                     <Form.Label>Clase</Form.Label>
                     <Form.Select
-                        name="idClase" value={formData.idClase || ''}
+                        name="clasId" value={formData.claseId || ''}
                         onChange={handleCatalogoChange}
-                        disabled={isSubmitting || !formData.idGrupo || cargandoClases}
+                        disabled={isSubmitting || !formData.grupoId || cargandoClases}
                         required>
-                        <option value="">{cargandoClases ? 'Cargando...' : (!formData.idGrupo ? 'Seleccione Grupo primero' : 'Seleccione Clase')}</option>
+                        <option value="">{cargandoClases ? 'Cargando...' : (!formData.grupoId ? 'Seleccione Grupo primero' : 'Seleccione Clase')}</option>
                         {opcionesClase.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
                     </Form.Select>
                 </Form.Group>
@@ -361,12 +360,12 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                 <Form.Group as={Col} md="4" controlId="formGridSubclase">
                     <Form.Label>Subclase</Form.Label>
                     <Form.Select
-                        name="idSubClase"
-                        value={formData.idSubClase || ''}
+                        name="subclaseId"
+                        value={formData.subclaseId || ''}
                         onChange={handleCatalogoChange}
-                        disabled={isSubmitting || !formData.idClase || cargandoSubclases}
+                        disabled={isSubmitting || !formData.claseId || cargandoSubclases}
                         required>
-                        <option value="">{cargandoSubclases ? 'Cargando...' : (!formData.idClase ? 'Seleccione Clase primero' : 'Seleccione Subclase')}</option>
+                        <option value="">{cargandoSubclases ? 'Cargando...' : (!formData.claseId ? 'Seleccione Clase primero' : 'Seleccione Subclase')}</option>
                         {opcionesSubclase.map(sc => <option key={sc.id} value={sc.id}>{sc.nombre}</option>)}
                     </Form.Select>
                 </Form.Group>
@@ -377,8 +376,8 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                 <Form.Group as={Col} md="6" controlId="formGridMarca">
                     <Form.Label>Marca</Form.Label>
                     <Form.Select
-                        name="idMarca"
-                        value={formData.idMarca || ''}
+                        name="marcaId"
+                        value={formData.marcaId || ''}
                         onChange={handleCatalogoChange}
                         disabled={isSubmitting}
                         required>
@@ -389,12 +388,12 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                 </Form.Group>
                 <Form.Group as={Col} md="6" controlId="formGridModelo">
                     <Form.Label>Modelo</Form.Label>
-                    <Form.Select name="idModelo"
-                        value={formData.idModelo || ''}
+                    <Form.Select name="modeloId"
+                        value={formData.modeloId || ''}
                         onChange={handleCatalogoChange}
-                        disabled={isSubmitting || !formData.idMarca || cargandoModelos}
+                        disabled={isSubmitting || !formData.marcaId || cargandoModelos}
                         required>
-                        <option value="">{cargandoModelos ? 'Cargando...' : (!formData.idMarca ? 'Seleccione Marca primero' : 'Seleccione Modelo')}</option>
+                        <option value="">{cargandoModelos ? 'Cargando...' : (!formData.marcaId ? 'Seleccione Marca primero' : 'Seleccione Modelo')}</option>
                         {opcionesModelo.map(m => <option key={m.id} value={m.id}>{m.nombre}</option>)}
                     </Form.Select>
                 </Form.Group>
@@ -498,8 +497,8 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="formGridUbicacion">
                     <Form.Label>Ubicación</Form.Label>
-                    <Form.Select name="idUbicacion"
-                        value={formData.idUbicacion || ''}
+                    <Form.Select name="ubicacionId"
+                        value={formData.ubicacionId || ''}
                         onChange={handleCatalogoChange}
                         disabled={isSubmitting}
                         min="0"
@@ -510,13 +509,26 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridUnidadMed">
                     <Form.Label>Unidad Medida</Form.Label>
-                    <Form.Select name="idUnidadMedida"
-                        value={formData.idUnidadMedida || ''}
+                    <Form.Select name="unidadMedidaId"
+                        value={formData.unidadMedidaId || ''}
                         onChange={handleCatalogoChange}
                         disabled={isSubmitting}
                         required>
                         <option value="">Seleccione Unidad</option>
                         {currentCatalogos.unidadesMedida.map(um => <option key={um.id} value={um.id}>{um.nombre}</option>)}
+                    </Form.Select>
+                </Form.Group>
+                <Form.Group as={Col} md="4" controlId="formGridEstado">
+                    <Form.Label>Estado</Form.Label>
+                    <Form.Select name="estado"
+                        value={formData.estado || ''}
+                        onChange={handleInputChange}
+                        disabled={isSubmitting}
+                        required>
+                        <option value="">Seleccione Unidad</option>
+                        <option value="Malo">Malo</option>
+                        <option value="Regular">Regular</option>
+                        <option value="Bueno">Bueno</option>
                     </Form.Select>
                 </Form.Group>
 

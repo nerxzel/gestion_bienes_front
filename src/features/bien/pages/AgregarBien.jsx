@@ -10,11 +10,11 @@ import api from '../../../api/axiosConfig';
 const FORMULARIO_BIEN_VACIO = {
     nombre: '', grupo: '', clase: '', subClase: '', marca: '', modelo: '',
     fechaIngreso: new Date().toISOString().split('T')[0], condicion: 'Alta',
-    idGrupo: '', idClase: '', idSubClase: '', idMarca: '', idModelo: '',
+    grupoId: '', claseId: '', subclaseId: '', marcaId: '', modeloId: '',
     descripcionLarga: '', tipoObjeto: '', numSerie: '', color: '', cantidadPieza: '',
-    largo: '', alto: '', ancho: '', idUbicacion: '', idUnidadMedida: '',
-    urlFoto: '', responsableRut: '', idResponsable: '', costoAdquisicion: '', valorResidual: '',
-    valor: '', isla: '', fila: '', columna: ''
+    largo: '', alto: '', ancho: '', ubicacionId: '', unidadMedidaId: '',
+    urlFoto: '', responsableRut: '', responsableId: '', costoAdquisicion: '', valorResidual: '',
+    valor: '', isla: '', fila: '', columna: '', estado: ''
 };
 
 function AgregarBien() {
@@ -74,9 +74,11 @@ function AgregarBien() {
         setErrorGuardar(null);
         setCargando(true);
         try {
+            console.log("Previo a la llamada:",datosParaEnviar)
             await api.post('/bien/', datosParaEnviar);
             navigate('/dashboard');
         } catch (err) {
+            console.log("Cuando salta error:",datosParaEnviar)
             const mensajeError = obtenerMensajeError(err, "Error al agregar el bien");
             setErrorGuardar(mensajeError);
         } finally {

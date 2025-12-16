@@ -1,7 +1,7 @@
 import { normalizarCondicion } from './condicionUtils';
 
 const parseIdInt = (value) => (value && value !== "" ? parseInt(value) : null);
-const parseFloat = (value) => (value && value !== "" ? parseFloat(value) : null);
+const parseFloatVal = (value) => (value && value !== "" ? parseFloat(value) : null);
 
 export const mapFrontendToBackendAdd = (formData) => { 
 
@@ -22,12 +22,12 @@ export const mapFrontendToBackendAdd = (formData) => {
 
         // Campos numéricos
         cantidadPieza: parseIdInt(formData.cantidadPieza),
-        largo: parseFloat(formData.largo),
-        alto: parseFloat(formData.alto),
-        ancho: parseFloat(formData.ancho),
-        costoAdquisicion: parseFloat(formData.costoAdquisicion),
-        valorResidual: parseFloat(formData.valorResidual) || 0,
-        valor: parseFloat(formData.valor),
+        largo: parseFloatVal(formData.largo),
+        alto: parseFloatVal(formData.alto),
+        ancho: parseFloatVal(formData.ancho),
+        costoAdquisicion: parseFloatVal(formData.costoAdquisicion),
+        valorResidual: parseFloatVal(formData.valorResidual) || 0,
+        valor: parseFloatVal(formData.valor),
         
         // Strings cortitos
         isla: formData.isla,
