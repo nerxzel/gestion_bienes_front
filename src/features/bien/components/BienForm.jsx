@@ -247,8 +247,8 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                     <Form.Label>Fecha Ingreso</Form.Label>
                     <Form.Control
                         type="date"
-                        name="fechaAdquisicion"
-                        value={formData.fechaAdquisicion || ''}
+                        name="fechaIngreso"
+                        value={formData.fechaIngreso || ''}
                         onChange={handleInputChange}
                         disabled={isSubmitting}
                         required />

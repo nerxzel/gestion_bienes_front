@@ -9,7 +9,6 @@ function IniciarSesionForm() {
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState('');
-
   const navigate = useNavigate()
 
   const validateForm = () => {

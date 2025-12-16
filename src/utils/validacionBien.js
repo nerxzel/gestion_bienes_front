@@ -4,7 +4,7 @@ export const validarBien = (formData) => {
     const camposRequeridos = {
         nombre: 'Descripción Corta',
         descripcionLarga: 'Descripción Larga',
-        fechaAdquisicion: 'Fecha Ingreso',
+        fechaIngreso: 'Fecha Ingreso',
         tipoObjeto: 'Tipo Objeto',
         idResponsable: 'Responsable',
         color: 'Color',

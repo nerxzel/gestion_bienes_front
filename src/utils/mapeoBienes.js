@@ -1,190 +1,97 @@
 import { normalizarCondicion } from './condicionUtils';
 
-export const mapFrontendToBackendAdd = (formData, catalogos) => { 
+const parseIdInt = (value) => (value && value !== "" ? parseInt(value) : null);
+const parseFloat = (value) => (value && value !== "" ? parseFloar(value) : null);
 
-    const grupo = catalogos?.grupos?.find(g => g.id === parseInt(formData.idGrupo));
-    const marca = catalogos?.marcas?.find(m => m.id === parseInt(formData.idMarca));
-    const ubicacion = catalogos?.ubicaciones?.find(u => u.id === parseInt(formData.idUbicacion));
-    const unidadMedida = catalogos?.unidadesMedida?.find(um => um.id === parseInt(formData.idUnidadMedida));
-    
-    const backendData = {
+export const mapFrontendToBackendAdd = (formData) => { 
+
+    return {
+        // Campos de texto
         nombre: formData.nombre,
         descripcionLarga: formData.descripcionLarga,
-        fechaIngreso: formData.fechaAdquisicion,
-        fechaResolucion: formData.fechaResolucion,
         tipoObjeto: formData.tipoObjeto,
         condicion: formData.condicion,
+        estado: formData.estado,
         numSerie: formData.numSerie,
         color: formData.color,
-        cantidadPieza: formData.cantidadPieza ? parseInt(formData.cantidadPieza) : null,
-        largo: formData.largo ? parseFloat(formData.largo) : null,
-        alto: formData.alto ? parseFloat(formData.alto) : null,
-        ancho: formData.ancho ? parseFloat(formData.ancho) : null,
-        responsableRut: formData.responsableRut ? parseInt(formData.responsableRut) : null,
-        urlFoto: formData.urlFoto,
-        costoAdquisicion: formData.costoAdquisicion ? parseFloat(formData.costoAdquisicion) : null,
-        valorResidual: formData.valorResidual ? parseFloat(formData.valorResidual) : 0,
-        valor: formData.costoAdquisicion ? parseFloat(formData.costoAdquisicion) : null,
-        ultimaDepreciacion: formData.ultimaDepreciacion,
+
+        // Fechas
+        fechaIngreso: formData.fechaIngreso ? new Date(formData.fechaIngreso) : null,
+        fechaResolucion: formData.fechaResolucion ? new Date(formData.fechaResolucion) : null,
+        ultimaDepreciacion: formData.ultimaDepreciacion ? new Date(formData.ultimaDepreciacion) : null,
+
+        // Campos numéricos
+        cantidadPieza: parseIdInt(formData.cantidadPiezas),
+        largo: parseFloat(formData.largo),
+        alto: parseFloat(formData.alto),
+        ancho: parseFloat(formData.ancho),
+        costoAdquisicion: parseFloat(formData.costoAdquisicion),
+        valorResidual: parseFloat(formData.valorResidual) || 0,
+        valor: parseFloat(formData.valor),
+        
+        // Strings cortitos
         isla: formData.isla,
         fila: formData.fila,
         columna: formData.columna,
 
+        // Catalogos
+        grupoId: parseIdInt(formData.grupoId),
+        claseId: parseIdInt(formData.claseId),
+        subclaseId: parseIdInt(formData.subclaseId),
+        marcaId: parseIdInt(formData.marcaId),
+        modeloId: parseIdInt(formData.modeloId),
+        ubicacionId: parseIdInt(formData.ubicacionId),
+        unidadMedidaId: parseIdInt(formData.unidadMedidaId), 
+        responsableId: parseIdInt(formData.responsableId),
         
-        grupo: formData.idGrupo ? { 
-            id: parseInt(formData.idGrupo),
-            nombre: grupo?.nombre || null 
-        } : null,
-        
-        clase: formData.idClase ? { id: parseInt(formData.idClase) } : null,
-        subclase: formData.idSubClase ? { id: parseInt(formData.idSubClase) } : null,
-        
-        marca: formData.idMarca ? { 
-            id: parseInt(formData.idMarca),
-            nombre: marca?.nombre || null 
-        } : null,
-        
-        modelo: formData.idModelo ? { id: parseInt(formData.idModelo) } : null,
-        
-        ubicacion: formData.idUbicacion ? { 
-            id: parseInt(formData.idUbicacion),
-            nombre: ubicacion?.nombre || null 
-        } : null,
-        
-        unidadMedida: formData.idUnidadMedida ? { 
-            id: parseInt(formData.idUnidadMedida),
-            nombre: unidadMedida?.nombre || null 
-        } : null,
-
-        responsable: formData.idResponsable ? { 
-            id: parseInt(formData.idResponsable) 
-        } : null,
     };
-    
-    Object.keys(backendData).forEach(key => {
-        const value = backendData[key];
-        if (value === null || value === undefined || value === '') {
-            delete backendData[key];
-        } else if (typeof value === 'object' && value !== null && 
-                (value.id === null || value.id === undefined || isNaN(value.id))) {
-            delete backendData[key];
-        }
-    });
-    
-    return backendData;
 };
 
 export const mapFrontendToBackendUpdate = (formData) => {
-    const backendData = {
-        id: formData.id,
-        codigoInventario: formData.codigoInventario,
-        nombre: formData.nombre,
-        descripcionLarga: formData.descripcionLarga,
-        fechaIngreso: formData.fechaAdquisicion,
-        fechaResolucion: formData.fechaResolucion,
-        nroResolucion: formData.nroResolucion,
-        tipoObjeto: formData.tipoObjeto,
-        condicion: formData.condicion,
-        numSerie: formData.numSerie,
-        color: formData.color,
-        cantidadPieza: formData.cantidadPieza ? parseInt(formData.cantidadPieza) : null,
-        largo: formData.largo ? parseFloat(formData.largo) : null,
-        alto: formData.alto ? parseFloat(formData.alto) : null,
-        ancho: formData.ancho ? parseFloat(formData.ancho) : null,
-        responsableRut: formData.responsableRut ? parseInt(formData.responsableRut) : null,
-        urlFoto: formData.urlFoto,
-        costoAdquisicion: formData.costoAdquisicion ? parseFloat(formData.costoAdquisicion) : null,
-        valorResidual: formData.valorResidual ? parseFloat(formData.valorResidual) : 0,
-        valor: formData.valor ? parseFloat(formData.valor) : null,
-        ultimaDepreciacion: formData.ultimaDepreciacion,
-        isla: formData.isla,
-        fila: formData.fila,
-        columna: formData.columna,
-
-        responsable: formData.idResponsable ? { 
-            id: parseInt(formData.idResponsable) 
-        } : null,
-        
-        grupo: formData.idGrupo ? { id: parseInt(formData.idGrupo) } : null,
-        clase: formData.idClase ? { id: parseInt(formData.idClase) } : null,
-        subclase: formData.idSubClase ? { id: parseInt(formData.idSubClase) } : null,
-        marca: formData.idMarca ? { id: parseInt(formData.idMarca) } : null,
-        modelo: formData.idModelo ? { id: parseInt(formData.idModelo) } : null,
-        ubicacion: formData.idUbicacion ? { id: parseInt(formData.idUbicacion) } : null,
-        unidadMedida: formData.idUnidadMedida ? { id: parseInt(formData.idUnidadMedida) } : null,
-    };
-    
-    Object.keys(backendData).forEach(key => {
-        const value = backendData[key];
-        if (value === undefined) {
-            delete backendData[key];
-        } else if (typeof value === 'object' && value !== null && 
-                (value.id === null || value.id === undefined || isNaN(value.id))) {
-            backendData[key] = null;
-        }
-    });
-    
-    return backendData;
+    const data = mapFrontendToBackendAdd(formData);
+    return { id: parseIdInt(formData.id),
+             ...data };
 };
 
 export const mapBackendToFrontend = (backendDto, catalogos) => {
     const formatDate = (dateString) => dateString ? dateString.split('T')[0] : '';
     
-    const findIdByName = (catName, nameValue) => {
-        const list = catalogos[catName];
-        return list?.find(item => item.nombre === nameValue)?.id || '';
-    };
-
-    const findResponsableIdByRut = (rut) => {
-        const list = catalogos.responsables;
-        return list?.find(item => item.rut === rut)?.id || '';
-    };
-
     return {
         id: backendDto.id,
         codigoInventario: backendDto.codigoInventario,
         nombre: backendDto.nombre,
         descripcionLarga: backendDto.descripcionLarga,
-        fechaAdquisicion: formatDate(backendDto.fechaIngreso),
-        fechaResolucion: formatDate(backendDto.fechaResolucion),
-        nroResolucion: backendDto.nroResolucion,
         tipoObjeto: backendDto.tipoObjeto,
         condicion: normalizarCondicion(backendDto.condicion),
+        estado: backendDto.estado,
         numSerie: backendDto.numSerie,
         color: backendDto.color,
+
+        fechaIngreso: formatDate(backendDto.fechaIngreso),
+        fechaResolucion: formatDate(backendDto.fechaResolucion),
+        ultimaDepreciacion: formatDate(backendDto.ultimaDepreciacion),
+        
+        
         cantidadPieza: backendDto.cantidadPieza,
         largo: backendDto.largo,
         alto: backendDto.alto,
         ancho: backendDto.ancho,
-        fechaUltimaToma: formatDate(backendDto.fechaUltimaToma),
-        urlFoto: backendDto.urlFoto,
+        nroResolucion: backendDto.nroResolucion,
         costoAdquisicion: backendDto.costoAdquisicion,
         valorResidual: backendDto.valorResidual,
         valor: backendDto.valor,
-        ultimaDepreciacion: backendDto.ultimaDepreciacion,
+       
         isla: backendDto.isla,
         fila: backendDto.fila,
         columna: backendDto.columna,
 
-
-        idResponsable: findResponsableIdByRut(backendDto.responsable),
-        responsableRut: backendDto.responsable,
-        
-        idGrupo: findIdByName('grupos', backendDto.grupo),
-        idMarca: findIdByName('marcas', backendDto.marca),
-        idUbicacion: findIdByName('ubicaciones', backendDto.ubicacion),
-        idUnidadMedida: findIdByName('unidadesMedida', backendDto.unidadMedida),
-
-        idClase: backendDto.clase ? null : '',
-        idModelo: backendDto.modelo ? null : '',
-        idSubClase: backendDto.subclase ? null : '',
-
-        grupo: backendDto.grupo,
-        clase: backendDto.clase,
-        subClase: backendDto.subclase,
-        marca: backendDto.marca,
-        modelo: backendDto.modelo,
-        ubicacion: backendDto.ubicacion,
-        unidadMedida: backendDto.unidadMedida,
+        grupoId: backendDto.grupoId,
+        claseId: backendDto.claseId,
+        subclaseId: backendDto.subclaseId,
+        marcaId: backendDto.marcaId,
+        modeloId: backendDto.modeloId,
+        ubicacionId: backendDto.ubicacionId,
+        unidadMedidaId: backendDto.unidadMedidaId,
+        responsableId: backendDto.responsableId,
     };
 };
