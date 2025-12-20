@@ -37,7 +37,7 @@ function ModificarClase() {
                     return {
                         id: backendDto.id,
                         nombre: backendDto.nombre,
-                        idGrupo: findIdByName('grupos', backendDto.grupo)
+                        grupoId: findIdByName('grupos', backendDto.grupo)
                     };
                 };
 
@@ -59,7 +59,7 @@ function ModificarClase() {
             id: formData.id,
             nombre: formData.nombre,
             grupo: {
-                id: parseInt(formData.idGrupo)
+                id: parseInt(formData.grupoId)
             }
         };
     };

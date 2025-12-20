@@ -34,10 +34,10 @@ function SubclaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmittin
             }));
         }
 
-        if (name === 'idGrupo') {
+        if (name === 'grupoId') {
             const grupoId = value;
 
-            setFormData(prev => ({ ...prev, idClase: '' }));
+            setFormData(prev => ({ ...prev, claseId: '' }));
             setOpcionesClase([]);
 
             if (grupoId) {
@@ -58,12 +58,12 @@ function SubclaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmittin
     const validarFormulario = () => {
         const errores = {};
 
-        if (!formData.idGrupo || formData.idGrupo === '') {
-            errores.idGrupo = 'Debe seleccionar un grupo.';
+        if (!formData.grupoId || formData.grupoId === '') {
+            errores.grupoId = 'Debe seleccionar un grupo.';
         }
 
-        if (!formData.idClase || formData.idClase === '') {
-            errores.idClase = 'Debe seleccionar una clase.';
+        if (!formData.claseId || formData.claseId === '') {
+            errores.claseId = 'Debe seleccionar una clase.';
         }
 
         if (!formData.nombre || formData.nombre.trim() === '') {
@@ -90,14 +90,14 @@ function SubclaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmittin
     return (
         <Form onSubmit={handleSubmit}>
             <Row className="mb-3">
-                <Form.Group as={Col} md="4" controlId="formIdGrupo">
+                <Form.Group as={Col} md="4" controlId="formGrupoGrid">
                     <Form.Label>Grupo al que pertenece</Form.Label>
                     <Form.Select
-                        name="idGrupo"
-                        value={formData.idGrupo || ''}
+                        name="grupoId"
+                        value={formData.grupoId || ''}
                         onChange={handleFormChange}
                         disabled={isSubmitting}
-                        isInvalid={!!erroresValidacion.idGrupo}
+                        isInvalid={!!erroresValidacion.grupoId}
                         required
                     >
                         <option value="">Seleccione un Grupo</option>
@@ -106,33 +106,33 @@ function SubclaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmittin
                         ))}
                     </Form.Select>
                     <Form.Control.Feedback type="invalid">
-                        {erroresValidacion.idGrupo}
+                        {erroresValidacion.grupoId}
                     </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group as={Col} md="4" controlId="formGridClase">
+                <Form.Group as={Col} md="4" controlId="formClaseGrid">
                     <Form.Label>Clase a la que pertenece</Form.Label>
                     <Form.Select
-                        name="idClase"
-                        value={formData.idClase || ''}
+                        name="claseId"
+                        value={formData.claseId || ''}
                         onChange={handleFormChange}
-                        disabled={isSubmitting || !formData.idGrupo || cargandoClases}
-                        isInvalid={!!erroresValidacion.idClase}
+                        disabled={isSubmitting || !formData.grupoId || cargandoClases}
+                        isInvalid={!!erroresValidacion.claseId}
                         required
                     >
                         <option value="">
-                            {cargandoClases ? 'Cargando...' : (!formData.idGrupo ? 'Primero seleccione un Grupo' : 'Seleccione Clase')}
+                            {cargandoClases ? 'Cargando...' : (!formData.grupoId ? 'Primero seleccione un Grupo' : 'Seleccione Clase')}
                         </option>
                         {opcionesClase.map(c => (
                             <option key={c.id} value={c.id}>{c.nombre}</option>
                         ))}
                     </Form.Select>
                     <Form.Control.Feedback type="invalid">
-                        {erroresValidacion.idClase}
+                        {erroresValidacion.claseId}
                     </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group as={Col} md="4" controlId="formGridSubclase">
+                <Form.Group as={Col} md="4" controlId="formSubclaseGrid">
                     <Form.Label>Nombre de la Subclase</Form.Label>
                     <Form.Control
                         type="text"
@@ -140,7 +140,7 @@ function SubclaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmittin
                         value={formData.nombre || ''}
                         onChange={handleFormChange}
                         isInvalid={!!erroresValidacion.nombre}
-                        disabled={isSubmitting || !formData.idGrupo || !formData.idClase}
+                        disabled={isSubmitting || !formData.grupoId || !formData.claseId}
                         required
                         maxLength="35"
                     />

@@ -13,7 +13,7 @@ function AgregarClase() {
     const [cargando, setCargando] = useState(false);
     const navigate = useNavigate();
 
-    const FORMULARIO_CLASE_VACIO = { nombre: '', idGrupo: '' };
+    const FORMULARIO_CLASE_VACIO = { nombre: '', grupoId: '' };
 
     useEffect(() => {
         const cargarGrupos = async () => {
@@ -36,7 +36,7 @@ function AgregarClase() {
         return {
             nombre: formData.nombre,
             grupo: {
-                id: parseInt(formData.idGrupo)
+                id: parseInt(formData.grupoId)
             }
         };
     };

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { validarBien } from '../../../utils/validacionBien';
 import { obtenerMensajeError } from '../../../utils/errorHandler';
 import { mapFrontendToBackendAdd } from '../../../utils/mapeoBienes';
+import { useBienes } from '../../../hooks/useBienes';
 import BienForm from '../components/BienForm';
 import api from '../../../api/axiosConfig';
 
@@ -18,14 +19,14 @@ const FORMULARIO_BIEN_VACIO = {
 };
 
 function AgregarBien() {
-    const [catalogos, setCatalogos] = useState({
-        grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], responsables: []
-    });
+    const [catalogos, setCatalogos] = useState({ grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], responsables: [] });
+
     const [cargandoCatalogos, setCargandoCatalogos] = useState(true);
     const [errorCatalogos, setErrorCatalogos] = useState(null);
     const [errorGuardar, setErrorGuardar] = useState(null);
     const [cargando, setCargando] = useState(false);
     const navigate = useNavigate();
+    const { cargarBienes } = useBienes();
 
     useEffect(() => {
         const cargarCatalogosNecesarios = async () => {
@@ -76,6 +77,7 @@ function AgregarBien() {
         try {
             console.log("Previo a la llamada:",datosParaEnviar)
             await api.post('/bien/', datosParaEnviar);
+            await cargarBienes();
             navigate('/dashboard');
         } catch (err) {
             console.log("Cuando salta error:",datosParaEnviar)

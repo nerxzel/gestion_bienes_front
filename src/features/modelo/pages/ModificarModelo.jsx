@@ -37,7 +37,7 @@ function ModificarModelo() {
                     return {
                         id: backendDto.id,
                         nombre: backendDto.nombre,
-                        idMarca: findIdByName('marcas', backendDto.marca)
+                        marcaId: findIdByName('marcas', backendDto.marca)
                     };
                 };
 
@@ -59,7 +59,7 @@ function ModificarModelo() {
             id: formData.id,
             nombre: formData.nombre,
             marca: {
-                id: parseInt(formData.idMarca)
+                id: parseInt(formData.marcaId)
             }
         };
     };

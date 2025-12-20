@@ -27,15 +27,15 @@ function ModificarSubclase() {
                 const subclaseData = subclaseRes.data;
                 const grupos = gruposRes.data || [];
 
-                const idGrupo = grupos.find(g => g.nombre === subclaseData.grupo)?.id || '';
+                const grupoId = grupos.find(g => g.nombre === subclaseData.grupo)?.id || '';
 
                 let clases = [];
-                let idClase = '';
+                let claseId = '';
 
-                if (idGrupo) {
-                    const clasesRes = await api.get(`/clase/dropdown/${idGrupo}`);
+                if (grupoId) {
+                    const clasesRes = await api.get(`/clase/dropdown/${grupoId}`);
                     clases = clasesRes.data || [];
-                    idClase = clases.find(c => c.nombre === subclaseData.clase)?.id || '';
+                    claseId = clases.find(c => c.nombre === subclaseData.clase)?.id || '';
                 }
 
                 setCatalogos({ grupos, clases });
@@ -43,8 +43,8 @@ function ModificarSubclase() {
                 setInitialData({
                     id: subclaseData.id,
                     nombre: subclaseData.nombre,
-                    idGrupo: idGrupo,
-                    idClase: idClase
+                    grupoId: grupoId,
+                    claseId: claseId
                 });
 
             } catch (err) {
@@ -62,7 +62,7 @@ function ModificarSubclase() {
             id: formData.id,
             nombre: formData.nombre,
             clase: {
-                id: parseInt(formData.idClase)
+                id: parseInt(formData.claseId)
             }
         };
     };

@@ -34,8 +34,8 @@ function ClaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmitting =
             errores.nombre = 'El nombre de la clase no puede tener más de 35 caracteres'
         }
 
-        if(!formData.idGrupo || formData.idGrupo === '') {
-        errores.idGrupo = 'Debe seleccionar un grupo.';
+        if(!formData.grupoId || formData.grupoId === '') {
+        errores.grupoId = 'Debe seleccionar un grupo.';
     }
 
         return errores;
@@ -55,14 +55,14 @@ function ClaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmitting =
     return (
         <Form onSubmit={handleSubmit}>
             <Row className="mb-3">
-                <Form.Group as={Col} md="6" controlId="formGridGrupo">
+                <Form.Group as={Col} md="6" controlId="formGrupoGrid">
                     <Form.Label>Grupo al que pertenece</Form.Label>
                     <Form.Select
-                        name="idGrupo"
-                        value={formData.idGrupo || ''}
+                        name="grupoId"
+                        value={formData.grupoId || ''}
                         onChange={handleInputChange}
                         disabled={isSubmitting}
-                        isInvalid={!!erroresValidacion.idGrupo}
+                        isInvalid={!!erroresValidacion.grupoId}
                         required
                     >
                         <option value="">Seleccione un Grupo</option>
@@ -71,7 +71,7 @@ function ClaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmitting =
                         ))}
                     </Form.Select>
                     <Form.Control.Feedback type="invalid">
-                        {erroresValidacion.idGrupo}
+                        {erroresValidacion.grupoId}
                     </Form.Control.Feedback>
                 </Form.Group>
 
@@ -83,7 +83,7 @@ function ClaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmitting =
                         value={formData.nombre || ''}
                         onChange={handleInputChange}
                         isInvalid={!!erroresValidacion.nombre}
-                        disabled={isSubmitting || !formData.idGrupo}
+                        disabled={isSubmitting || !formData.grupoId}
                         required
                         maxLength="35"
                     />

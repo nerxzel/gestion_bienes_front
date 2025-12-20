@@ -13,7 +13,7 @@ function AgregarSubclase() {
     const [cargando, setCargando] = useState(false);
     const navigate = useNavigate();
 
-    const FORMULARIO_SUBCLASE_VACIO = { nombre: '', idGrupo: '', idClase: '' };
+    const FORMULARIO_SUBCLASE_VACIO = { nombre: '', grupoId: '', claseId: '' };
 
     useEffect(() => {
         const cargarGrupos = async () => {
@@ -35,8 +35,8 @@ function AgregarSubclase() {
     const mapFrontendToBackend = (formData) => {
         return {
             nombre: formData.nombre,
-            clase: { id: parseInt(formData.idClase) },
-            grupo: { id: parseInt(formData.idGrupo) }
+            clase: { id: parseInt(formData.claseId) },
+            grupo: { id: parseInt(formData.grupoId) }
         };
     };
 
