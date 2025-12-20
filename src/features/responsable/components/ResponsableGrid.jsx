@@ -16,7 +16,7 @@ function ResponsableGrid() {
 
     const cargarResponsables = async () => {
         try {
-            const respuesta = await api.get('/responsable/all');
+            const respuesta = await api.get('/responsable/');
             setResponsables(respuesta.data || []);
         } catch (err) {
             const mensajeError = manejarErrorAPI(err);

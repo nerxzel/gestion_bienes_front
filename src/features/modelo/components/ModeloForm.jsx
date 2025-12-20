@@ -34,8 +34,8 @@ function ModeloForm({ initialData, onSubmit, isEditing, catalogos, isSubmitting 
             errores.nombre = 'El nombre del modelo no puede tener más de 35 caracteres'
         }
 
-        if(!formData.idMarca || formData.idMarca === '') {
-        errores.idMarca = 'Debe seleccionar una marca.';
+        if(!formData.marcaId || formData.marcaId === '') {
+        errores.marcaId = 'Debe seleccionar una marca.';
     }
 
         return errores;
@@ -55,14 +55,14 @@ function ModeloForm({ initialData, onSubmit, isEditing, catalogos, isSubmitting 
     return (
         <Form onSubmit={handleSubmit}>
             <Row className="mb-3">
-                <Form.Group as={Col} md="6" controlId="formGridMarca">
+                <Form.Group as={Col} md="6" controlId="formMarcaGrid">
                     <Form.Label>Marca a la que pertenece</Form.Label>
                     <Form.Select
-                        name="idMarca"
-                        value={formData.idMarca || ''}
+                        name="marcaId"
+                        value={formData.marcaId || ''}
                         onChange={handleInputChange}
                         disabled={isSubmitting}
-                        isInvalid={!!erroresValidacion.idGrupo}
+                        isInvalid={!!erroresValidacion.grupoId}
                         required
                     >
                         <option value="">Seleccione una Marca</option>
@@ -71,7 +71,7 @@ function ModeloForm({ initialData, onSubmit, isEditing, catalogos, isSubmitting 
                         ))}
                     </Form.Select>
                     <Form.Control.Feedback type="invalid">
-                        {erroresValidacion.idGrupo}
+                        {erroresValidacion.grupoId}
                     </Form.Control.Feedback>
                 </Form.Group>
 

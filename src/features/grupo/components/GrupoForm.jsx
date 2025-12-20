@@ -49,7 +49,11 @@ function GrupoForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
         if(Object.keys(errores).length > 0) {
             setErroresValidacion(errores);
             return;}
-        onSubmit(formData);
+        const dataToSubmit = {
+            ...formData,
+            vidaUtil: parseInt(formData.vidaUtil)
+        }
+        onSubmit(dataToSubmit);
     };
 
     return (

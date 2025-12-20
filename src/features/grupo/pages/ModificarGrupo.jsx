@@ -37,7 +37,7 @@ function ModificarGrupo() {
         setErrorGuardar(null);
         setModificando(true);
         try {
-            await api.put(`/grupo/update`, formData);
+            await api.put(`/grupo/${formData.id}`, formData);
             navigate('/dashboard-grupo');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al modificar el grupo");

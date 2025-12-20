@@ -13,7 +13,7 @@ function AgregarModelo() {
     const [cargando, setCargando] = useState(false);
     const navigate = useNavigate();
 
-    const FORMULARIO_MODELO_VACIO = { nombre: '', idMarca: '' };
+    const FORMULARIO_MODELO_VACIO = { nombre: '', marcaId: '' };
 
     useEffect(() => {
         const cargarMarcas = async () => {
@@ -36,7 +36,7 @@ function AgregarModelo() {
         return {
             nombre: formData.nombre,
             marca: {
-                id: parseInt(formData.idMarca)
+                id: parseInt(formData.marcaId)
             }
         };
     };

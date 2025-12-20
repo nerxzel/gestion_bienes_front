@@ -37,7 +37,7 @@ function ModificarResponsable() {
         setErrorGuardar(null);
         setModificando(true);
         try {
-            await api.put(`/responsable/update`, formData);
+            await api.put(`/responsable/${formData.id}`, formData);
             navigate('/dashboard-responsable');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al modificar al responsable");

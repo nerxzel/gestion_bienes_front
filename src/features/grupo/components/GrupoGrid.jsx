@@ -16,7 +16,7 @@ function GrupoGrid() {
 
     const cargarGrupos = async () => {
         try {
-            const respuesta = await api.get('/grupo/all');
+            const respuesta = await api.get('/grupo');
             setGrupos(respuesta.data || []);
         } catch (err) {
             const mensajeError = manejarErrorAPI(err);

@@ -6,20 +6,20 @@ export const validarBien = (formData) => {
         descripcionLarga: 'Descripción Larga',
         fechaIngreso: 'Fecha Ingreso',
         tipoObjeto: 'Tipo Objeto',
-        idResponsable: 'Responsable',
+        responsableId: 'Responsable',
         color: 'Color',
         cantidadPieza: 'Cantidad Piezas',
         largo: 'Largo',
         alto: 'Alto',
         ancho: 'Ancho',
         condicion: 'Condición',
-        idGrupo: 'Grupo',
-        idClase: 'Clase',
-        idSubClase: 'Subclase',
-        idMarca: 'Marca',
-        idModelo: 'Modelo',
-        idUbicacion: 'Ubicación',
-        idUnidadMedida: 'Unidad de Medida'
+        grupoId: 'Grupo',
+        claseId: 'Clase',
+        subclaseId: 'Subclase',
+        marcaId: 'Marca',
+        modeloId: 'Modelo',
+        ubicacionId: 'Ubicación',
+        unidadMedidaId: 'Unidad de Medida'
     };
     
     Object.entries(camposRequeridos).forEach(([campo, nombre]) => {

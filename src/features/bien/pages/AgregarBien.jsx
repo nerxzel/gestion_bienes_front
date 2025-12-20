@@ -4,28 +4,29 @@ import { useNavigate } from 'react-router-dom';
 import { validarBien } from '../../../utils/validacionBien';
 import { obtenerMensajeError } from '../../../utils/errorHandler';
 import { mapFrontendToBackendAdd } from '../../../utils/mapeoBienes';
+import { useBienes } from '../../../hooks/useBienes';
 import BienForm from '../components/BienForm';
 import api from '../../../api/axiosConfig';
 
 const FORMULARIO_BIEN_VACIO = {
     nombre: '', grupo: '', clase: '', subClase: '', marca: '', modelo: '',
     fechaIngreso: new Date().toISOString().split('T')[0], condicion: 'Alta',
-    idGrupo: '', idClase: '', idSubClase: '', idMarca: '', idModelo: '',
+    grupoId: '', claseId: '', subclaseId: '', marcaId: '', modeloId: '',
     descripcionLarga: '', tipoObjeto: '', numSerie: '', color: '', cantidadPieza: '',
-    largo: '', alto: '', ancho: '', idUbicacion: '', idUnidadMedida: '',
-    urlFoto: '', responsableRut: '', idResponsable: '', costoAdquisicion: '', valorResidual: '',
-    valor: '', isla: '', fila: '', columna: ''
+    largo: '', alto: '', ancho: '', ubicacionId: '', unidadMedidaId: '',
+    urlFoto: '', responsableRut: '', responsableId: '', costoAdquisicion: '', valorResidual: '',
+    valor: '', isla: '', fila: '', columna: '', estado: ''
 };
 
 function AgregarBien() {
-    const [catalogos, setCatalogos] = useState({
-        grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], responsables: []
-    });
+    const [catalogos, setCatalogos] = useState({ grupos: [], marcas: [], ubicaciones: [], unidadesMedida: [], responsables: [] });
+
     const [cargandoCatalogos, setCargandoCatalogos] = useState(true);
     const [errorCatalogos, setErrorCatalogos] = useState(null);
     const [errorGuardar, setErrorGuardar] = useState(null);
     const [cargando, setCargando] = useState(false);
     const navigate = useNavigate();
+    const { cargarBienes } = useBienes();
 
     useEffect(() => {
         const cargarCatalogosNecesarios = async () => {
@@ -74,9 +75,12 @@ function AgregarBien() {
         setErrorGuardar(null);
         setCargando(true);
         try {
+            console.log("Previo a la llamada:",datosParaEnviar)
             await api.post('/bien/', datosParaEnviar);
+            await cargarBienes();
             navigate('/dashboard');
         } catch (err) {
+            console.log("Cuando salta error:",datosParaEnviar)
             const mensajeError = obtenerMensajeError(err, "Error al agregar el bien");
             setErrorGuardar(mensajeError);
         } finally {

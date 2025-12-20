@@ -37,7 +37,7 @@ function ModificarModelo() {
                     return {
                         id: backendDto.id,
                         nombre: backendDto.nombre,
-                        idMarca: findIdByName('marcas', backendDto.marca)
+                        marcaId: findIdByName('marcas', backendDto.marca)
                     };
                 };
 
@@ -59,7 +59,7 @@ function ModificarModelo() {
             id: formData.id,
             nombre: formData.nombre,
             marca: {
-                id: parseInt(formData.idMarca)
+                id: parseInt(formData.marcaId)
             }
         };
     };
@@ -69,7 +69,7 @@ function ModificarModelo() {
         setErrorGuardar(null);
         setModificando(true);
         try {
-            await api.put(`/modelo/update`, datosParaEnviar);
+            await api.put(`/modelo/${formData.id}`, datosParaEnviar);
             navigate('/dashboard-modelo');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al modificar el modelo");

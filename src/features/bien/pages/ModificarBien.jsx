@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { mapFrontendToBackendUpdate, mapBackendToFrontend } from '../../../utils/mapeoBienes';
 import { validarBien } from '../../../utils/validacionBien';
 import { obtenerMensajeError } from '../../../utils/errorHandler';
+import { useBienes } from '../../../hooks/useBienes';
 import BienForm from '../components/BienForm';
 import api from '../../../api/axiosConfig';
 
@@ -19,6 +20,7 @@ function ModificarBien() {
     const [modificando, setModificando] = useState(false);
     const [error, setError] = useState(null);
     const [errorGuardar, setErrorGuardar] = useState(null);
+    const { cargarBienes } = useBienes();
 
     useEffect(() => {
         const cargarDatosCompletos = async () => {
@@ -80,9 +82,11 @@ function ModificarBien() {
         setModificando(true);
 
         try {
-            await api.put(`/bien/update`, datosParaEnviar);
+            await api.put(`/bien/${id}`, datosParaEnviar);
+            await cargarBienes();
             navigate('/dashboard');
         } catch (err) {
+            console.log("Revisar:",datosParaEnviar)
             const mensajeError = obtenerMensajeError(err, "Error al modificar el bien");
             setErrorGuardar(mensajeError);
         } finally {
@@ -93,7 +97,7 @@ function ModificarBien() {
     const handleDelete = async () => {
         setErrorGuardar(null);
         try {
-            await api.delete(`/bien/${id}`);
+            await api.post(`/bien/${id}`);
             navigate('/dashboard');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al eliminar el bien");

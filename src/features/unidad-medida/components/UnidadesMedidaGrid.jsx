@@ -16,7 +16,7 @@ function UnidadesMedidaGrid() {
 
     const cargarUnidadesMedida = async () => {
         try {
-            const respuesta = await api.get('/unidadMedida/all');
+            const respuesta = await api.get('/unidadMedida');
             setUnidadesMedida(respuesta.data || []);
         } catch (err) {
             const mensajeError = manejarErrorAPI(err);

@@ -37,7 +37,7 @@ function ModificarMarca() {
         setErrorGuardar(null);
         setModificando(true);
         try {
-            await api.put(`/marca/update`, formData);
+            await api.put(`/marca/${formData.id}`, formData);
             navigate('/dashboard-marca');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al modificar la marca");
