@@ -1,18 +1,20 @@
 export const CONDICION = {
     ALTA: 'Alta',
-    BAJA: 'Baja'
+    BAJA: 'Baja',
+    PENDIENTE: 'Pendiente'
 };
 
 export const normalizarCondicion = (condicion) => {
-    if (!condicion) return CONDICION.ALTA;
-    
+    if (!condicion) return CONDICION.PENDIENTE;
+
     const condicionLower = condicion.toLowerCase();
-    
+
     if (condicionLower === 'alta') {
         return CONDICION.ALTA;
     } else if (condicionLower === 'baja') {
         return CONDICION.BAJA;
-    }
+    } else if (condicionLower === 'pendiente')
+        return (CONDICION.PENDIENTE)
 
     return condicion;
 };
@@ -29,3 +31,7 @@ export const esAlta = (condicion) => {
 export const esBaja = (condicion) => {
     return esCondicion(condicion, CONDICION.BAJA);
 };
+
+export const esPendiente = (condicion) => {
+    return esCondicion(condicion, CONDICION.PENDIENTE)
+}
