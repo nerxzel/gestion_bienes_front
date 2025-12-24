@@ -1,4 +1,4 @@
-import { Navbar, Nav, NavDropdown, Container, Spinner, Alert, Modal, Button} from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Container, Spinner, Alert, Modal} from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { FaFileDownload, FaCalculator} from 'react-icons/fa';
@@ -14,6 +14,7 @@ function NavBar() {
   const [downloadError, setDownloadError] = useState(null);
 
   const [showDepreciateModal, setShowDepreciateModal] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false)
   const [isDepreciating, setIsDepreciating] = useState(false);
   const [depreciateError, setDepreciateError] = useState(null);
 
@@ -104,7 +105,7 @@ function NavBar() {
               {/*<NavDropdown.Item as={Link} to='/bienes-alta'>Bienes Alta</NavDropdown.Item>
               <NavDropdown.Item as={Link} to='/bienes-baja'>Bienes Baja</NavDropdown.Item>*/}
               <NavDropdown.Item 
-                onClick={handleDescargarReporte} 
+                onClick={() => setShowReportModal(true)} 
                 disabled={isDownloading}
               >
                 {isDownloading ? (
@@ -119,7 +120,9 @@ function NavBar() {
                 )}
               </NavDropdown.Item>
               
-            <NavDropdown.Item as={Link} to='/dashboard-responsable'>
+            <NavDropdown.Item onClick={() => setShowReportModal(true)} 
+                      //</NavDropdown>as={Link} to='/dashboard-responsable'
+                      >
               <FaFileDownload className="me-1" /> Hoja Mural
             </NavDropdown.Item>
               {/*<NavDropdown title="Etiquetas" id="etiquetas-nested-dropdown" drop="end" className='ms-2'>
@@ -166,7 +169,16 @@ function NavBar() {
 
       <Modal show={showDepreciateModal} onHide={() => setShowDepreciateModal(false)} centered>
         <Modal.Header closeButton>
-        <Modal.Title>Confirmar Depreciación Masiva</Modal.Title>
+        <Modal.Title>Depreciación</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+        <p>En estos momentos esta función se encuentra en desarrollo. Gracias por su paciencia.</p>
+        </Modal.Body>
+
+
+
+        {/*<Modal.Title>Confirmar Depreciación Masiva</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <p>Estás a punto de recalcular el valor para <strong>todos los bienes</strong> del sistema basado en su costo de adquisición y años de depreciación.</p>
@@ -193,7 +205,17 @@ function NavBar() {
                     'Sí, ejecutar depreciación'
                 )}
             </Button>
-        </Modal.Footer>
+        </Modal.Footer>*/}
+    </Modal>
+    <Modal show={showReportModal} onHide={() => setShowReportModal(false)} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Hoja Mural y otros reportes</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+        <p>En estos momentos esta función se encuentra en desarrollo. Gracias por su paciencia.</p>
+        </Modal.Body>
+
     </Modal>
     </>
   );
