@@ -3,11 +3,13 @@ import { normalizarCondicion } from './condicionUtils';
 const parseIdInt = (value) => (value && value !== "" ? parseInt(value) : null);
 const parseFloatVal = (value) => (value && value !== "" ? parseFloat(value) : null);
 
-export const mapFrontendToBackendAdd = (formData) => { 
+export const mapFrontendToBackendAdd = (formData) => {
 
     return {
         ...formData,
- 
+
+        condicion: formData.condicion || undefined,
+
         // Fechas
         fechaIngreso: formData.fechaIngreso ? new Date(formData.fechaIngreso) : null,
         fechaResolucion: formData.fechaResolucion ? new Date(formData.fechaResolucion) : null,
@@ -21,7 +23,7 @@ export const mapFrontendToBackendAdd = (formData) => {
         costoAdquisicion: parseFloatVal(formData.costoAdquisicion) ?? '',
         valorResidual: parseFloatVal(formData.valorResidual) || 0,
         valor: parseFloatVal(formData.valor),
-        
+
         // Strings cortitos
         isla: formData.isla,
         fila: formData.fila,
@@ -34,28 +36,30 @@ export const mapFrontendToBackendAdd = (formData) => {
         marcaId: parseIdInt(formData.marcaId),
         modeloId: parseIdInt(formData.modeloId),
         ubicacionId: parseIdInt(formData.ubicacionId),
-        unidadMedidaId: parseIdInt(formData.unidadMedidaId), 
+        unidadMedidaId: parseIdInt(formData.unidadMedidaId),
         responsableId: parseIdInt(formData.responsableId),
-        
+
     };
 };
 
 export const mapFrontendToBackendUpdate = (formData) => {
     const data = mapFrontendToBackendAdd(formData);
-    return { id: parseIdInt(formData.id),
-             ...data };
+    return {
+        id: parseIdInt(formData.id),
+        ...data
+    };
 };
 
 export const mapBackendToFrontend = (backendDto) => {
     const formatDate = (dateString) => dateString ? dateString.split('T')[0] : '';
-    
+
     return {
         ...backendDto,
 
         fechaIngreso: formatDate(backendDto.fechaIngreso),
         fechaResolucion: formatDate(backendDto.fechaResolucion),
         ultimaDepreciacion: formatDate(backendDto.ultimaDepreciacion),
-        
+
         condicion: normalizarCondicion(backendDto.condicion),
 
         grupoId: backendDto.grupoId,

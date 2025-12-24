@@ -36,6 +36,7 @@ function BienGrid() {
                     onChange={(e) => setFiltroCondicion(e.target.value)}>
                     <option value="Alta">Alta</option>
                     <option value="Baja">Baja</option>
+                    <option value="Pendiente">Pendiente</option>
                     <option value="Todas">Todas</option>
                 </Form.Select></Col>
             </Row>
