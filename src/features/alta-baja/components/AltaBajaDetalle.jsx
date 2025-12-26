@@ -1,12 +1,9 @@
 import { Row, Alert } from 'react-bootstrap';
 import { FormInput } from '../../bien/components/formFields.jsx';
-import { formatCLP } from '../../../utils/formatUtils.js'; 
+import { formatDate } from '../../../utils/formatUtils.js'
 import { esAlta, CONDICION } from '../../../utils/condicionUtils.js';
 
-const formatDate = (dateString) => dateString ? dateString.split('T')[0] : '';
-
 export const AltaBajaDetalle = ({ bien, exitoso, tipoAccion }) => {
-    if (!bien) return null;
 
     const esAltaActual = esAlta(bien.condicion);
     const condicionClass = esAltaActual ? 'bg-success-subtle' : 'bg-danger-subtle';
@@ -35,7 +32,7 @@ export const AltaBajaDetalle = ({ bien, exitoso, tipoAccion }) => {
                 />
                 <FormInput 
                     md="6" label="Fecha de Resolución" name="fechaResolucion" 
-                    value={formatDate(bien.fechaResolucion)} 
+                    value={formatDate(bien.fechaResolucion) || '(Sin asignar)'} 
                     disabled readOnly className={resolucionClass} 
                 />
             </Row>

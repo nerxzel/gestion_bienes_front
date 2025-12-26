@@ -53,10 +53,10 @@ import AgregarResponsable from "../features/responsable/pages/AgregarResponsable
 import ModificarResponsable from "../features/responsable/pages/ModificarResponsable.jsx"
 
 // Alta
-import DarAlta from "../features/alta-baja/pages/ProcesosDarDeAlta.jsx";
+import DarAlta from "../features/alta-baja/pages/Alta.jsx";
 
 // Baja
-import DarBaja from "../features/alta-baja/pages/ProcesosDarDeBaja.jsx";
+import DarBaja from "../features/alta-baja/pages/Baja.jsx";
 
 
 {/*import MaestroFuncionario from "../pages/ConfigMaestroFuncionario.jsx";

@@ -10,15 +10,5 @@ export const formatCLP = (value) => {
     return formatter.format(numberToFormat).replace('CLP$', '$ ');
 };
 
-export const formatDate = (dateString) => {
-    if (!dateString) return "-";
-    
-    const date = new Date(dateString);
-    
-    return date.toLocaleDateString('es-CL', {
-        day: '2-digit', 
-        month: '2-digit', 
-        year: 'numeric',
-        timeZone: 'UTC' 
-    });
-};
+export const formatDate = (dateString) => dateString ? dateString.split('T')[0] : '';
+
