@@ -1,4 +1,4 @@
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Row, Col, Button, Modal} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { FaPencilAlt, FaPlus, FaArrowDown, FaArrowUp, } from 'react-icons/fa';
@@ -7,6 +7,7 @@ import { useBienes } from '../../../hooks/useBienes';
 
 function BienGrid() {
     const [barraBusqueda, setBarraBusqueda] = useState('');
+    const [modal, setModal] = useState(false)
     const [filtroCondicion, setFiltroCondicion] = useState('Todas');
     const { bienes, estaCargando, error } = useBienes()
 
@@ -96,7 +97,7 @@ function BienGrid() {
                                             <Button variant="outline-primary"
                                                 className="me-2"
                                                 size="sm"
-                                                onClick={() => navigate(`/modificar-bien/${bien.id}`)}>
+                                                onClick={() => navigate(`/modificar-bien/${bien.id}`) }>
                                                 <FaPencilAlt />
                                             </Button>
 
@@ -104,7 +105,7 @@ function BienGrid() {
                                                 variant="outline-success"
                                                 className="me-2"
                                                 size="sm"
-                                                onClick={() => navigate(`/dar-alta/${bien.id}`)}
+                                                onClick={() => setModal(true)}
                                                 title="Dar de Alta">
                                                 <FaArrowUp />
                                             </Button>
@@ -112,7 +113,7 @@ function BienGrid() {
                                             <Button
                                                 variant="outline-danger"
                                                 size="sm"
-                                                onClick={() => navigate(`/dar-baja/${bien.id}`)}
+                                                onClick={() => setModal(true)}
                                                 title="Dar de Baja">
                                                 <FaArrowDown />
                                             </Button>
@@ -126,6 +127,14 @@ function BienGrid() {
                     </table>
                 </div>
             )}
+
+        <Modal show={modal} onHide={() => setModal(false)} centered>
+            <Modal.Title>
+            <Modal.Header>Alta y Baja de bienes</Modal.Header>
+            </Modal.Title>
+            <Modal.Body>En estos momentos esta función se encuentra en desarrollo. Gracias por su paciencia.</Modal.Body>
+
+        </Modal>
 
 
         </>
