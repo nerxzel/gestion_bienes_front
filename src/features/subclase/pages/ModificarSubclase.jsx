@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { Container, Spinner, Alert, Card } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { obtenerMensajeError } from '../../../utils/errorHandler';
+import { useBienes } from '../../../hooks/useBienes';
 import api from '../../../api/axiosConfig';
 import SubclaseForm from '../components/SubclaseForm';
 
 function ModificarSubclase() {
     const { id } = useParams();
+    const { cargarBienes } = useBienes();
     const navigate = useNavigate();
 
     const [initialData, setInitialData] = useState(null);
@@ -25,20 +27,18 @@ function ModificarSubclase() {
                 ]);
 
                 const subclaseData = subclaseRes.data;
-                const grupos = gruposRes.data || [];
 
-                const grupoId = grupos.find(g => g.nombre === subclaseData.grupo)?.id || '';
+                const grupoId = subclaseData.grupoId
+                const claseId = subclaseData.claseId
 
                 let clases = [];
-                let claseId = '';
 
                 if (grupoId) {
-                    const clasesRes = await api.get(`/clase/dropdown/${grupoId}`);
+                    const clasesRes = await api.get(`/clase?grupoId=${grupoId}&dropdown=true`);
                     clases = clasesRes.data || [];
-                    claseId = clases.find(c => c.nombre === subclaseData.clase)?.id || '';
                 }
 
-                setCatalogos({ grupos, clases });
+                setCatalogos({ grupos: gruposRes.data, clases });
 
                 setInitialData({
                     id: subclaseData.id,
@@ -61,9 +61,9 @@ function ModificarSubclase() {
         return {
             id: formData.id,
             nombre: formData.nombre,
-            clase: {
-                id: parseInt(formData.claseId)
-            }
+            claseId: parseInt(formData.claseId), 
+            grupoId: parseInt(formData.grupoId)  
+            
         };
     };
 
@@ -73,6 +73,7 @@ function ModificarSubclase() {
         setModificando(true);
         try {
             await api.put(`/subclase/${formData.id}`, datosParaEnviar);
+            await cargarBienes();
             navigate('/dashboard-subclase');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al modificar la subclase");

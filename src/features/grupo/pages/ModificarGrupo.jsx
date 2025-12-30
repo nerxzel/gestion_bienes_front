@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { Container, Spinner, Alert, Card } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { obtenerMensajeError } from '../../../utils/errorHandler';
+import { useBienes } from '../../../hooks/useBienes'
 import GrupoForm from '../components/GrupoForm';
 import api from '../../../api/axiosConfig';
 
 function ModificarGrupo() {
     const { id } = useParams();
+    const { cargarBienes } = useBienes();
     const navigate = useNavigate();
 
     const [initialData, setInitialData] = useState(null);
@@ -38,6 +40,7 @@ function ModificarGrupo() {
         setModificando(true);
         try {
             await api.put(`/grupo/${formData.id}`, formData);
+            await cargarBienes();
             navigate('/dashboard-grupo');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al modificar el grupo");

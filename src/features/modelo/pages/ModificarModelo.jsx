@@ -21,7 +21,7 @@ function ModificarModelo() {
             try {
                 const [modeloRes, marcasRes] = await Promise.all([
                     api.get(`/modelo/${id}`),
-                    api.get('/marca/all')
+                    api.get('/marca?dropdown=true')
                 ]);
 
                 const loadedCatalogos = { marcas: marcasRes.data || [] };
@@ -37,7 +37,7 @@ function ModificarModelo() {
                     return {
                         id: backendDto.id,
                         nombre: backendDto.nombre,
-                        marcaId: findIdByName('marcas', backendDto.marca)
+                        marcaId: backendDto.marcaId
                     };
                 };
 
@@ -58,9 +58,7 @@ function ModificarModelo() {
         return {
             id: formData.id,
             nombre: formData.nombre,
-            marca: {
-                id: parseInt(formData.marcaId)
-            }
+            marca: parseInt(formData.marcaId)
         };
     };
 
