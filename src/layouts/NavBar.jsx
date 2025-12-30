@@ -1,4 +1,4 @@
-import { Navbar, Nav, NavDropdown, Container, Spinner, Alert, Modal} from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Container, Spinner, Button, Alert, Modal} from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { FaFileDownload, FaCalculator} from 'react-icons/fa';
@@ -68,7 +68,7 @@ function NavBar() {
       setDepreciateError(null);
       
       try {
-          await api.post('/bien/depreciar');
+          await api.put('/bien/depreciar');
           setShowDepreciateModal(false);
           
           cargarBienes();
@@ -169,16 +169,7 @@ function NavBar() {
 
       <Modal show={showDepreciateModal} onHide={() => setShowDepreciateModal(false)} centered>
         <Modal.Header closeButton>
-        <Modal.Title>Depreciación</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-        <p>En estos momentos esta función se encuentra en desarrollo. Gracias por su paciencia.</p>
-        </Modal.Body>
-
-
-
-        {/*<Modal.Title>Confirmar Depreciación Masiva</Modal.Title>
+        <Modal.Title>Confirmar Depreciación Masiva</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <p>Estás a punto de recalcular el valor para <strong>todos los bienes</strong> del sistema basado en su costo de adquisición y años de depreciación.</p>
@@ -205,7 +196,7 @@ function NavBar() {
                     'Sí, ejecutar depreciación'
                 )}
             </Button>
-        </Modal.Footer>*/}
+        </Modal.Footer>
     </Modal>
     <Modal show={showReportModal} onHide={() => setShowReportModal(false)} centered>
       <Modal.Header closeButton>
