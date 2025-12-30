@@ -15,7 +15,7 @@ function BajaForm() {
     if (status.cargando) return <Container className="mt-4 text-center"><Spinner animation="border" /></Container>;
     if (!bienData && error) return <Container className="mt-4"><Alert variant="danger">{error}</Alert></Container>;
 
-    const yaEstaDeBaja = esBaja ? esBaja(bienData?.condicion) : (bienData?.condicion === 'Baja' || bienData?.condicion === 'En desuso');
+    const yaEstaDeBaja = esBaja(bienData?.condicion)
 
     return (
         <Container className="mt-4">
@@ -23,10 +23,10 @@ function BajaForm() {
                 <Card.Header as="h5" className="bg-danger text-white">Dar de Baja</Card.Header>
                 <Card.Body>
                     {error && <Alert variant="danger" onClose={handleLimpiarError} dismissible>{error}</Alert>}
-                    {exitoso && <Alert variant="success" onClose={handleLimpiarExito} dismissible>¡Bien dado de baja exitosamente!</Alert>}
+                    {exitoso && <Alert variant="danger" onClose={handleLimpiarExito} dismissible>¡Bien dado de baja exitosamente!</Alert>}
                     
                     {yaEstaDeBaja && !exitoso && (
-                        <Alert variant="warning">Este bien ya se encuentra de <strong>Baja</strong>.</Alert>
+                        <Alert variant="danger">Este bien ya se encuentra de <strong>Baja</strong>.</Alert>
                     )}
 
                     <Form>
