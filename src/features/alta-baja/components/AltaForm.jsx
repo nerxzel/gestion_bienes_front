@@ -36,7 +36,7 @@ function AltaForm() {
                     {exitoso && <Alert variant="success" onClose={handleLimpiarExito} dismissible>¡Bien dado de alta exitosamente!</Alert>}
                     
                     {yaEstaDeAlta && !exitoso && (
-                        <Alert variant="warning">Este bien ya se encuentra de <strong>Alta</strong>.</Alert>
+                        <Alert variant="success">Este bien ya se encuentra de <strong>Alta</strong>.</Alert>
                     )}
 
                     <Form>

@@ -105,7 +105,7 @@ function BienGrid() {
                                                 variant="outline-success"
                                                 className="me-2"
                                                 size="sm"
-                                                onClick={() => setModal(true)}
+                                                onClick={() => navigate(`/dar-alta/${bien.id}`)}
                                                 title="Dar de Alta">
                                                 <FaArrowUp />
                                             </Button>
@@ -113,7 +113,7 @@ function BienGrid() {
                                             <Button
                                                 variant="outline-danger"
                                                 size="sm"
-                                                onClick={() => setModal(true)}
+                                                onClick={() => navigate(`/dar-baja/${bien.id}`)}
                                                 title="Dar de Baja">
                                                 <FaArrowDown />
                                             </Button>

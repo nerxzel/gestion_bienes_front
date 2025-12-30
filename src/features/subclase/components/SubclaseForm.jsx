@@ -43,7 +43,7 @@ function SubclaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmittin
             if (grupoId) {
                 setCargandoClases(true);
                 try {
-                    const res = await api.get(`/clase/dropdown/${grupoId}`);
+                    const res = await api.get(`/clase?grupoId=${grupoId}`);
                     setOpcionesClase(res.data || []);
                 } catch (error) {
                     console.error("Error cargando clases", error);

@@ -1,14 +1,15 @@
 import { Row, Alert } from 'react-bootstrap';
 import { FormInput } from '../../bien/components/formFields.jsx';
 import { formatDate } from '../../../utils/formatUtils.js'
-import { esAlta, CONDICION } from '../../../utils/condicionUtils.js';
+import { esAlta, esBaja, CONDICION } from '../../../utils/condicionUtils.js';
+
 
 export const AltaBajaDetalle = ({ bien, exitoso, tipoAccion }) => {
 
     const esAltaActual = esAlta(bien.condicion);
-    const condicionClass = esAltaActual ? 'bg-success-subtle' : 'bg-danger-subtle';
-    const resolucionClass = exitoso ? 'bg-success-subtle' : 'bg-light';
-
+    const esBajaActual = esBaja(bien.condicion);
+    const condicionClass = esAltaActual ? 'bg-success-subtle' : (esBajaActual ? 'bg-danger-subtle' : 'bg-light') ;
+    
     return (
         <>
             <h6 className="text-muted mb-3">Información del Bien</h6>
@@ -28,12 +29,12 @@ export const AltaBajaDetalle = ({ bien, exitoso, tipoAccion }) => {
                 <FormInput 
                     md="6" label="Número de Resolución" name="nroResolucion" 
                     value={bien.nroResolucion || '(Sin asignar)'} 
-                    disabled readOnly className={resolucionClass} 
+                    disabled readOnly className='bg-light' 
                 />
                 <FormInput 
                     md="6" label="Fecha de Resolución" name="fechaResolucion" 
                     value={formatDate(bien.fechaResolucion) || '(Sin asignar)'} 
-                    disabled readOnly className={resolucionClass} 
+                    disabled readOnly className='bg-light' 
                 />
             </Row>
             
@@ -44,7 +45,7 @@ export const AltaBajaDetalle = ({ bien, exitoso, tipoAccion }) => {
             )}
 
             {exitoso && (
-                <Alert variant="success" className="mt-3">
+                <Alert className={condicionClass}>
                     <strong>Datos Actualizados:</strong>
                     <ul className="mb-0 mt-2">
                         <li>Nro. Resolución: <strong>{bien.nroResolucion}</strong></li>

@@ -26,7 +26,8 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
         ? (formData.costoAdquisicion ? formatCLP(formData.costoAdquisicion) : '$ 0')
         : formatCLP(formData.valor);
 
-    const condicionClass = formData.condicion === 'Alta' ? 'bg-success-subtle' : 'bg-danger-subtle';
+    const condicionClass = formData.condicion === 'Alta' ? 'bg-success-subtle' : (formData.condicion === 'Baja' ? 'bg-danger-subtle' : 'bg-light' );
+    
 
     return (
         <Form onSubmit={handleSubmit}>

@@ -85,7 +85,7 @@ function ResponsableForm({ initialData, onSubmit, isEditing, isSubmitting = fals
         <Form.Group as={Col} md="6" controlId="formRut">
             <Form.Label>RUT del responsable</Form.Label>
             <Form.Control
-                type="number"
+                type="text"
                 name="rut"
                 value={formData.rut || ''}
                 onChange={handleInputChange}
@@ -128,8 +128,8 @@ function ResponsableForm({ initialData, onSubmit, isEditing, isSubmitting = fals
                 required
             >
                 <option value="">Seleccione estado</option>
-                <option value="activo">Activo</option>
-                <option value="inactivo">Inactivo</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
             </Form.Select>
             <Form.Control.Feedback type="invalid">
                 {erroresValidacion.estado}

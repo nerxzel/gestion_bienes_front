@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { Container, Spinner, Alert, Card } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { obtenerMensajeError } from '../../../utils/errorHandler';
+import { useBienes } from '../../../hooks/useBienes';
 import ClaseForm from '../components/ClaseForm';
 import api from '../../../api/axiosConfig';
 
 function ModificarClase() {
     const { id } = useParams();
+    const { cargarBienes } = useBienes();
     const navigate = useNavigate();
 
     const [initialData, setInitialData] = useState(null);
@@ -37,7 +39,7 @@ function ModificarClase() {
                     return {
                         id: backendDto.id,
                         nombre: backendDto.nombre,
-                        grupoId: findIdByName('grupos', backendDto.grupo)
+                        grupoId: backendDto.grupoId
                     };
                 };
 
@@ -58,9 +60,7 @@ function ModificarClase() {
         return {
             id: formData.id,
             nombre: formData.nombre,
-            grupo: {
-                id: parseInt(formData.grupoId)
-            }
+            grupo: parseInt(formData.grupoId)
         };
     };
 
@@ -70,6 +70,7 @@ function ModificarClase() {
         setModificando(true);
         try {
             await api.put(`/clase/${formData.id}`, datosParaEnviar);
+            await cargarBienes();
             navigate('/dashboard-clase');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al modificar la clase");

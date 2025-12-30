@@ -1,11 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
+import { useBienes } from './useBienes.js'
 import api from '../api/axiosConfig.js';
 import { obtenerMensajeError } from '../utils/errorHandler.js';
 import { normalizarCondicion } from '../utils/condicionUtils.js';
 
 export const useAltaBaja = (endpointAccion) => {
     const { id } = useParams();
+    const { cargarBienes } = useBienes();
 
     const [bienData, setBienData] = useState(null);
 
@@ -46,6 +48,7 @@ export const useAltaBaja = (endpointAccion) => {
 
         try {
             await api.put(`${endpointAccion}/${id}`);
+            await cargarBienes();
             const { data } = await api.get(`/bien/${id}`);            
             setBienData({ 
                 ...data, 
