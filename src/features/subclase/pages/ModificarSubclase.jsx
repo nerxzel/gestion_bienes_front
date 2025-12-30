@@ -28,23 +28,25 @@ function ModificarSubclase() {
 
                 const subclaseData = subclaseRes.data;
 
-                const grupoId = subclaseData.grupoId
-                const claseId = subclaseData.claseId
-
                 let clases = [];
 
-                if (grupoId) {
-                    const clasesRes = await api.get(`/clase?grupoId=${grupoId}&dropdown=true`);
-                    clases = clasesRes.data || [];
+                if (subclaseData.grupoId) {
+                    try {
+                        const clasesRes = await api.get(`/clase?grupoId=${subclaseData.grupoId}&dropdown=true`);
+                        clases = clasesRes.data || [];
+                    } catch (e) {
+                        console.error("Error cargando clases", e)
+                    }
+                    
                 }
 
-                setCatalogos({ grupos: gruposRes.data, clases });
+                setCatalogos({ grupos: gruposRes.data || [], clases: clases });
 
                 setInitialData({
                     id: subclaseData.id,
                     nombre: subclaseData.nombre,
-                    grupoId: grupoId,
-                    claseId: claseId
+                    grupoId: subclaseData.grupoId,
+                    claseId: subclaseData.claseId
                 });
 
             } catch (err) {
@@ -57,18 +59,13 @@ function ModificarSubclase() {
         cargarDatos();
     }, [id]);
 
-    const mapFrontendToBackend = (formData) => {
-        return {
+    const handleGuardarSubmit = async (formData) => {
+        const datosParaEnviar = {
             id: formData.id,
             nombre: formData.nombre,
-            claseId: parseInt(formData.claseId), 
-            grupoId: parseInt(formData.grupoId)  
-            
+            grupoId: parseInt(formData.grupoId),
+            claseId: parseInt(formData.claseId)
         };
-    };
-
-    const handleGuardarSubmit = async (formData) => {
-        const datosParaEnviar = mapFrontendToBackend(formData);
         setErrorGuardar(null);
         setModificando(true);
         try {

@@ -29,13 +29,7 @@ function ModificarClase() {
                 const loadedCatalogos = { grupos: gruposRes.data || [] };
                 setCatalogos(loadedCatalogos);
 
-                const mapResponseToFormState = (backendDto, loadedCats) => {
-                    const findIdByName = (catName, nameValue) => {
-                        const list = loadedCats[catName] || [];
-                        const item = list.find(item => item.nombre === nameValue);
-                        return item ? item.id : '';
-                    };
-
+                const mapResponseToFormState = (backendDto) => {
                     return {
                         id: backendDto.id,
                         nombre: backendDto.nombre,
@@ -60,7 +54,7 @@ function ModificarClase() {
         return {
             id: formData.id,
             nombre: formData.nombre,
-            grupo: parseInt(formData.grupoId)
+            grupoId: parseInt(formData.grupoId)
         };
     };
 
