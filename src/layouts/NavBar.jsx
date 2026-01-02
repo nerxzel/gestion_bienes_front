@@ -32,7 +32,7 @@ function NavBar() {
     setDownloadError(null);
 
     try {
-      const response = await api.get('/bien/excel/all', {
+      const response = await api.get('/bien/excel', {
         responseType: 'blob',
       });
 
@@ -105,7 +105,7 @@ function NavBar() {
               {/*<NavDropdown.Item as={Link} to='/bienes-alta'>Bienes Alta</NavDropdown.Item>
               <NavDropdown.Item as={Link} to='/bienes-baja'>Bienes Baja</NavDropdown.Item>*/}
               <NavDropdown.Item 
-                onClick={() => setShowReportModal(true)} 
+                onClick={() => handleDescargarReporte()} 
                 disabled={isDownloading}
               >
                 {isDownloading ? (
