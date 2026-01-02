@@ -75,9 +75,11 @@ function BienGrid() {
                                 <th className="truncate-cell">Sub Clase</th>
                                 <th className="truncate-cell">Fecha Ingreso</th>
                                 <th className="truncate-cell">Condición</th>
+                                <th>Estado</th>
                                 <th className="truncate-cell">Última Depreciación</th>
                                 <th>Valor</th>
                                 <th>Acciones</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -91,6 +93,7 @@ function BienGrid() {
                                         <td className="truncate-cell">{bien.subclase}</td>
                                         <td className="truncate-cell">{formatDate(bien.fechaIngreso)}</td>
                                         <td className="truncate-cell">{bien.condicion}</td>
+                                        <td>{bien.estado}</td>
                                         <td className="truncate-cell">{formatDate(bien.ultimaDepreciacion)}</td>
                                         <td>{formatCLP(bien.valor)}</td>
                                         <td className="text-nowrap">

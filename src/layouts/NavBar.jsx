@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { FaFileDownload, FaCalculator} from 'react-icons/fa';
 import { manejarErrorAPI } from '../utils/errorHandler';
 import { useBienes } from '../hooks/useBienes';
+import { formatDate } from '../utils/formatUtils'
 import api from '../api/axiosConfig';
-
 import '../styles/themes.css';
 
 function NavBar() {
@@ -30,14 +30,17 @@ function NavBar() {
   const handleDescargarReporte = async () => {
     setIsDownloading(true);
     setDownloadError(null);
-
+    
     try {
       const response = await api.get('/bien/excel', {
         responseType: 'blob',
       });
 
+      const currentDate = new Date().toISOString()
+      const formatedDate = formatDate(currentDate)
+      
 
-      let filename = 'Reporte_General_Bienes.xlsx';
+      let filename = `Reporte_General_Bienes_${formatedDate}.xlsx`;
       const contentDisposition = response.headers['content-disposition'];
       if (contentDisposition) {
           const filenameMatch = contentDisposition.match(/filename="?(.+?)"?$/i);
@@ -56,6 +59,7 @@ function NavBar() {
       window.URL.revokeObjectURL(url); 
 
     } catch (err) {
+      
         console.error('Error al descargar el reporte:', err);
         setDownloadError('No se pudo descargar el reporte.');
     } finally {
@@ -102,8 +106,6 @@ function NavBar() {
             </NavDropdown>
 
             <NavDropdown title="Reportes" id="reportes-dropdown">
-              {/*<NavDropdown.Item as={Link} to='/bienes-alta'>Bienes Alta</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to='/bienes-baja'>Bienes Baja</NavDropdown.Item>*/}
               <NavDropdown.Item 
                 onClick={() => handleDescargarReporte()} 
                 disabled={isDownloading}
@@ -119,17 +121,12 @@ function NavBar() {
                   </>
                 )}
               </NavDropdown.Item>
-              
-            <NavDropdown.Item onClick={() => setShowReportModal(true)} 
-                      //</NavDropdown>as={Link} to='/dashboard-responsable'
-                      >
-              <FaFileDownload className="me-1" /> Hoja Mural
-            </NavDropdown.Item>
-              {/*<NavDropdown title="Etiquetas" id="etiquetas-nested-dropdown" drop="end" className='ms-2'>
-                  <NavDropdown.Item as={Link} to='/etiquetas-individual'>Individual</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to='/etiquetas-responsable'>Por Responsable</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to='/etiquetas-ubicacion'>Por Ubicación</NavDropdown.Item>
-              </NavDropdown>*/}
+              <NavDropdown.Item as={Link} to='/dashboard-responsable'>
+                <>
+                  <FaFileDownload className="me-1" /> Hoja Mural
+                </>
+              </NavDropdown.Item>
+          
             </NavDropdown>
 
             <NavDropdown title="Configuración" id="config-dropdown">
@@ -141,11 +138,6 @@ function NavBar() {
               <NavDropdown.Item as={Link} to='/dashboard-modelo'>Modelo</NavDropdown.Item>
               <NavDropdown.Item as={Link} to='/dashboard-ubicacion'>Ubicaciones</NavDropdown.Item>
               <NavDropdown.Item as={Link} to='/dashboard-unidadesM'>Unidades de medida</NavDropdown.Item>
-              {/*<NavDropdown.Item as={Link} to='/tipo-bien'>Tipo de Bien</NavDropdown.Item>
-              <NavDropdown title="Correlativos" id="correlativos-nested-dropdown" drop="end" className='ms-2'>
-                  <NavDropdown.Item as={Link} to='/correlativo-grupo'>Por grupo</NavDropdown.Item>
-              </NavDropdown>
-              <NavDropdown.Item as={Link} to='/maestro-funcionario'>Maestro de Funcionario</NavDropdown.Item>*/}
             </NavDropdown>
 
           

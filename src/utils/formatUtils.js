@@ -11,4 +11,3 @@ export const formatCLP = (value) => {
 };
 
 export const formatDate = (dateString) => dateString ? dateString.split('T')[0] : '';
-

@@ -27,7 +27,7 @@ function ResponsableGrid() {
 
     const handleDescargarHojaMural = async (responsableId, responsableNombre) => {
         try {
-            const response = await api.get(`/bien/hojamural/${responsableId}`, {
+            const response = await api.get(`/bien/responsable/${responsableId}`, {
                 responseType: 'blob',
             });
 
