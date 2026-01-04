@@ -124,7 +124,7 @@ function BienGrid() {
                                     </tr>))
                             ) : (
                                 <tr>
-                                    <td colSpan="8" className="text-center">No se encontraron bienes.</td>
+                                    <td colSpan="11" className="text-center">No se encontraron bienes.</td>
                                 </tr>)}
                         </tbody>
                     </table>

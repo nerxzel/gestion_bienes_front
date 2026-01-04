@@ -22,7 +22,7 @@ export const validarBien = (formData) => {
     };
     
     Object.entries(camposRequeridos).forEach(([campo, nombre]) => {
-        if (!formData[campo]) {
+        if (formData[campo] === null || formData[campo] === undefined || formData[campo] === '') {
             errores.push(nombre);
         }
     });
@@ -30,14 +30,13 @@ export const validarBien = (formData) => {
     const camposNumericos = ['cantidadPieza', 'largo', 'alto', 'ancho'];
     camposNumericos.forEach(campo => {
         const valor = formData[campo];
-        if (valor !== undefined && valor !== null && valor !== '') {
             const valorNumerico = parseFloat(valor);
             if (isNaN(valorNumerico) || valorNumerico < 0) {
                 if (!errores.includes(`${campo}`)) {
                     errores.push(`${campo}`);
                 }
             }
-        }
+        
     });
     
     return {

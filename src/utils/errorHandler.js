@@ -14,7 +14,7 @@ export const obtenerMensajeError = (error, mensajePorDefecto = "Ocurrió un erro
         case 401:
             return "No autorizado. Por favor inicia sesión nuevamente.";
         case 403:
-            return "No tienes permisos para realizar esta acción.";
+            return data?.message || "No tienes permisos para realizar esta acción.";
         case 404:
             return data?.message || "Recurso no encontrado.";
         case 422:
