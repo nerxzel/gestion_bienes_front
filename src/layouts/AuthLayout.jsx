@@ -1,7 +1,6 @@
 import { Children } from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 
-
 function AuthLayout({children}) {
     return (
         <Container>

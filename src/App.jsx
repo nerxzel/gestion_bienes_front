@@ -1,6 +1,5 @@
 import NavBar from "./layouts/NavBar.jsx"
 import { Outlet } from 'react-router-dom';
-import './styles/themes.css';
 import { BienesProvider } from './context/BienContext';
 
 function App() {

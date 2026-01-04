@@ -245,7 +245,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                     Cancelar
                 </Button>
                 
-                <Button variant="primary" type="submit" disabled={isSubmitting}>
+                <Button variant="success" type="submit" disabled={isSubmitting}>
                     {isSubmitting && <Spinner as="span" animation="border" size="sm" className="me-2" />}
                     {isEditing ? 'Guardar Cambios' : 'Agregar Bien'}
                 </Button>
