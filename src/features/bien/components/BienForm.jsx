@@ -39,10 +39,7 @@ function BienForm({ initialData, onSubmit, isEditing, catalogos, onDelete, isSub
                             label="Cód. Inventario" name="codigoInventario" 
                             value={formData.codigoInventario} disabled readOnly 
                         />
-                        <FormInput 
-                            label="Fecha Ult. Toma" name="fechaUltimaToma" type="date" 
-                            value={formData.fechaUltimaToma} disabled readOnly 
-                        />
+                    
                     </>
                 )}
                 {isEditing && formData.fechaResolucion && (
