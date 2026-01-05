@@ -77,7 +77,7 @@ function UnidadesMedidaForm({ initialData, onSubmit, isEditing, isSubmitting = f
                 </Button>
 
                 <Button
-                    variant="primary" 
+                    variant="success" 
                     type="submit"
                     disabled={isSubmitting}>
                 {isSubmitting && <Spinner as="span" animation="border" size="sm" className="me-2" />}

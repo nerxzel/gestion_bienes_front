@@ -148,7 +148,7 @@ function ResponsableForm({ initialData, onSubmit, isEditing, isSubmitting = fals
         </Button>
 
         <Button
-            variant="primary" 
+            variant="success" 
             type="submit"
             disabled={isSubmitting}
         >
