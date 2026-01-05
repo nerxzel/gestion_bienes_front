@@ -6,7 +6,6 @@ import { manejarErrorAPI } from '../utils/errorHandler';
 import { useBienes } from '../hooks/useBienes';
 import { formatDate } from '../utils/formatUtils'
 import api from '../api/axiosConfig';
-import '../styles/themes.css';
 
 function NavBar() {
 

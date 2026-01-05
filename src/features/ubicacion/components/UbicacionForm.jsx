@@ -77,7 +77,7 @@ function UbicacionForm({ initialData, onSubmit, isEditing, isSubmitting = false}
                 </Button>
 
                 <Button
-                    variant="primary" 
+                    variant="success" 
                     type="submit"
                     disabled={isSubmitting}>
                 {isSubmitting && <Spinner as="span" animation="border" size="sm" className="me-2" />}

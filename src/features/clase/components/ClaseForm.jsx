@@ -102,7 +102,7 @@ function ClaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmitting =
                     Cancelar
                 </Button>
                 <Button 
-                    variant="primary" 
+                    variant="success" 
                     type="submit"
                     disabled={isSubmitting}>
                     {isSubmitting && <Spinner as="span" animation="border" size="sm" className="me-2" />}
