@@ -78,7 +78,8 @@ function UbicacionGrid() {
                                             <Button variant="outline-primary"
                                                 className="me-2"
                                                 size="sm"
-                                                onClick={() => navigate(`/modificar-ubicacion/${ubicacion.id}`)}>
+                                                onClick={() => navigate(`/modificar-ubicacion/${ubicacion.id}`)}
+                                                title="Modificar Ubicación">
                                                 <FaPencilAlt />
                                             </Button>
                                         </td>

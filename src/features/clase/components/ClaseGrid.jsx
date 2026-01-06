@@ -80,7 +80,8 @@ function ClaseGrid() {
                                             <Button variant="outline-primary"
                                                 className="me-2"
                                                 size="sm"
-                                                onClick={() => navigate(`/modificar-clase/${clase.id}`)}>
+                                                onClick={() => navigate(`/modificar-clase/${clase.id}`)}
+                                                title="Modificar Clase">
                                                 <FaPencilAlt />
                                             </Button>
                                         </td>

@@ -78,7 +78,8 @@ function MarcaGrid() {
                                             <Button variant="outline-primary"
                                                 className="me-2"
                                                 size="sm"
-                                                onClick={() => navigate(`/modificar-marca/${marca.id}`)}>
+                                                onClick={() => navigate(`/modificar-marca/${marca.id}`)}
+                                                title="Modificar Marca">
                                                 <FaPencilAlt />
                                             </Button>
                                         </td>

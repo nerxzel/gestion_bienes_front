@@ -11,7 +11,7 @@ import api from '../../../api/axiosConfig';
 const FORMULARIO_BIEN_VACIO = {
     nombre: '', grupo: '', clase: '', subClase: '', marca: '', modelo: '',
     fechaIngreso: new Date().toISOString().split('T')[0],
-    grupoId: '', claseId: '', subclaseId: '', marcaId: '', modeloId: '',
+    grupoId: '', vidaUtil: '', claseId: '', subclaseId: '', marcaId: '', modeloId: '',
     descripcionLarga: '', tipoObjeto: '', numSerie: '', color: '', cantidadPieza: '',
     largo: '', alto: '', ancho: '', ubicacionId: '', unidadMedidaId: '',
     urlFoto: '', responsableRut: '', responsableId: '', costoAdquisicion: '', valorResidual: '',
@@ -36,7 +36,7 @@ function AgregarBien() {
                 const [
                     gruposRes, marcasRes, ubicacionesRes, unidadesMedidaRes, responsableRes
                 ] = await Promise.all([
-                    api.get('/grupo?dropdown=true'),
+                    api.get('/grupo'),
                     api.get('/marca'),
                     api.get('/ubicacion'),
                     api.get('/unidadMedida'),

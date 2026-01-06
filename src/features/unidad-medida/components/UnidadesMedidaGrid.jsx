@@ -78,7 +78,8 @@ function UnidadesMedidaGrid() {
                                             <Button variant="outline-primary"
                                                 className="me-2"
                                                 size="sm"
-                                                onClick={() => navigate(`/modificar-unidadesM/${unidades.id}`)}>
+                                                onClick={() => navigate(`/modificar-unidadesM/${unidades.id}`)}
+                                                title="Modificar Unidad de Medida">
                                                 <FaPencilAlt />
                                             </Button>
                                         </td>

@@ -80,7 +80,8 @@ function ModeloGrid() {
                                             <Button variant="outline-primary"
                                                 className="me-2"
                                                 size="sm"
-                                                onClick={() => navigate(`/modificar-modelo/${modelo.id}`)}>
+                                                onClick={() => navigate(`/modificar-modelo/${modelo.id}`)}
+                                                title="Modificar Modelo">
                                                 <FaPencilAlt />
                                             </Button>
                                         </td>

@@ -1,10 +1,10 @@
 import { Form, Col } from 'react-bootstrap'
 
 export const FormInput = ({ label, name, value, onChange, type = "text", error, ...props }) => (
-    <Form.Group as={Col} 
-                md={props.md || "4"} 
-                controlId={`formGrid${name}`} 
-                className="mb-3">
+    <Form.Group as={Col}
+        md={props.md}
+        controlId={`formGrid${name}`}
+        className="mb-3">
 
         <Form.Label>{label}</Form.Label>
 
@@ -22,13 +22,13 @@ export const FormInput = ({ label, name, value, onChange, type = "text", error, 
 );
 
 export const FormSelect = ({ label, name, value, onChange, options, loading, disabled, defaultOption = "Seleccione...", ...props }) => (
-    <Form.Group as={Col} 
-                md={props.md || "4"} 
-                controlId={`formGrid${name}`} 
-                className="mb-3">
+    <Form.Group as={Col}
+        md={props.md}
+        controlId={`formGrid${name}`}
+        className="mb-3">
 
         <Form.Label>{label}</Form.Label>
-        
+
         <Form.Select
             name={name}
             value={value || ''}
@@ -39,7 +39,7 @@ export const FormSelect = ({ label, name, value, onChange, options, loading, dis
             <option value="">{loading ? 'Cargando...' : defaultOption}</option>
             {options.map(opt => (
                 <option key={opt.id} value={opt.id}>
-                    {opt.nombre || `${opt.rut} - ${opt.nombre}`} 
+                    {opt.nombre || `${opt.rut} - ${opt.nombre}`}
                 </option>
             ))}
         </Form.Select>
