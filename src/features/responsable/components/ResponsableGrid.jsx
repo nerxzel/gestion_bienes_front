@@ -106,7 +106,8 @@ function ResponsableGrid() {
                                             <Button variant="outline-primary"
                                                 className="me-2"
                                                 size="sm"
-                                                onClick={() => navigate(`/modificar-responsable/${responsable.id}`)}>
+                                                onClick={() => navigate(`/modificar-responsable/${responsable.id}`)}
+                                                title="Modificar Responsable">
                                                 <FaPencilAlt />
                                             </Button>
                                             <Button variant="outline-info"

@@ -1,4 +1,4 @@
-import { Form, Row, Col, Button, Modal} from 'react-bootstrap';
+import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { FaPencilAlt, FaPlus, FaArrowDown, FaArrowUp, } from 'react-icons/fa';
@@ -79,7 +79,7 @@ function BienGrid() {
                                 <th className="truncate-cell">Última Depreciación</th>
                                 <th>Valor</th>
                                 <th>Acciones</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
@@ -87,12 +87,12 @@ function BienGrid() {
                                 bienesFiltrados.map((bien) => (
                                     <tr key={bien.codigoInventario}>
                                         <td className="truncate-cell">{bien.codigoInventario}</td>
-                                        <td className="truncate-cell">{bien.nombre}</td>
-                                        <td className="truncate-cell">{bien.grupo}</td>
-                                        <td className="truncate-cell">{bien.clase}</td>
-                                        <td className="truncate-cell">{bien.subclase}</td>
-                                        <td className="truncate-cell">{formatDate(bien.fechaIngreso)}</td>
-                                        <td className="truncate-cell">{bien.condicion}</td>
+                                        <td className="truncate-cell" title={bien.nombre}>{bien.nombre}</td>
+                                        <td className="truncate-cell" title={bien.grupo}>{bien.grupo}</td>
+                                        <td className="truncate-cell" title={bien.clase}>{bien.clase}</td>
+                                        <td className="truncate-cell" title={bien.subclase}>{bien.subclase}</td>
+                                        <td className="truncate-cell" >{formatDate(bien.fechaIngreso)}</td>
+                                        <td className="truncate-cell" title={bien.condicion}>{bien.condicion}</td>
                                         <td>{bien.estado}</td>
                                         <td className="truncate-cell">{formatDate(bien.ultimaDepreciacion)}</td>
                                         <td>{formatCLP(bien.valor)}</td>
@@ -100,7 +100,8 @@ function BienGrid() {
                                             <Button variant="outline-primary"
                                                 className="me-2"
                                                 size="sm"
-                                                onClick={() => navigate(`/modificar-bien/${bien.id}`) }>
+                                                onClick={() => navigate(`/modificar-bien/${bien.id}`)}
+                                                title="Modificar Bien">
                                                 <FaPencilAlt />
                                             </Button>
 
@@ -131,13 +132,13 @@ function BienGrid() {
                 </div>
             )}
 
-        <Modal show={modal} onHide={() => setModal(false)} centered>
-            <Modal.Title>
-            <Modal.Header>Alta y Baja de bienes</Modal.Header>
-            </Modal.Title>
-            <Modal.Body>En estos momentos esta función se encuentra en desarrollo. Gracias por su paciencia.</Modal.Body>
+            <Modal show={modal} onHide={() => setModal(false)} centered>
+                <Modal.Title>
+                    <Modal.Header>Alta y Baja de bienes</Modal.Header>
+                </Modal.Title>
+                <Modal.Body>En estos momentos esta función se encuentra en desarrollo. Gracias por su paciencia.</Modal.Body>
 
-        </Modal>
+            </Modal>
 
 
         </>

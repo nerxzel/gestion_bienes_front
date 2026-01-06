@@ -80,7 +80,8 @@ function GrupoGrid() {
                                             <Button variant="outline-primary"
                                                 className="me-2"
                                                 size="sm"
-                                                onClick={() => navigate(`/modificar-grupo/${grupo.id}`)}>
+                                                onClick={() => navigate(`/modificar-grupo/${grupo.id}`)}
+                                                title="Modificar Grupo">
                                                 <FaPencilAlt />
                                             </Button>
                                         </td>

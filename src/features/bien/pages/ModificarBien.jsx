@@ -38,7 +38,7 @@ function ModificarBien() {
                     bienRes, gruposRes, marcasRes, ubicacionesRes, unidadesRes, responsablesRes
                 ] = await Promise.all([
                     api.get(`/bien/${id}`),
-                    api.get('/grupo?dropdown=true'),
+                    api.get('/grupo'),
                     api.get('/marca'),
                     api.get('/ubicacion'),
                     api.get('/unidadMedida'),
@@ -86,7 +86,7 @@ function ModificarBien() {
             await cargarBienes();
             navigate('/dashboard');
         } catch (err) {
-            console.log("Revisar:",datosParaEnviar)
+            console.log("Revisar:", datosParaEnviar)
             const mensajeError = obtenerMensajeError(err, "Error al modificar el bien");
             setErrorGuardar(mensajeError);
         } finally {

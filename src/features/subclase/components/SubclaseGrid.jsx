@@ -82,7 +82,8 @@ function SubclaseGrid() {
                                             <Button variant="outline-primary"
                                                 className="me-2"
                                                 size="sm"
-                                                onClick={() => navigate(`/modificar-subclase/${subclase.id}`)}>
+                                                onClick={() => navigate(`/modificar-subclase/${subclase.id}`)}
+                                                title="Modificar Subclase">
                                                 <FaPencilAlt />
                                             </Button>
                                         </td>
