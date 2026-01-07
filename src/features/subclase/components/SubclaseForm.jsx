@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
+import { Form, Button, Row, Col, Spinner, Card } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import api from "../../../api/axiosConfig";
 
@@ -89,66 +89,72 @@ function SubclaseForm({ initialData, onSubmit, isEditing, catalogos, isSubmittin
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Row className="mb-3">
-                <Form.Group as={Col} md="4" controlId="formGrupoGrid">
-                    <Form.Label>Grupo al que pertenece</Form.Label>
-                    <Form.Select
-                        name="grupoId"
-                        value={formData.grupoId || ''}
-                        onChange={handleFormChange}
-                        disabled={isSubmitting}
-                        isInvalid={!!erroresValidacion.grupoId}
-                        required
-                    >
-                        <option value="">Seleccione un Grupo</option>
-                        {grupos.map(g => (
-                            <option key={g.id} value={g.id}>{g.nombre}</option>
-                        ))}
-                    </Form.Select>
-                    <Form.Control.Feedback type="invalid">
-                        {erroresValidacion.grupoId}
-                    </Form.Control.Feedback>
-                </Form.Group>
+            <Card>
+                <Card.Body>
 
-                <Form.Group as={Col} md="4" controlId="formClaseGrid">
-                    <Form.Label>Clase a la que pertenece</Form.Label>
-                    <Form.Select
-                        name="claseId"
-                        value={formData.claseId || ''}
-                        onChange={handleFormChange}
-                        disabled={isSubmitting || !formData.grupoId || cargandoClases}
-                        isInvalid={!!erroresValidacion.claseId}
-                        required
-                    >
-                        <option value="">
-                            {cargandoClases ? 'Cargando...' : (!formData.grupoId ? 'Primero seleccione un Grupo' : 'Seleccione Clase')}
-                        </option>
-                        {opcionesClase.map(c => (
-                            <option key={c.id} value={c.id}>{c.nombre}</option>
-                        ))}
-                    </Form.Select>
-                    <Form.Control.Feedback type="invalid">
-                        {erroresValidacion.claseId}
-                    </Form.Control.Feedback>
-                </Form.Group>
 
-                <Form.Group as={Col} md="4" controlId="formSubclaseGrid">
-                    <Form.Label>Nombre de la Subclase</Form.Label>
-                    <Form.Control
-                        type="text"
-                        name="nombre"
-                        value={formData.nombre || ''}
-                        onChange={handleFormChange}
-                        isInvalid={!!erroresValidacion.nombre}
-                        disabled={isSubmitting || !formData.grupoId || !formData.claseId}
-                        required
-                        maxLength="35"
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {erroresValidacion.nombre}
-                    </Form.Control.Feedback>
-                </Form.Group>
-            </Row>
+                    <Row className="mb-3">
+                        <Form.Group as={Col} md="4" controlId="formGrupoGrid">
+                            <Form.Label>Grupo al que pertenece</Form.Label>
+                            <Form.Select
+                                name="grupoId"
+                                value={formData.grupoId || ''}
+                                onChange={handleFormChange}
+                                disabled={isSubmitting}
+                                isInvalid={!!erroresValidacion.grupoId}
+                                required
+                            >
+                                <option value="">Seleccione un Grupo</option>
+                                {grupos.map(g => (
+                                    <option key={g.id} value={g.id}>{g.nombre}</option>
+                                ))}
+                            </Form.Select>
+                            <Form.Control.Feedback type="invalid">
+                                {erroresValidacion.grupoId}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group as={Col} md="4" controlId="formClaseGrid">
+                            <Form.Label>Clase a la que pertenece</Form.Label>
+                            <Form.Select
+                                name="claseId"
+                                value={formData.claseId || ''}
+                                onChange={handleFormChange}
+                                disabled={isSubmitting || !formData.grupoId || cargandoClases}
+                                isInvalid={!!erroresValidacion.claseId}
+                                required
+                            >
+                                <option value="">
+                                    {cargandoClases ? 'Cargando...' : (!formData.grupoId ? 'Primero seleccione un Grupo' : 'Seleccione Clase')}
+                                </option>
+                                {opcionesClase.map(c => (
+                                    <option key={c.id} value={c.id}>{c.nombre}</option>
+                                ))}
+                            </Form.Select>
+                            <Form.Control.Feedback type="invalid">
+                                {erroresValidacion.claseId}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group as={Col} md="4" controlId="formSubclaseGrid">
+                            <Form.Label>Nombre de la Subclase</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="nombre"
+                                value={formData.nombre || ''}
+                                onChange={handleFormChange}
+                                isInvalid={!!erroresValidacion.nombre}
+                                disabled={isSubmitting || !formData.grupoId || !formData.claseId}
+                                required
+                                maxLength="35"
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {erroresValidacion.nombre}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Row>
+                </Card.Body>
+            </Card>
 
             <div className="d-flex justify-content-end mt-4">
                 <Button

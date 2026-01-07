@@ -1,4 +1,6 @@
-import { Form, Button, Row, Spinner, Card, Col } from "react-bootstrap";
+import { Form, Button, Row, Spinner, Card } from "react-bootstrap";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css'
 import { useNavigate } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { formatCLP } from "../../../utils/formatUtils";
@@ -41,6 +43,8 @@ function BienForm({
             : formData.condicion === "Baja"
                 ? "bg-danger-subtle"
                 : "bg-light";
+
+
 
     return (
         <Form onSubmit={handleSubmit}>

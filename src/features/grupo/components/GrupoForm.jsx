@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
+import { Form, Button, Row, Col, Spinner, Card } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
-function GrupoForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
+function GrupoForm({ initialData, onSubmit, isEditing, isSubmitting = false }) {
     const [formData, setFormData] = useState(initialData);
     const [erroresValidacion, setErroresValidacion] = useState({});
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ function GrupoForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
 
         if (erroresValidacion[name]) {
             setErroresValidacion(prev => ({
-                ...prev, [name]:null
+                ...prev, [name]: null
             }))
         }
     };
@@ -28,13 +28,13 @@ function GrupoForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
     const validarFormulario = () => {
         const errores = {};
 
-        if(!formData.nombre || formData.nombre.trim() === '') {
+        if (!formData.nombre || formData.nombre.trim() === '') {
             errores.nombre = 'El nombre del grupo no puede estar vacio.';
         } else if (formData.nombre.length > 35) {
             errores.nombre = 'El nombre del grupo no puede tener más de 35 caracteres'
         }
 
-        if(!formData.vidaUtil) {
+        if (!formData.vidaUtil) {
             errores.vidaUtil = 'Los años de depreciación no pueden quedar vacíos, favor asignar un valor'
         } else if (parseInt(formData.vidaUtil, 10) <= 0) {
             errores.vidaUtil = 'Los años de depreciación deben ser un número mayor que 0.';
@@ -46,9 +46,10 @@ function GrupoForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const errores = validarFormulario();
-        if(Object.keys(errores).length > 0) {
+        if (Object.keys(errores).length > 0) {
             setErroresValidacion(errores);
-            return;}
+            return;
+        }
         const dataToSubmit = {
             ...formData,
             vidaUtil: parseInt(formData.vidaUtil)
@@ -58,44 +59,50 @@ function GrupoForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Row>
-                <Form.Group as={Col} md="8">
-                    <Form.Label>Nombre del grupo</Form.Label>
-                    <Form.Control
-                        type="text"
-                        name="nombre"
-                        value={formData.nombre}
-                        onChange={handleInputChange}
-                        isInvalid={!!erroresValidacion.nombre}
-                        disabled={isSubmitting}
-                        required
-                        maxLength="35"
-                        />
-                    <Form.Control.Feedback type="invalid">
-                        {erroresValidacion.nombre}
-                    </Form.Control.Feedback>
-                </Form.Group>
+            <Card>
+                <Card.Body>
 
-                <Form.Group as={Col} md="4">
-                    <Form.Label>Años depreciación</Form.Label>
-                    <Form.Control
-                        type="number"
-                        name="vidaUtil"
-                        value={formData.vidaUtil}
-                        onChange={handleInputChange}
-                        isInvalid={!!erroresValidacion.vidaUtil}
-                        disabled={isSubmitting}
-                        min="1"
-                        required
-                        />
-                    <Form.Control.Feedback type="invalid">
-                        {erroresValidacion.vidaUtil}
-                    </Form.Control.Feedback>
-                </Form.Group>
-            </Row>
+
+                    <Row>
+                        <Form.Group as={Col} md="8">
+                            <Form.Label>Nombre del grupo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="nombre"
+                                value={formData.nombre}
+                                onChange={handleInputChange}
+                                isInvalid={!!erroresValidacion.nombre}
+                                disabled={isSubmitting}
+                                required
+                                maxLength="35"
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {erroresValidacion.nombre}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group as={Col} md="4">
+                            <Form.Label>Años depreciación</Form.Label>
+                            <Form.Control
+                                type="number"
+                                name="vidaUtil"
+                                value={formData.vidaUtil}
+                                onChange={handleInputChange}
+                                isInvalid={!!erroresValidacion.vidaUtil}
+                                disabled={isSubmitting}
+                                min="1"
+                                required
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {erroresValidacion.vidaUtil}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Row>
+                </Card.Body>
+            </Card>
             <div className="d-flex justify-content-end mt-4">
                 <Button
-                    variant="secondary" 
+                    variant="secondary"
                     onClick={() => navigate('/dashboard-grupo')}
                     disabled={isSubmitting}
                     className="me-2">
@@ -104,14 +111,14 @@ function GrupoForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
                 </Button>
 
                 <Button
-                    variant="success" 
+                    variant="success"
                     type="submit"
                     disabled={isSubmitting}>
-                {isSubmitting && <Spinner as="span" animation="border" size="sm" className="me-2" />}
-                {isEditing ? 'Guardar Cambios' : 'Agregar Grupo'}
+                    {isSubmitting && <Spinner as="span" animation="border" size="sm" className="me-2" />}
+                    {isEditing ? 'Guardar Cambios' : 'Agregar Grupo'}
                 </Button>
             </div>
         </Form>
-        );
-        }
+    );
+}
 export default GrupoForm;
