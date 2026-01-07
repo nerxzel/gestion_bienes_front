@@ -1,4 +1,4 @@
-import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
+import { Form, Row, Col, Button, Modal, Placeholder } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { FaPencilAlt, FaPlus, FaArrowDown, FaArrowUp, } from 'react-icons/fa';
@@ -60,10 +60,10 @@ function BienGrid() {
                 </Button>
 
             </div>
-            {estaCargando && <div className="text-center">Cargando datos...</div>}
+
             {error && <div className="alert alert-danger">Error: {error}</div>}
 
-            {!estaCargando && !error && (
+            {!error && (
                 <div className='table-responsive'>
                     <table className="table table-striped table-bordered table-hover table-sm table-layout-fixed">
                         <thead>
@@ -83,50 +83,66 @@ function BienGrid() {
                             </tr>
                         </thead>
                         <tbody>
-                            {bienesFiltrados.length > 0 ? (
-                                bienesFiltrados.map((bien) => (
-                                    <tr key={bien.codigoInventario}>
-                                        <td className="truncate-cell">{bien.codigoInventario}</td>
-                                        <td className="truncate-cell" title={bien.nombre}>{bien.nombre}</td>
-                                        <td className="truncate-cell" title={bien.grupo}>{bien.grupo}</td>
-                                        <td className="truncate-cell" title={bien.clase}>{bien.clase}</td>
-                                        <td className="truncate-cell" title={bien.subclase}>{bien.subclase}</td>
-                                        <td className="truncate-cell" >{formatDate(bien.fechaIngreso)}</td>
-                                        <td className="truncate-cell" title={bien.condicion}>{bien.condicion}</td>
-                                        <td>{bien.estado}</td>
-                                        <td className="truncate-cell">{formatDate(bien.ultimaDepreciacion)}</td>
-                                        <td>{formatCLP(bien.valor)}</td>
-                                        <td className="text-nowrap">
-                                            <Button variant="outline-primary"
-                                                className="me-2"
-                                                size="sm"
-                                                onClick={() => navigate(`/modificar-bien/${bien.id}`)}
-                                                title="Modificar Bien">
-                                                <FaPencilAlt />
-                                            </Button>
-
-                                            <Button
-                                                variant="outline-success"
-                                                className="me-2"
-                                                size="sm"
-                                                onClick={() => navigate(`/dar-alta/${bien.id}`)}
-                                                title="Dar de Alta">
-                                                <FaArrowUp />
-                                            </Button>
-
-                                            <Button
-                                                variant="outline-danger"
-                                                size="sm"
-                                                onClick={() => navigate(`/dar-baja/${bien.id}`)}
-                                                title="Dar de Baja">
-                                                <FaArrowDown />
-                                            </Button>
-                                        </td>
-                                    </tr>))
+                            {estaCargando ? (
+                                [...Array(5)].map((_, index) => (
+                                    <tr key={index}>
+                                        {[...Array(11)].map((_, colIndex) => (
+                                            <td key={colIndex}>
+                                                <Placeholder as="p" animation="glow" className="mb-0">
+                                                    <Placeholder xs={12} size="sm" bg="secondary" />
+                                                </Placeholder>
+                                            </td>
+                                        ))}
+                                    </tr>
+                                ))
                             ) : (
-                                <tr>
-                                    <td colSpan="11" className="text-center">No se encontraron bienes.</td>
-                                </tr>)}
+                                bienesFiltrados.length > 0 ? (
+                                    bienesFiltrados.map((bien) => (
+                                        <tr key={bien.codigoInventario}>
+                                            <td className="truncate-cell">{bien.codigoInventario}</td>
+                                            <td className="truncate-cell" title={bien.nombre}>{bien.nombre}</td>
+                                            <td className="truncate-cell" title={bien.grupo}>{bien.grupo}</td>
+                                            <td className="truncate-cell" title={bien.clase}>{bien.clase}</td>
+                                            <td className="truncate-cell" title={bien.subclase}>{bien.subclase}</td>
+                                            <td className="truncate-cell" >{formatDate(bien.fechaIngreso)}</td>
+                                            <td className="truncate-cell" title={bien.condicion}>{bien.condicion}</td>
+                                            <td>{bien.estado}</td>
+                                            <td className="truncate-cell">{formatDate(bien.ultimaDepreciacion)}</td>
+                                            <td>{formatCLP(bien.valor)}</td>
+                                            <td className="text-nowrap">
+                                                <Button variant="outline-primary"
+                                                    className="me-2"
+                                                    size="sm"
+                                                    onClick={() => navigate(`/modificar-bien/${bien.id}`)}
+                                                    title="Modificar Bien">
+                                                    <FaPencilAlt />
+                                                </Button>
+
+                                                <Button
+                                                    variant="outline-success"
+                                                    className="me-2"
+                                                    size="sm"
+                                                    onClick={() => navigate(`/dar-alta/${bien.id}`)}
+                                                    title="Dar de Alta">
+                                                    <FaArrowUp />
+                                                </Button>
+
+                                                <Button
+                                                    variant="outline-danger"
+                                                    size="sm"
+                                                    onClick={() => navigate(`/dar-baja/${bien.id}`)}
+                                                    title="Dar de Baja">
+                                                    <FaArrowDown />
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="11" className="text-center">No se encontraron bienes.</td>
+                                    </tr>
+                                )
+                            )}
                         </tbody>
                     </table>
                 </div>

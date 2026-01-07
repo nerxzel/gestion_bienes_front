@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
+import { Form, Button, Row, Col, Spinner, Card } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
-function MarcaForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
+function MarcaForm({ initialData, onSubmit, isEditing, isSubmitting = false }) {
     const [formData, setFormData] = useState(initialData);
     const [erroresValidacion, setErroresValidacion] = useState({});
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ function MarcaForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
 
         if (erroresValidacion[name]) {
             setErroresValidacion(prev => ({
-                ...prev, [name]:null
+                ...prev, [name]: null
             }))
         }
     };
@@ -28,7 +28,7 @@ function MarcaForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
     const validarFormulario = () => {
         const errores = {};
 
-        if(!formData.nombre || formData.nombre.trim() === '') {
+        if (!formData.nombre || formData.nombre.trim() === '') {
             errores.nombre = 'El nombre de la marca no puede estar vacio.';
         } else if (formData.nombre.length > 35) {
             errores.nombre = 'El nombre de la marca no puede tener más de 35 caracteres'
@@ -40,35 +40,42 @@ function MarcaForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const errores = validarFormulario();
-        if(Object.keys(errores).length > 0) {
+        if (Object.keys(errores).length > 0) {
             setErroresValidacion(errores);
-            return;}
+            return;
+        }
         onSubmit(formData);
     };
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Row>
-                <Form.Group as={Col} md="12">
-                    <Form.Label>Nombre de la marca</Form.Label>
-                    <Form.Control
-                        type="text"
-                        name="nombre"
-                        value={formData.nombre}
-                        onChange={handleInputChange}
-                        isInvalid={!!erroresValidacion.nombre}
-                        disabled={isSubmitting}
-                        required
-                        maxLength="35"
-                        />
-                    <Form.Control.Feedback type="invalid">
-                        {erroresValidacion.nombre}
-                    </Form.Control.Feedback>
-                </Form.Group>
-            </Row>
+            <Card>
+                <Card.Body>
+
+
+                    <Row>
+                        <Form.Group as={Col} md="12">
+                            <Form.Label>Nombre de la marca</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="nombre"
+                                value={formData.nombre}
+                                onChange={handleInputChange}
+                                isInvalid={!!erroresValidacion.nombre}
+                                disabled={isSubmitting}
+                                required
+                                maxLength="35"
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {erroresValidacion.nombre}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Row>
+                </Card.Body>
+            </Card>
             <div className="d-flex justify-content-end mt-4">
                 <Button
-                    variant="secondary" 
+                    variant="secondary"
                     onClick={() => navigate('/dashboard-marca')}
                     disabled={isSubmitting}
                     className="me-2">
@@ -77,14 +84,14 @@ function MarcaForm({ initialData, onSubmit, isEditing, isSubmitting = false}) {
                 </Button>
 
                 <Button
-                    variant="success" 
+                    variant="success"
                     type="submit"
                     disabled={isSubmitting}>
-                {isSubmitting && <Spinner as="span" animation="border" size="sm" className="me-2" />}
-                {isEditing ? 'Guardar Cambios' : 'Agregar Marca'}
+                    {isSubmitting && <Spinner as="span" animation="border" size="sm" className="me-2" />}
+                    {isEditing ? 'Guardar Cambios' : 'Agregar Marca'}
                 </Button>
             </div>
         </Form>
-        );
-        }
+    );
+}
 export default MarcaForm;

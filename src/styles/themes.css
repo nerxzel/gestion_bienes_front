@@ -78,6 +78,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 
 .navbar>.container {
@@ -87,6 +88,7 @@ body {
   border-bottom: 1px solid #e2e8f0;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+  border-radius: 0.75rem;
 }
 
 .navbar-brand {
@@ -109,6 +111,10 @@ body {
 }
 
 /*forms*/
+
+main .container {
+  padding: 0;
+}
 
 .container .card {
   border: none;
@@ -142,9 +148,6 @@ body {
   text-overflow: ellipsis;
 }
 
-.container-ancho-personalizado {
-  max-width: 1400px !important;
-}
 
 /*Botones*/
 
