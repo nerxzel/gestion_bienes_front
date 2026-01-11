@@ -17,7 +17,7 @@ export function BienesProvider({ children }) {
         setError(null);
         try {
             const respuesta = await api.get('/bien/grid');
-            const bienesNormalizados = (respuesta.data || []).map(bien => ({...bien, condicion: normalizarCondicion(bien.condicion)}));
+            const bienesNormalizados = (respuesta.data || []).map(bien => ({ ...bien, condicion: normalizarCondicion(bien.condicion) }));
             bienesNormalizados.sort((a, b) => (a.codigoInventario || '').localeCompare(b.codigoInventario || ''));
             setBienes(bienesNormalizados);
         } catch (err) {
@@ -25,13 +25,13 @@ export function BienesProvider({ children }) {
             setError(mensajeError);
             setBienes([]);
         } finally {
-            setEstaCargando(false);
+            setTimeout(() => { setEstaCargando(false) }, 2000);
         }
     }, []);
 
     useEffect(() => {
         cargarBienes();
-    }, [cargarBienes]); 
+    }, [cargarBienes]);
 
     const value = {
         bienes,

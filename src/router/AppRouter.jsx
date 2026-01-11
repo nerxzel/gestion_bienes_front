@@ -58,8 +58,8 @@ import DarAlta from "../features/alta-baja/pages/Alta.jsx";
 // Baja
 import DarBaja from "../features/alta-baja/pages/Baja.jsx";
 
-
-{/*import MaestroFuncionario from "../pages/ConfigMaestroFuncionario.jsx";
+{/* import Test from "../test/TestPage.jsx"
+import MaestroFuncionario from "../pages/ConfigMaestroFuncionario.jsx";
 import TipoBien from "../pages/ConfigTipoBien.jsx";
 import CambioResponsable from "../pages/ProcesosCambioResponsable.jsx";
 import Depreciar from "../pages/ProcesosDepreciar.jsx";
@@ -140,8 +140,9 @@ function AppRouter() {
                     <Route path="/dar-baja/:id" element={<DarBaja />} />
                     {/*<Route path="/bienes-baja" element={<BienesBaja/>}/>*/}
 
-
-                    {/*<Route path="/cambio-responsable" element={<CambioResponsable/>}/>
+                    {/*
+                    <Route path="/test" element={<Test />} />
+                    <Route path="/cambio-responsable" element={<CambioResponsable/>}/>
                     <Route path="/toma-inventario" element={<TomaInventario/>}/>
                     <Route path="/traslado" element={<Traslado/>}/>
                     <Route path="/etiquetas-individual" element={<EtiquetaIndividual/>}/>

@@ -1,13 +1,13 @@
-import { Form, Row, Col, Button, Modal, Placeholder } from 'react-bootstrap';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus, FaArrowDown, FaArrowUp, } from 'react-icons/fa';
 import { formatCLP, formatDate } from '../../../utils/formatUtils';
 import { useBienes } from '../../../hooks/useBienes';
+import BienGridSkeleton from './BienGridSkeleton';
 
 function BienGrid() {
     const [barraBusqueda, setBarraBusqueda] = useState('');
-    const [modal, setModal] = useState(false)
     const [filtroCondicion, setFiltroCondicion] = useState('Todas');
     const { bienes, estaCargando, error } = useBienes()
 
@@ -60,103 +60,76 @@ function BienGrid() {
                 </Button>
 
             </div>
-
+            {estaCargando && <BienGridSkeleton></BienGridSkeleton>}
             {error && <div className="alert alert-danger">Error: {error}</div>}
 
-            {!error && (
+            {!estaCargando && !error && (
                 <div className='table-responsive'>
                     <table className="table table-striped table-bordered table-hover table-sm table-layout-fixed">
                         <thead>
                             <tr>
-                                <th className="truncate-cell">Código Inv</th>
-                                <th className="truncate-cell">Descripción Corta</th>
-                                <th className="truncate-cell">Grupo</th>
-                                <th className="truncate-cell">Clase</th>
-                                <th className="truncate-cell">Sub Clase</th>
-                                <th className="truncate-cell">Fecha Ingreso</th>
-                                <th className="truncate-cell">Condición</th>
-                                <th>Estado</th>
-                                <th className="truncate-cell">Última Depreciación</th>
-                                <th>Valor</th>
-                                <th>Acciones</th>
-
+                                <th className="truncate-cell" title='Código Inventario'>Código Inv</th>
+                                <th className="truncate-cell" title='Descripción Corta'>Descripción Corta</th>
+                                <th className="truncate-cell" title='Grupo'>Grupo</th>
+                                <th className="truncate-cell" title='Clase'>Clase</th>
+                                <th className="truncate-cell" title='Subclase'>Subclase</th>
+                                <th className="truncate-cell" title='Fecha Ingreso'>Fecha Ingreso</th>
+                                <th className="truncate-cell" title='Condición'>Condición</th>
+                                <th className="truncate-cell" title='Estado'>Estado</th>
+                                <th className="truncate-cell" title='Última Depreciación'>Última Depreciación</th>
+                                <th className="truncate-cell" title='Valor'>Valor</th>
+                                <th className="truncate-cell" title='Acciones'>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {estaCargando ? (
-                                [...Array(5)].map((_, index) => (
-                                    <tr key={index}>
-                                        {[...Array(11)].map((_, colIndex) => (
-                                            <td key={colIndex}>
-                                                <Placeholder as="p" animation="glow" className="mb-0">
-                                                    <Placeholder xs={12} size="sm" bg="secondary" />
-                                                </Placeholder>
-                                            </td>
-                                        ))}
-                                    </tr>
-                                ))
+                            {bienesFiltrados.length > 0 ? (
+                                bienesFiltrados.map((bien) => (
+                                    <tr key={bien.codigoInventario}>
+                                        <td className="truncate-cell">{bien.codigoInventario}</td>
+                                        <td className="truncate-cell" title={bien.nombre}>{bien.nombre}</td>
+                                        <td className="truncate-cell" title={bien.grupo}>{bien.grupo}</td>
+                                        <td className="truncate-cell" title={bien.clase}>{bien.clase}</td>
+                                        <td className="truncate-cell" title={bien.subclase}>{bien.subclase}</td>
+                                        <td className="truncate-cell" >{formatDate(bien.fechaIngreso)}</td>
+                                        <td className="truncate-cell" title={bien.condicion}>{bien.condicion}</td>
+                                        <td className="truncate-cell">{bien.estado}</td>
+                                        <td className="truncate-cell">{formatDate(bien.ultimaDepreciacion)}</td>
+                                        <td className="truncate-cell">{formatCLP(bien.valor)}</td>
+                                        <td className="text-nowrap text-center">
+                                            <Button variant="outline-primary"
+                                                className="me-2"
+                                                size="sm"
+                                                onClick={() => navigate(`/modificar-bien/${bien.id}`)}
+                                                title="Modificar Bien">
+                                                <FaPencilAlt />
+                                            </Button>
+
+                                            <Button
+                                                variant="outline-success"
+                                                className="me-2"
+                                                size="sm"
+                                                onClick={() => navigate(`/dar-alta/${bien.id}`)}
+                                                title="Dar de Alta">
+                                                <FaArrowUp />
+                                            </Button>
+
+                                            <Button
+                                                variant="outline-danger"
+                                                size="sm"
+                                                onClick={() => navigate(`/dar-baja/${bien.id}`)}
+                                                title="Dar de Baja">
+                                                <FaArrowDown />
+                                            </Button>
+                                        </td>
+                                    </tr>))
                             ) : (
-                                bienesFiltrados.length > 0 ? (
-                                    bienesFiltrados.map((bien) => (
-                                        <tr key={bien.codigoInventario}>
-                                            <td className="truncate-cell">{bien.codigoInventario}</td>
-                                            <td className="truncate-cell" title={bien.nombre}>{bien.nombre}</td>
-                                            <td className="truncate-cell" title={bien.grupo}>{bien.grupo}</td>
-                                            <td className="truncate-cell" title={bien.clase}>{bien.clase}</td>
-                                            <td className="truncate-cell" title={bien.subclase}>{bien.subclase}</td>
-                                            <td className="truncate-cell" >{formatDate(bien.fechaIngreso)}</td>
-                                            <td className="truncate-cell" title={bien.condicion}>{bien.condicion}</td>
-                                            <td>{bien.estado}</td>
-                                            <td className="truncate-cell">{formatDate(bien.ultimaDepreciacion)}</td>
-                                            <td>{formatCLP(bien.valor)}</td>
-                                            <td className="text-nowrap">
-                                                <Button variant="outline-primary"
-                                                    className="me-2"
-                                                    size="sm"
-                                                    onClick={() => navigate(`/modificar-bien/${bien.id}`)}
-                                                    title="Modificar Bien">
-                                                    <FaPencilAlt />
-                                                </Button>
-
-                                                <Button
-                                                    variant="outline-success"
-                                                    className="me-2"
-                                                    size="sm"
-                                                    onClick={() => navigate(`/dar-alta/${bien.id}`)}
-                                                    title="Dar de Alta">
-                                                    <FaArrowUp />
-                                                </Button>
-
-                                                <Button
-                                                    variant="outline-danger"
-                                                    size="sm"
-                                                    onClick={() => navigate(`/dar-baja/${bien.id}`)}
-                                                    title="Dar de Baja">
-                                                    <FaArrowDown />
-                                                </Button>
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="11" className="text-center">No se encontraron bienes.</td>
-                                    </tr>
-                                )
-                            )}
+                                <tr>
+                                    <td colSpan="11" className="text-center">No se encontraron bienes.</td>
+                                </tr>)}
                         </tbody>
                     </table>
                 </div>
             )}
-
-            <Modal show={modal} onHide={() => setModal(false)} centered>
-                <Modal.Title>
-                    <Modal.Header>Alta y Baja de bienes</Modal.Header>
-                </Modal.Title>
-                <Modal.Body>En estos momentos esta función se encuentra en desarrollo. Gracias por su paciencia.</Modal.Body>
-
-            </Modal>
-
-
         </>
     );
 }

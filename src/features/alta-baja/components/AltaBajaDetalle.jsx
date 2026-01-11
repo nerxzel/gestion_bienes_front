@@ -1,5 +1,5 @@
 import { Row, Alert } from 'react-bootstrap';
-import { FormInput } from '../../bien/components/formFields.jsx';
+import { FormInput } from '../../common/FormFields.jsx';
 import { formatDate } from '../../../utils/formatUtils.js'
 import { esAlta, esBaja, CONDICION } from '../../../utils/condicionUtils.js';
 
@@ -8,8 +8,8 @@ export const AltaBajaDetalle = ({ bien, exitoso, tipoAccion }) => {
 
     const esAltaActual = esAlta(bien.condicion);
     const esBajaActual = esBaja(bien.condicion);
-    const condicionClass = esAltaActual ? 'bg-success-subtle' : (esBajaActual ? 'bg-danger-subtle' : 'bg-light') ;
-    
+    const condicionClass = esAltaActual ? 'bg-success-subtle' : (esBajaActual ? 'bg-danger-subtle' : 'bg-light');
+
     return (
         <>
             <h6 className="text-muted mb-3">Información del Bien</h6>
@@ -23,21 +23,21 @@ export const AltaBajaDetalle = ({ bien, exitoso, tipoAccion }) => {
             </Row>
 
             <hr className="my-4" />
-            
+
             <h6 className="text-muted mb-3">Información de Resolución</h6>
             <Row>
-                <FormInput 
-                    md="6" label="Número de Resolución" name="nroResolucion" 
-                    value={bien.nroResolucion || '(Sin asignar)'} 
-                    disabled readOnly className='bg-light' 
+                <FormInput
+                    md="6" label="Número de Resolución" name="nroResolucion"
+                    value={bien.nroResolucion || '(Sin asignar)'}
+                    disabled readOnly className='bg-light'
                 />
-                <FormInput 
-                    md="6" label="Fecha de Resolución" name="fechaResolucion" 
-                    value={formatDate(bien.fechaResolucion) || '(Sin asignar)'} 
-                    disabled readOnly className='bg-light' 
+                <FormInput
+                    md="6" label="Fecha de Resolución" name="fechaResolucion"
+                    value={formatDate(bien.fechaResolucion) || '(Sin asignar)'}
+                    disabled readOnly className='bg-light'
                 />
             </Row>
-            
+
             {!bien.nroResolucion && !exitoso && (
                 <div className="text-muted small ms-2 mt-n2 mb-3">
                     * Se asignará automáticamente al dar de {tipoAccion}.

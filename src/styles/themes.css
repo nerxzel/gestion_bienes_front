@@ -142,7 +142,7 @@ main .container {
 }
 
 .truncate-cell {
-  max-width: 180px;
+  max-width: 100px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

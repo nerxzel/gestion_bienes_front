@@ -93,7 +93,11 @@ function AgregarBien() {
             <Card>
                 <Card.Header as="h5">Agregar Nuevo Bien</Card.Header>
                 <Card.Body>
-                    {cargandoCatalogos && <div className="text-center"><Spinner animation="border" /> Cargando datos necesarios...</div>}
+                    {cargandoCatalogos &&
+
+                        <div className="text-center"><Spinner animation="border" /> Cargando datos necesarios...
+
+                        </div>}
                     {errorCatalogos && <Alert variant="danger">{errorCatalogos}</Alert>}
                     {!cargandoCatalogos && !errorCatalogos && (
                         <>

@@ -28,3 +28,4 @@ dist-ssr
 
 # Directorios personalizados a ignorar
 references/
+test/

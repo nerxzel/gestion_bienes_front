@@ -1,11 +1,9 @@
 import { Form, Button, Row, Spinner, Card } from "react-bootstrap";
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css'
 import { useNavigate } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { formatCLP } from "../../../utils/formatUtils";
 import { useBienForm } from "../../../hooks/useBienForm";
-import { FormInput, FormSelect } from "../components/formFields";
+import { FormInput, FormSelect } from "../../common/FormFields";
 
 function BienForm({
     initialData,
