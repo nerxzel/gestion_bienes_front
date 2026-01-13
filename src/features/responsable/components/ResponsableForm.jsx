@@ -60,17 +60,17 @@ function ResponsableForm({ initialData, onSubmit, isEditing, isSubmitting = fals
         const errores = validarFormulario();
         if (Object.keys(errores).length > 0) {
             setErroresValidacion(errores);
+            console.log('1:', formData)
             return;
         }
         onSubmit(formData);
+        console.log('2:', formData)
     };
 
     return (
         <Form onSubmit={handleSubmit}>
             <Card>
                 <Card.Body>
-
-
                     <Row className="mb-3">
                         <Form.Group as={Col} md="6" controlId="formNombre">
                             <Form.Label>Nombre del responsable</Form.Label>

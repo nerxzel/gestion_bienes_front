@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { manejarErrorAPI } from '../../../utils/errorHandler';
+import GrupoGridSkeleton from './GrupoGridSkeleton.jsx';
 import api from '../../../api/axiosConfig';
 
 function GrupoGrid() {
@@ -30,7 +31,7 @@ function GrupoGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarGrupos();
-            setEstaCargando(false);
+            setTimeout(() => { setEstaCargando(false) }, 2000);
         };
         loadData();
     }, []);
@@ -53,11 +54,12 @@ function GrupoGrid() {
                 variant="success"
                 className="mb-3"
                 onClick={() => navigate(`/agregar-grupo/`)}
+                disabled={estaCargando}
             >
                 <FaPlus className="me-1" /> Agregar Grupo
             </Button>
 
-            {estaCargando && <div className="text-center">Cargando datos...</div>}
+            {estaCargando && <GrupoGridSkeleton></GrupoGridSkeleton>}
             {error && <div className="alert alert-danger">Error: {error}</div>}
 
             {!estaCargando && !error && (

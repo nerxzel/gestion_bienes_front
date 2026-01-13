@@ -58,7 +58,7 @@ function ModificarModelo() {
         return {
             id: formData.id,
             nombre: formData.nombre,
-            marca: parseInt(formData.marcaId)
+            marcaId: parseInt(formData.marcaId)
         };
     };
 

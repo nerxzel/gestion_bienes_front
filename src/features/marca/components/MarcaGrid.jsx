@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { manejarErrorAPI } from '../../../utils/errorHandler';
 import api from '../../../api/axiosConfig';
+import MarcaGridSkeleton from './MarcaGridSkeleton';
 
 function MarcaGrid() {
     const [marcas, setMarcas] = useState([]);
@@ -30,7 +31,7 @@ function MarcaGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarMarcas();
-            setEstaCargando(false);
+            setTimeout(() => { setEstaCargando(false) }, 2000);
         };
         loadData();
     }, []);
@@ -53,11 +54,12 @@ function MarcaGrid() {
                 variant="success"
                 className="mb-3"
                 onClick={() => navigate(`/agregar-marca/`)}
+                disabled={estaCargando}
             >
                 <FaPlus className="me-1" /> Agregar Marca
             </Button>
 
-            {estaCargando && <div className="text-center">Cargando datos...</div>}
+            {estaCargando && <MarcaGridSkeleton></MarcaGridSkeleton>}
             {error && <div className="alert alert-danger">Error: {error}</div>}
 
             {!estaCargando && !error && (

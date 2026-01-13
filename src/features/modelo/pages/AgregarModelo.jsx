@@ -20,7 +20,7 @@ function AgregarModelo() {
             setCargandoCatalogos(true);
             setErrorCatalogos(null);
             try {
-                const res = await api.get('/marca/all');
+                const res = await api.get('/marca');
                 setCatalogos({ marcas: res.data || [] });
             } catch (error) {
                 const mensajeError = obtenerMensajeError(error, "Error al cargar marcas");
@@ -35,9 +35,8 @@ function AgregarModelo() {
     const mapFrontendToBackend = (formData) => {
         return {
             nombre: formData.nombre,
-            marca: {
-                id: parseInt(formData.marcaId)
-            }
+            marcaId: parseInt(formData.marcaId)
+
         };
     };
 
@@ -46,7 +45,7 @@ function AgregarModelo() {
         setErrorGuardar(null);
         setCargando(true);
         try {
-            await api.post('/modelo/add', datosParaEnviar);
+            await api.post('/modelo', datosParaEnviar);
             navigate('/dashboard-modelo');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al agregar el modelo");

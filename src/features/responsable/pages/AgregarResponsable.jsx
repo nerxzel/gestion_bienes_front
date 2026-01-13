@@ -10,13 +10,13 @@ function AgregarResponsable() {
     const [cargando, setCargando] = useState(false);
     const navigate = useNavigate();
 
-    const FORMULARIO_RESPONSABLE_VACIO = { nombre: '', rut: '', cargo: '', estado: 'activo' };
+    const FORMULARIO_RESPONSABLE_VACIO = { nombre: '', rut: '', cargo: '', estado: '' };
 
     const handleAgregarSubmit = async (formData) => {
         setErrorGuardar(null);
         setCargando(true);
         try {
-            await api.post('/responsable/add', formData);
+            await api.post('/responsable', formData);
             navigate('/dashboard-responsable');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al agregar la responsable");

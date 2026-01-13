@@ -1,7 +1,11 @@
 import SkeletonCell from '../../common/SkeletonCell.jsx';
 
 function BienGridSkeleton() {
-    let placeholderList = Array(10).fill('Texto Ejemplo')
+    let placeholderList = Array(10).fill(' ')
+
+    let randomWidthPercent = (min, max) => { return `${Math.floor(Math.random() * (max - min + 1) + min)}%` }
+    let randomWidthPx = (min, max) => { return `${Math.floor(Math.random() * (max - min + 1) + min)}px` }
+
     return (
         <>
             <div className='table-responsive'>
@@ -24,14 +28,14 @@ function BienGridSkeleton() {
                     <tbody>
                         {placeholderList.map((elemento, index) => (
                             <tr key={index}>
-                                <td className="truncate-cell"><SkeletonCell width='70px' height='15px' className='rounded-2'></SkeletonCell></td>
+                                <td className="truncate-cell"><SkeletonCell width={randomWidthPercent(50, 60)} height='15px' className='rounded-2'></SkeletonCell></td>
+                                <td className="truncate-cell"><SkeletonCell width={randomWidthPercent(90, 100)} height='15px' className='rounded-2'></SkeletonCell></td>
+                                <td className="truncate-cell"><SkeletonCell width={randomWidthPx(80, 90)} height='15px' className='rounded-2'></SkeletonCell></td>
+                                <td className="truncate-cell"><SkeletonCell width={randomWidthPx(80, 90)} height='15px' className='rounded-2'></SkeletonCell></td>
+                                <td className="truncate-cell"><SkeletonCell width={randomWidthPx(70, 90)} height='15px' className='rounded-2'></SkeletonCell></td>
                                 <td className="truncate-cell"><SkeletonCell width='100px' height='15px' className='rounded-2'></SkeletonCell></td>
-                                <td className="truncate-cell"><SkeletonCell width='70px' height='15px' className='rounded-2'></SkeletonCell></td>
-                                <td className="truncate-cell"><SkeletonCell width='100px' height='15px' className='rounded-2'></SkeletonCell></td>
-                                <td className="truncate-cell"><SkeletonCell width='70px' height='15px' className='rounded-2'></SkeletonCell></td>
-                                <td className="truncate-cell"><SkeletonCell width='70px' height='15px' className='rounded-2'></SkeletonCell></td>
-                                <td className="truncate-cell"><SkeletonCell width='70px' height='15px' className='rounded-2'></SkeletonCell></td>
-                                <td className="truncate-cell"><SkeletonCell width='70px' height='15px' className='rounded-2'></SkeletonCell></td>
+                                <td className="truncate-cell"><SkeletonCell width='90px' height='15px' className='rounded-2'></SkeletonCell></td>
+                                <td className="truncate-cell"><SkeletonCell width={randomWidthPercent(70, 90)} height='15px' className='rounded-2'></SkeletonCell></td>
                                 <td className="truncate-cell"><SkeletonCell width='70px' height='15px' className='rounded-2'></SkeletonCell></td>
                                 <td className="truncate-cell"><SkeletonCell width='70px' height='15px' className='rounded-2'></SkeletonCell></td>
                                 <td className="text-nowrap text-center">

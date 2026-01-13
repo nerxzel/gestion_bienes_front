@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { manejarErrorAPI } from '../../../utils/errorHandler';
+import ModeloGridSkeleton from './ModeloGridSkeleton.jsx'
 import api from '../../../api/axiosConfig';
 
 function ModeloGrid() {
@@ -30,7 +31,7 @@ function ModeloGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarModelos();
-            setEstaCargando(false);
+            setTimeout(() => { setEstaCargando(false) }, 2000);
         };
         loadData();
     }, []);
@@ -53,11 +54,12 @@ function ModeloGrid() {
                 variant="success"
                 className="mb-3"
                 onClick={() => navigate(`/agregar-modelo/`)}
+                disabled={estaCargando}
             >
                 <FaPlus className="me-1" /> Agregar Modelo
             </Button>
 
-            {estaCargando && <div className="text-center">Cargando datos...</div>}
+            {estaCargando && <ModeloGridSkeleton></ModeloGridSkeleton>}
             {error && <div className="alert alert-danger">Error: {error}</div>}
 
             {!estaCargando && !error && (
