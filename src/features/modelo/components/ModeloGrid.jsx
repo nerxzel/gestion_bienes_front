@@ -31,7 +31,7 @@ function ModeloGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarModelos();
-            setTimeout(() => { setEstaCargando(false) }, 2000);
+            setEstaCargando(false);
         };
         loadData();
     }, []);

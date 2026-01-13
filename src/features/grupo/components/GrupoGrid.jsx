@@ -31,7 +31,7 @@ function GrupoGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarGrupos();
-            setTimeout(() => { setEstaCargando(false) }, 2000);
+            setEstaCargando(false);
         };
         loadData();
     }, []);

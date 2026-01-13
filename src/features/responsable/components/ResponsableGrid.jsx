@@ -53,7 +53,7 @@ function ResponsableGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarResponsables();
-            setTimeout(() => { setEstaCargando(false) }, 2000);
+            setEstaCargando(false);
         };
         loadData();
     }, []);

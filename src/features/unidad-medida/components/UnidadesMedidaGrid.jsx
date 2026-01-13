@@ -31,7 +31,7 @@ function UnidadesMedidaGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarUnidadesMedida();
-            setTimeout(() => { setEstaCargando(false) }, 2000);
+            setEstaCargando(false);
         };
         loadData();
     }, []);

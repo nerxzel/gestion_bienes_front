@@ -31,7 +31,7 @@ function UbicacionGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarUbicaciones();
-            setTimeout(() => { setEstaCargando(false) }, 2000);
+            setEstaCargando(false);
         };
         loadData();
     }, []);
