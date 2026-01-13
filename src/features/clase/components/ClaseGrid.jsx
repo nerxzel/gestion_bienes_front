@@ -31,7 +31,7 @@ function ClaseGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarClases();
-            setTimeout(() => { setEstaCargando(false) }, 2000);
+            setEstaCargando(false);
         };
         loadData();
     }, []);

@@ -25,7 +25,7 @@ export function BienesProvider({ children }) {
             setError(mensajeError);
             setBienes([]);
         } finally {
-            setTimeout(() => { setEstaCargando(false) }, 2000);
+            setEstaCargando(false);
         }
     }, []);
 

@@ -31,7 +31,7 @@ function SubclaseGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarSubclases();
-            setTimeout(() => { setEstaCargando(false) }, 2000);
+            setEstaCargando(false);
         };
         loadData();
     }, []);

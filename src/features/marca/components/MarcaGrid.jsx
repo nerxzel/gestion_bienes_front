@@ -31,7 +31,7 @@ function MarcaGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarMarcas();
-            setTimeout(() => { setEstaCargando(false) }, 2000);
+            setEstaCargando(false);
         };
         loadData();
     }, []);
