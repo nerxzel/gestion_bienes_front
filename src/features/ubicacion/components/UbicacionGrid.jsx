@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { manejarErrorAPI } from '../../../utils/errorHandler';
+import UbicacionGridSkeleton from './UbicacionGridSkeleton.jsx'
 import api from '../../../api/axiosConfig';
 
 function UbicacionGrid() {
@@ -30,7 +31,7 @@ function UbicacionGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarUbicaciones();
-            setEstaCargando(false);
+            setTimeout(() => { setEstaCargando(false) }, 2000);
         };
         loadData();
     }, []);
@@ -53,11 +54,12 @@ function UbicacionGrid() {
                 variant="success"
                 className="mb-3"
                 onClick={() => navigate(`/agregar-ubicacion/`)}
+                disabled={estaCargando}
             >
                 <FaPlus className="me-1" /> Agregar Ubicación
             </Button>
 
-            {estaCargando && <div className="text-center">Cargando datos...</div>}
+            {estaCargando && <UbicacionGridSkeleton></UbicacionGridSkeleton>}
             {error && <div className="alert alert-danger">Error: {error}</div>}
 
             {!estaCargando && !error && (

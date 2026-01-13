@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { manejarErrorAPI } from '../../../utils/errorHandler';
 import api from '../../../api/axiosConfig';
+import ClaseGridSkeleton from './ClaseGridSkeleton';
 
 function ClaseGrid() {
     const [clases, setClases] = useState([]);
@@ -30,7 +31,7 @@ function ClaseGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarClases();
-            setEstaCargando(false);
+            setTimeout(() => { setEstaCargando(false) }, 2000);
         };
         loadData();
     }, []);
@@ -53,11 +54,12 @@ function ClaseGrid() {
                 variant="success"
                 className="mb-3"
                 onClick={() => navigate(`/agregar-clase/`)}
+                disabled={estaCargando}
             >
                 <FaPlus className="me-1" /> Agregar Clase
             </Button>
 
-            {estaCargando && <div className="text-center">Cargando datos...</div>}
+            {estaCargando && <ClaseGridSkeleton></ClaseGridSkeleton>}
             {error && <div className="alert alert-danger">Error: {error}</div>}
 
             {!estaCargando && !error && (

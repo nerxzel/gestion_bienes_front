@@ -35,9 +35,8 @@ function AgregarClase() {
     const mapFrontendToBackend = (formData) => {
         return {
             nombre: formData.nombre,
-            grupo: {
-                id: parseInt(formData.grupoId)
-            }
+            grupoId: parseInt(formData.grupoId)
+
         };
     };
 
@@ -46,10 +45,12 @@ function AgregarClase() {
         setErrorGuardar(null);
         setCargando(true);
         try {
-            await api.post('/clase/add', datosParaEnviar);
+            await api.post('/clase', datosParaEnviar);
+
             navigate('/dashboard-clase');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al agregar la clase");
+            console.log(datosParaEnviar)
             setErrorGuardar(mensajeError);
         } finally {
             setCargando(false);

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { manejarErrorAPI } from '../../../utils/errorHandler';
 import api from '../../../api/axiosConfig';
+import SubclaseGridSkeleton from './SubclaseGridSkeleton';
 
 function SubclaseGrid() {
     const [subclases, setSubclases] = useState([]);
@@ -30,7 +31,7 @@ function SubclaseGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarSubclases();
-            setEstaCargando(false);
+            setTimeout(() => { setEstaCargando(false) }, 2000);
         };
         loadData();
     }, []);
@@ -53,11 +54,12 @@ function SubclaseGrid() {
                 variant="success"
                 className="mb-3"
                 onClick={() => navigate(`/agregar-subclase/`)}
+                disabled={estaCargando}
             >
                 <FaPlus className="me-1" /> Agregar Subclase
             </Button>
 
-            {estaCargando && <div className="text-center">Cargando datos...</div>}
+            {estaCargando && <SubclaseGridSkeleton></SubclaseGridSkeleton>}
             {error && <div className="alert alert-danger">Error: {error}</div>}
 
             {!estaCargando && !error && (

@@ -16,7 +16,7 @@ function AgregaUbicacion() {
         setErrorGuardar(null);
         setCargando(true);
         try {
-            await api.post('/ubicacion/add', formData);
+            await api.post('/ubicacion', formData);
             navigate('/dashboard-ubicacion');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al agregar la ubicación");

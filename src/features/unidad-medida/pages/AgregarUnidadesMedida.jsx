@@ -18,7 +18,7 @@ function AgregarUnidadesMedida() {
         setErrorGuardar(null);
         setCargando(true);
         try {
-            await api.post('/unidadMedida/add', formData);
+            await api.post('/unidadMedida', formData);
             navigate('/dashboard-unidadesM');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al agregar la unidad de medida");

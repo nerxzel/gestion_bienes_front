@@ -35,8 +35,8 @@ function AgregarSubclase() {
     const mapFrontendToBackend = (formData) => {
         return {
             nombre: formData.nombre,
-            clase: { id: parseInt(formData.claseId) },
-            grupo: { id: parseInt(formData.grupoId) }
+            claseId: parseInt(formData.claseId),
+            grupoId: parseInt(formData.grupoId)
         };
     };
 
@@ -45,7 +45,7 @@ function AgregarSubclase() {
         setErrorGuardar(null);
         setCargando(true);
         try {
-            await api.post('/subclase/add', datosParaEnviar);
+            await api.post('/subclase', datosParaEnviar);
             navigate('/dashboard-subclase');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al agregar la subclase");

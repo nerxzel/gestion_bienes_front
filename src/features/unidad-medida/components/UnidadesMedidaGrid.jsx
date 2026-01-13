@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { manejarErrorAPI } from '../../../utils/errorHandler';
+import UnidadesMedidaGridSkeleton from './UnidadesMedidaGridSkeleton.jsx'
 import api from '../../../api/axiosConfig';
 
 function UnidadesMedidaGrid() {
@@ -30,7 +31,7 @@ function UnidadesMedidaGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarUnidadesMedida();
-            setEstaCargando(false);
+            setTimeout(() => { setEstaCargando(false) }, 2000);
         };
         loadData();
     }, []);
@@ -53,11 +54,12 @@ function UnidadesMedidaGrid() {
                 variant="success"
                 className="mb-3"
                 onClick={() => navigate(`/agregar-unidadesM/`)}
+                disabled={estaCargando}
             >
                 <FaPlus className="me-1" /> Agregar Unidad de Medida
             </Button>
 
-            {estaCargando && <div className="text-center">Cargando datos...</div>}
+            {estaCargando && <UnidadesMedidaGridSkeleton></UnidadesMedidaGridSkeleton>}
             {error && <div className="alert alert-danger">Error: {error}</div>}
 
             {!estaCargando && !error && (

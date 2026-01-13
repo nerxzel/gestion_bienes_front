@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FaPencilAlt, FaPlus, FaFileDownload } from 'react-icons/fa';
 import { manejarErrorAPI } from '../../../utils/errorHandler';
+import ResponsableGridSkeleton from './ResponsableGridSkeleton.jsx';
 import api from '../../../api/axiosConfig';
 
 function ResponsableGrid() {
@@ -52,7 +53,7 @@ function ResponsableGrid() {
             setEstaCargando(true);
             setError(null);
             await cargarResponsables();
-            setEstaCargando(false);
+            setTimeout(() => { setEstaCargando(false) }, 2000);
         };
         loadData();
     }, []);
@@ -75,11 +76,12 @@ function ResponsableGrid() {
                 variant="success"
                 className="mb-3"
                 onClick={() => navigate(`/agregar-responsable/`)}
+                disabled={estaCargando}
             >
                 <FaPlus className="me-1" /> Agregar Responsable
             </Button>
 
-            {estaCargando && <div className="text-center">Cargando datos...</div>}
+            {estaCargando && <ResponsableGridSkeleton></ResponsableGridSkeleton>}
             {error && <div className="alert alert-danger">Error: {error}</div>}
 
             {!estaCargando && !error && (
@@ -98,13 +100,13 @@ function ResponsableGrid() {
                             {responsablesFiltrados.length > 0 ? (
                                 responsablesFiltrados.map((responsable) => (
                                     <tr key={responsable.id}>
-                                        <td>{responsable.nombre}</td>
-                                        <td>{responsable.rut}</td>
-                                        <td>{responsable.cargo}</td>
-                                        <td>{responsable.estado}</td>
+                                        <td className="truncate-cell">{responsable.nombre}</td>
+                                        <td className="truncate-cell">{responsable.rut}</td>
+                                        <td className="truncate-cell">{responsable.cargo}</td>
+                                        <td className="truncate-cell">{responsable.estado}</td>
                                         <td className="text-nowrap">
                                             <Button variant="outline-primary"
-                                                className="me-2"
+                                                className="me-3"
                                                 size="sm"
                                                 onClick={() => navigate(`/modificar-responsable/${responsable.id}`)}
                                                 title="Modificar Responsable">

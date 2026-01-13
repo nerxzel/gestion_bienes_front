@@ -55,6 +55,7 @@ function BienGrid() {
                 <Button
                     variant="success"
                     onClick={() => navigate(`/agregar-bien/`)}
+                    disabled={estaCargando}
                 >
                     <FaPlus className="me-1" /> Agregar Bien
                 </Button>

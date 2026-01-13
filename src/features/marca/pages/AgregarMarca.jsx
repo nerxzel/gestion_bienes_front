@@ -16,7 +16,7 @@ function AgregarMarca() {
         setErrorGuardar(null);
         setCargando(true);
         try {
-            await api.post('/marca/add', formData);
+            await api.post('/marca', formData);
             navigate('/dashboard-marca');
         } catch (err) {
             const mensajeError = obtenerMensajeError(err, "Error al agregar la marca");
